@@ -70,6 +70,7 @@ export function startTheme(): () => void {
 
 /**
  * Runs in <head> before the first paint, so a saved night never flashes as day.
- * Same rule as forcedNight(), written as plain script.
+ * Same rule as forcedNight(), written as plain script. Once the page has loaded it also sets data-print,
+ * which switches on the print textures (see globals.css).
  */
-export const THEME_BOOT_SCRIPT = `(function(){try{var r=document.documentElement,p=null;try{p=localStorage.getItem('${KEY}')}catch(e){}var n=p?p==='night':(r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme: dark)').matches));r.dataset.time=n?'night':'day'}catch(e){}})();`;
+export const THEME_BOOT_SCRIPT = `(function(){try{var r=document.documentElement,p=null;try{p=localStorage.getItem('${KEY}')}catch(e){}var n=p?p==='night':(r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme: dark)').matches));r.dataset.time=n?'night':'day';addEventListener('load',function(){requestAnimationFrame(function(){r.dataset.print='1'})})}catch(e){}})();`;

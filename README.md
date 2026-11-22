@@ -74,12 +74,21 @@ How the counter works: `POST /api/views/` adds a visit and returns the total, `G
 - **The print look**: the scene pictures are already crayon-processed (no filters on them). The decorative graphics use `filter:url(#riso)` and friends, listed at the end of `globals.css` under "print treatment". Reading text, felt Mel and Calì, photos and videos are never filtered.
 - **Calì's voice**: sounds play only on a tap or click, never on load. The word in her speech bubble picks the sound (`room.miao` and `room.miaoAsleep` in the dictionaries).
 
+## Performance
+
+- **Pictures**: the room scenes, felt Mel and Calì's paw are served as AVIF, then WebP, then the original JPG/PNG (`src/components/Picture.tsx`). After replacing one of them, run `npm run images` (`scripts/optimize-images.mjs`, uses sharp) and commit the generated files: scenes at 1344/2016/2688 px, the others at their own size.
+- **Loading**: felt Mel (the largest thing on the first screen) is preloaded with high priority; her yawning picture waits until the page has loaded. The room scenes load only when needed, and never before the page itself has loaded: the day scene when the room is half a screen away, the desk and the night as you approach their chapters, the night window when the night is on. Case-study posters load when their dialog opens.
+- **Print textures**: the grain over the page, the paper fibres and the riso ink of the big pieces are small pre-rendered tiles in `public/assets/print/` (the same `feTurbulence` noise, computed once by `scripts/turbulence.mjs`), so the browser never computes noise for anything large. Small stickers and labels keep the live SVG filter. They switch on right after the page has loaded (`data-print` on `<html>`), so they never compete with the first paint.
+- **Camera**: the scroll loop runs only while the room is near the screen and measures sizes on resize, not on every frame.
+- **Fonts**: next/font, Latin subset only, `display: swap`.
+- **Caching**: `/assets/*` is cached for a week in the browser and until the next deploy on Vercel's CDN (`next.config.ts`).
+
 ## Add a project
 
 1. Copy an existing module, e.g. `src/content/cases/stat.ts`, to `src/content/cases/<name>.ts` and fill in `it` and `en`: folder label, tarot name, title, `hitLabel` (the clickable folder on the desk), `blurb` (the line in the project list), owner, tagline, blocks and the buttons at the bottom.
 2. Add the key to `CaseKey` in `src/content/cases/types.ts` and the project to `src/content/cases/index.ts` with its swatch. A new swatch needs a `.sw-<swatch>` class in `globals.css`.
 3. In `src/content/room.ts` add it to `PROJECT_GROUPS` (Witailer or academy) and, if it has a folder drawn on the desk, to `DESK_FOLDERS` with its hit area and sticker point (% of the picture).
-4. Images go in `public/assets/cases/<name>/`, the demo video in `public/assets/videos/`.
+4. Images go in `public/assets/cases/<name>/`, the demo video in `public/assets/videos/` (its poster loads when the dialog opens).
 5. `npm run build` checks that nothing is missing.
 
 ## Credits

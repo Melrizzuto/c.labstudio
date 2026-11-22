@@ -262,6 +262,10 @@ dialog.case[open]{animation:slide .45s var(--ease)}
 /* ===== c.lab identity: stickers, hard shadows, print grain ===== */
 .grain{position:fixed;inset:0;z-index:60;pointer-events:none;mix-blend-mode:multiply;opacity:.11}
 :root[data-time="night"] .grain{mix-blend-mode:screen;opacity:.06}
+/* the print textures arrive right after the page has loaded (data-print, set in lib/theme.ts), so they never
+   compete with the fonts and felt Mel for the first paint */
+:root[data-print] .grain{background:url(/assets/print/grain-day.webp) 0 0/256px 256px}
+:root[data-print][data-time="night"] .grain{background-image:url(/assets/print/grain-night.webp)}
 .card{border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink)} /* taste-skill-ignore: the c.lab printed-card look */
 :root[data-time="night"] .card{border-color:#05082e;box-shadow:8px 8px 0 var(--cobalt)} /* taste-skill-ignore */
 .pin{background:var(--sun);color:var(--ink);border:3px solid var(--ink);outline:4px solid #fff;box-shadow:4px 4px 0 var(--ink);font:800 14px/1 var(--display);text-transform:uppercase;letter-spacing:.02em;padding:10px 14px;border-radius:999px;rotate:-3deg} /* taste-skill-ignore: stickers */
@@ -332,18 +336,24 @@ html[lang="en"] .sticker{white-space:nowrap} /* the English page keeps its stick
 .print-defs{position:absolute;left:0;top:0;width:0;height:0;overflow:hidden}
 /* paper fibres under the page: they show wherever the page has no picture or card on top */
 .paper{position:fixed;inset:0;z-index:-1;pointer-events:none;mix-blend-mode:multiply;opacity:.22}
+:root[data-print] .paper{background:url(/assets/print/paper.webp) 0 0/512px 512px}
 :root[data-time="night"] .paper{opacity:.12}
 footer{background-color:transparent} /* same colour as the page, so the paper shows through */
-/* ink plates */
-.stage .pinkblock,.stage .checker,.stage .sun,.hero h1 .mark .ink,.sticker,.pin,.approved,.case .badge .stamp,.tape div,
-.project .sw,.case-top .tag .sw,.scene .steam,.timor span,.bigmark{filter:url(#riso)}
-/* the pink shadow of the wordmark is a second plate, printed slightly off */
-.hero h1 .mark::before{filter:url(#riso-soft)}
-/* the cards keep crisp text; only their printed border and shadow get the ink */
+/* ink plates. Small pieces use the SVG filter; big ones the same ink as a pre-rendered mask tile (cheap to paint) */
+.stage .pinkblock,.stage .sun,.sticker,.pin,.approved,.case .badge .stamp,
+.project .sw,.case-top .tag .sw,.scene .steam,.timor span{filter:url(#riso)}
+:root[data-print] .stage .checker,:root[data-print] .hero h1 .mark .ink,:root[data-print] .tape div,:root[data-print] .bigmark,
+:root[data-print] .card::before,:root[data-print] .card::after{-webkit-mask:url(/assets/print/riso-mask.webp) 0 0/512px 512px;mask:url(/assets/print/riso-mask.webp) 0 0/512px 512px}
+/* the pink shadow of the wordmark is a second plate, printed slightly off: softer, sparser specks */
+.hero h1 .mark::before{filter:blur(.9px)}
+:root[data-print] .hero h1 .mark::before{-webkit-mask:url(/assets/print/riso-soft-mask.webp) 0 0/256px 256px;mask:url(/assets/print/riso-soft-mask.webp) 0 0/256px 256px}
+/* the cards keep crisp text; only their printed border (::before) and hard shadow (::after, behind the card) get the ink */
 .card{position:relative;border-color:transparent;box-shadow:none}
-.card::before{content:"";position:absolute;inset:-3px;border:3px solid var(--ink);border-radius:inherit;box-shadow:8px 8px 0 var(--ink);pointer-events:none;filter:url(#riso)}
+.card::before{content:"";position:absolute;inset:-3px;border:3px solid var(--ink);border-radius:inherit;pointer-events:none}
+.card::after{content:"";position:absolute;inset:5px -11px -11px 5px;border-radius:inherit;background:var(--ink);z-index:-1;pointer-events:none}
 :root[data-time="night"] .card{border-color:transparent;box-shadow:none}
-:root[data-time="night"] .card::before{border-color:#05082e;box-shadow:8px 8px 0 var(--cobalt)}
+:root[data-time="night"] .card::before{border-color:#05082e}
+:root[data-time="night"] .card::after{background:var(--cobalt)}
 /* the poster's typewriter face, for the small labels */
 .logo small{font:400 14px/1 var(--mono);letter-spacing:.06em}
 .hero h1 .studio{font:400 clamp(24px,2.5vw,40px)/1 var(--mono);letter-spacing:.06em}
@@ -383,3 +393,6 @@ footer{background-color:transparent} /* same colour as the page, so the paper sh
   .scene .hit{min-width:40px;min-height:40px}
 }
 @media (max-width:819.98px) and (prefers-reduced-motion:reduce){.room-dock{transition:none}}
+
+/* ===== performance: pictures in AVIF/WebP (Picture.tsx) lay out as the bare <img> did ===== */
+picture{display:contents}

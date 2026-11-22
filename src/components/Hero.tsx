@@ -1,8 +1,11 @@
+import { preload } from 'react-dom';
 import type { Dictionary } from '@/i18n/types';
 import { MelFigure } from './MelFigure';
 import { RichText } from './RichText';
 
 export function Hero({ t }: { t: Dictionary['hero'] }) {
+  /* felt Mel is the LCP: start fetching her (AVIF; browsers without it skip the hint) before anything else */
+  preload('/assets/mel-felt.avif', { as: 'image', type: 'image/avif', fetchPriority: 'high' });
   return (
     <section className="hero" aria-labelledby="title">
       <div className="wrap">

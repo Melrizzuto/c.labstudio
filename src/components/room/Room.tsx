@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 import { forcedNight } from '@/lib/theme';
+import { activatePicture } from '@/lib/pictures';
 import { playCat } from '@/lib/sounds';
 import type { CatLine } from '@/i18n/types';
 
@@ -117,6 +118,51 @@ export function Room({
     const clip = stage.querySelector<HTMLVideoElement>('#tvclip');
     const chapters = Array.from(roomSec.querySelectorAll<HTMLElement>('.chapter'));
 
+    /* sizes that only change on resize (or when the fonts arrive): measured then, never inside the frame loop */
+    let vw = 0,
+      vh = 0,
+      fw = 0,
+      fh = 0,
+      cardTop: number[] = [];
+    const measure = () => {
+      vw = stage.clientWidth;
+      vh = stage.clientHeight;
+      fw = Math.max(vw, vh * R);
+      fh = fw / R;
+      cardTop = chapters.map((ch) => {
+        const card = ch.querySelector<HTMLElement>('.card');
+        return card ? card.getBoundingClientRect().top - ch.getBoundingClientRect().top : 0;
+      });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(stage);
+    chapters.forEach((c) => ro.observe(c));
+    /* the chapters' positions, read once per frame */
+    let rects: DOMRect[] = [];
+
+    /* the pictures load only when needed: the day scene when the room is half a screen away, the desk and the night
+       when you get close to their chapters, the night window when the night is on (see lib/pictures.ts) */
+    const loaded = new Set<string>();
+    /* never before the page itself (fonts, felt Mel) has finished loading */
+    let pageLoaded = document.readyState === 'complete';
+    const waiting = new Set<string>();
+    const load = (key: 'day' | 'daynight' | 'desk' | 'night') => {
+      if (loaded.has(key)) return;
+      if (!pageLoaded) {
+        waiting.add(key);
+        return;
+      }
+      loaded.add(key);
+      stage.querySelectorAll<HTMLImageElement>(`img[data-load="${key}"]`).forEach(activatePicture);
+    };
+    const onPageLoad = () => {
+      pageLoaded = true;
+      waiting.forEach((k) => load(k as 'day'));
+      waiting.clear();
+    };
+    if (!pageLoaded) addEventListener('load', onPageLoad, { once: true });
+
     /* how far we are through a chapter, 0..1, with its view held at .5.
        The desk on medium screens has its card below the picture, so the view arrives when the chapter reaches the top
        and holds while the card scrolls past */
@@ -133,7 +179,7 @@ export function Room({
       const vh = innerHeight;
       let idx = 0;
       for (let i = 0; i < chapters.length; i++) {
-        const rc = chapters[i].getBoundingClientRect();
+        const rc = rects[i];
         if (rc.top <= vh * 0.5) idx = i + Math.min(1, Math.max(0, progress(chapters[i], rc, vh)));
       }
       return Math.max(0, Math.min(chapters.length - 1, idx - 0.5));
@@ -146,24 +192,19 @@ export function Room({
        wide screens: picture pushed right and zoomed until x0 meets the left edge, card beside it.
        medium screens: no room beside the card, so the strip is centred full width and the card scrolls in below it (see CSS) */
     /* phones: how far the scene of a chapter has been scrolled through, 0..1, until its card comes up */
-    function panOf(ch: HTMLElement) {
-      const card = ch.querySelector<HTMLElement>('.card');
-      if (!card) return 0;
-      const rc = ch.getBoundingClientRect();
-      const range = card.getBoundingClientRect().top - rc.top - innerHeight * 0.95;
-      return range > 1 ? clamp01(-rc.top / range) : 0;
+    function panOf(i: number) {
+      const range = cardTop[i] - innerHeight * 0.95;
+      return range > 1 ? clamp01(-rects[i].top / range) : 0;
     }
-    function fitCam(ch: HTMLElement): Cam {
+    function fitCam(i: number): Cam {
+      const ch = chapters[i];
       const cam = CAM[ch.dataset.cam!];
       if (innerWidth < MOBILE) {
         const m = MOBILE_CAM[ch.dataset.cam!];
-        return m.pan ? { ...m, x: lerp(m.pan[0], m.pan[1], smooth(panOf(ch))) } : m;
+        return m.pan ? { ...m, x: lerp(m.pan[0], m.pan[1], smooth(panOf(i))) } : m;
       }
       if (!cam.fit) return cam;
-      const vw = stage!.clientWidth,
-        vh = stage!.clientHeight,
-        fw = Math.max(vw, vh * R),
-        f = cam.fit;
+      const f = cam.fit;
       if (innerWidth < 1380) {
         const z = Math.max(1, Math.min(1.8, (vw * 0.92) / (((f[1] - f[0]) / 100) * fw)));
         return { s: cam.s, x: (f[0] + f[1]) / 2 + ((anchorOf(ch).ax * vw - vw / 2) / (fw * z)) * 100, y: f[2], z };
@@ -174,10 +215,11 @@ export function Room({
     function views(idx: number) {
       const i = Math.floor(idx),
         f = smooth(idx - i),
+        j = chapters[i + 1] ? i + 1 : i,
         A = chapters[i],
-        Bc = chapters[i + 1] || A;
-      const a = fitCam(A),
-        b = fitCam(Bc),
+        Bc = chapters[j];
+      const a = fitCam(i),
+        b = fitCam(j),
         aa = anchorOf(A),
         ab = anchorOf(Bc);
       const anc: Anchor = { ax: lerp(aa.ax, ab.ax, f), ay: lerp(aa.ay, ab.ay, f) };
@@ -197,12 +239,9 @@ export function Room({
     const cur: Partial<Record<SceneName, View & { o: number }>> = {};
     const mouse = { x: 0, y: 0 };
     let first = true;
+    const sized: Partial<Record<SceneName, number>> = {};
     function place(name: SceneName, c: View, o: number, anc: Anchor) {
       const el = scenes[name],
-        vw = stage!.clientWidth,
-        vh = stage!.clientHeight,
-        fw = Math.max(vw, vh * R),
-        fh = fw / R,
         z = c.z;
       const px = reduce ? 0 : mouse.x * 0.012 * vw,
         py = reduce ? 0 : mouse.y * 0.012 * vh;
@@ -210,8 +249,11 @@ export function Room({
         top = anc.ay * vh - (c.y / 100) * fh * z + py;
       left = Math.min(0, Math.max(vw - fw * z, left));
       top = Math.min(0, Math.max(vh - fh * z, top));
-      el.style.width = fw + 'px';
-      el.style.height = fh + 'px';
+      if (sized[name] !== fw) {
+        sized[name] = fw;
+        el.style.width = fw + 'px';
+        el.style.height = fh + 'px';
+      }
       el.style.transform = 'translate(' + left + 'px,' + top + 'px) scale(' + z + ')';
       el.style.opacity = String(o);
       el.style.zIndex = o > 0.5 ? '2' : '1';
@@ -244,17 +286,23 @@ export function Room({
       });
     }
 
-    let raf = 0;
+    /* the frame loop runs only while the room is near the screen (see the IntersectionObserver below) */
+    let raf = 0,
+      running = false;
     function frame() {
-      raf = requestAnimationFrame(frame);
+      raf = running ? requestAnimationFrame(frame) : 0;
       const sec = roomSec!.getBoundingClientRect();
       showDock(sec.top < innerHeight * 0.6 && sec.bottom > innerHeight * 0.8);
       if (sec.bottom < 0 || sec.top > innerHeight) return;
+      rects = chapters.map((c) => c.getBoundingClientRect());
       const idx = storyIndex(),
         w = views(idx),
         k = reduce || first ? 1 : 0.12;
       first = false;
       markDock(chapters[Math.round(idx)]?.dataset.cam);
+      if (idx > 0.5) load('desk');
+      if (idx > 1.5) load('night');
+      if (idx > 2.5 || forcedNight()) load('daynight');
       (Object.keys(scenes) as SceneName[]).forEach((n) => {
         const want = w.v[n];
         const c = (cur[n] ??= { x: 50, y: 50, z: 1, o: 0 });
@@ -296,7 +344,7 @@ export function Room({
       }
       /* page colours follow the picture: evening scenes turn the page to night */
       const night = forcedNight() || w.scene === 'night';
-      root.dataset.timeLock = '1';
+      if (root.dataset.timeLock !== '1') root.dataset.timeLock = '1';
       const t = night ? 'night' : 'day';
       if (root.dataset.time !== t) root.dataset.time = t;
     }
@@ -364,9 +412,30 @@ export function Room({
     };
     addEventListener('scroll', onScroll, { passive: true });
 
-    frame();
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          load('day');
+          if (forcedNight()) load('daynight');
+          if (!running) {
+            running = true;
+            frame();
+          }
+        } else if (running) {
+          running = false;
+          cancelAnimationFrame(raf);
+          showDock(false);
+        }
+      },
+      { rootMargin: '50% 0px' },
+    );
+    io.observe(roomSec);
     return () => {
+      running = false;
       cancelAnimationFrame(raf);
+      io.disconnect();
+      ro.disconnect();
+      removeEventListener('load', onPageLoad);
       removeEventListener('pointermove', onPointer);
       removeEventListener('scroll', onScroll);
       stage.removeEventListener('click', onStageClick);

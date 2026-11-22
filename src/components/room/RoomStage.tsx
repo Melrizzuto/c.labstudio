@@ -2,6 +2,7 @@ import type { Dictionary } from '@/i18n/types';
 import { getCase, caseDialogId, type CaseStudy } from '@/content/cases';
 import { DESK_FOLDERS } from '@/content/room';
 import { TimorDate } from './TimorDate';
+import { Picture, SCENE_SIZES, sceneSet } from '../Picture';
 
 /*
  * The pinned stage: the three illustrations (day, desk, night), their clickable spots, the animated bits (.fx),
@@ -13,8 +14,21 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
   return (
     <div className="room-stage" id="roomStage">
       <div className="scene" data-scene="day">
-        <img src="/assets/scenes/day.jpg" alt={t.dayAlt} width={2688} height={1520} />
-        <img className="nightwin" src="/assets/scenes/day-night.jpg" alt="" aria-hidden="true" width={2688} height={1520} decoding="async" />
+        <Picture defer data-load="day" src="/assets/scenes/day.jpg" avif={sceneSet('day', 'avif')} webp={sceneSet('day', 'webp')} sizes={SCENE_SIZES} alt={t.dayAlt} width={2688} height={1520} decoding="async" />
+        <Picture
+          defer
+          data-load="daynight"
+          className="nightwin"
+          src="/assets/scenes/day-night.jpg"
+          avif={sceneSet('day-night', 'avif')}
+          webp={sceneSet('day-night', 'webp')}
+          sizes={SCENE_SIZES}
+          alt=""
+          aria-hidden="true"
+          width={2688}
+          height={1520}
+          decoding="async"
+        />
         <TimorDate scene="day" locale={locale} />
         <div className="fx glow" style={{ left: '53%', top: '2%', width: '11%', height: '19%' }}></div>
         <button className="hit" data-go="progetti" aria-label={t.hits.dayDesk} style={{ left: 0, top: '20%', width: '27%', height: '44%' }}></button>
@@ -24,7 +38,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="hit" data-case={caseDialogId('cali')} aria-label={cali.hitLabel} style={{ left: '44%', top: '4%', width: '9%', height: '11%' }}></button>
       </div>
       <div className="scene" data-scene="desk">
-        <img src="/assets/scenes/desk.jpg" alt={t.deskAlt} width={2688} height={1520} />
+        <Picture defer data-load="desk" src="/assets/scenes/desk.jpg" avif={sceneSet('desk', 'avif')} webp={sceneSet('desk', 'webp')} sizes={SCENE_SIZES} alt={t.deskAlt} width={2688} height={1520} decoding="async" />
         <TimorDate scene="desk" locale={locale} />
         <img
           className="fx steam"
@@ -35,9 +49,13 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
           height={232}
           style={{ left: '83.110%', top: '52.039%', width: '5.580%', height: '15.263%' }}
         />
-        <img
+        <Picture
+          defer
+          data-load="desk"
           className="fx paw"
           src="/assets/scenes/desk-paw.png"
+          avif="/assets/scenes/desk-paw.avif"
+          webp="/assets/scenes/desk-paw.webp"
           alt=""
           aria-hidden="true"
           width={363}
@@ -50,7 +68,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="hit" data-cat="1" aria-label={t.hits.deskCat} style={{ left: '85%', top: '76%', width: '15%', height: '24%' }}></button>
       </div>
       <div className="scene" data-scene="night">
-        <img src="/assets/scenes/night.jpg" alt={t.nightAlt} width={2688} height={1520} />
+        <Picture defer data-load="night" src="/assets/scenes/night.jpg" avif={sceneSet('night', 'avif')} webp={sceneSet('night', 'webp')} sizes={SCENE_SIZES} alt={t.nightAlt} width={2688} height={1520} decoding="async" />
         <video
           className="tvclip"
           id="tvclip"

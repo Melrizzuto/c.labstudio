@@ -10,6 +10,8 @@ export function openCase(id: string): void {
   else d.setAttribute('open', '');
   d.scrollTop = 0;
   const v = d.querySelector<HTMLVideoElement>('.demo video');
+  /* the poster is fetched only now, not with the page */
+  if (v?.dataset.poster && !v.getAttribute('poster')) v.poster = v.dataset.poster;
   if (v && !reduceMotion()) {
     v.preload = 'auto';
     v.play()?.catch(() => {});
