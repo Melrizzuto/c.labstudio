@@ -8,7 +8,7 @@ The portfolio of Melania Rizzuto, designer and Junior Product Engineer in Milan.
 ## Stack
 
 - Next.js 16 (App Router), React 19, TypeScript. No other runtime dependency: no UI or animation libraries.
-- Both pages are prerendered as static HTML at build time. The only server code is the visit counter (`/api/views/`), backed by Upstash Redis through its REST API.
+- Both pages are prerendered as static HTML at build time. The only server code is the visit counter (`/api/views/`), backed by Supabase (or Upstash Redis) through its REST API.
 - Fonts via `next/font/google`: Outfit, Figtree, Caveat and Space Mono.
 - Plain CSS in `src/app/globals.css`; the wax-crayon / risograph print look comes from SVG filters (`src/components/PrintFilters.tsx`).
 
@@ -24,18 +24,18 @@ Production build:
     npm run build        # type-checks and prerenders both pages
     npm start            # http://localhost:3100
 
-The port is fixed at 3100 so it does not clash with other projects on 3000. Without the Upstash variables (see below) the site works normally and the eye in the footer is simply not shown.
+The port is fixed at 3100 so it does not clash with other projects on 3000. Without the counter variables (see below) the site works normally and the eye in the footer is simply not shown.
 
-## Deploy (Vercel + Upstash)
+## Deploy (Vercel + Supabase)
 
 1. Import the repository on vercel.com (Add New → Project). Vercel detects Next.js; no settings to change.
-2. Visit counter: in the Vercel project open Storage / Marketplace → **Upstash for Redis** → create a free database and connect it to the project. Vercel adds `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (the route also accepts `KV_REST_API_URL` / `KV_REST_API_TOKEN`). Redeploy so the variables take effect.
+2. Visit counter: in Supabase create a project, open the SQL editor and run `supabase/views.sql` (a `site_counters` table and an `increment_views()` function, closed to the browser by row level security). In Vercel → Settings → Environment Variables add `SUPABASE_URL` (Project URL) and `SUPABASE_SERVICE_ROLE_KEY` (Project Settings → API → service_role, server-only, never `NEXT_PUBLIC_`). Redeploy. Upstash Redis also works: set `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` instead.
 3. Optional: set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain`) so the link preview image (`og:image`) uses the final domain; otherwise Vercel's production URL is used.
 4. Custom domain: Settings → Domains.
 
 For the counter in local development: `npx vercel link` once, then `npx vercel env pull .env.local`. `.env*` files are git-ignored; `.env.example` lists the variable names.
 
-How the counter works: `POST /api/views/` adds a visit and returns the total, `GET /api/views/` only reads it. A browser counts at most once a day (a date kept in `localStorage`). If the variables are missing or Upstash does not answer, the route returns `{ "views": null }` and nothing is shown.
+How the counter works: `POST /api/views/` adds a visit and returns the total, `GET /api/views/` only reads it. A browser counts at most once a day (a date kept in `localStorage`). If the variables are missing or the store does not answer, the route returns `{ "views": null }` and nothing is shown.
 
 ## Where things live
 
@@ -43,7 +43,7 @@ How the counter works: `POST /api/views/` adds a visit and returns the total, `G
       app/
         (it)/layout.tsx, page.tsx      Italian page, <html lang="it">
         (en)/layout.tsx, en/page.tsx   English page, <html lang="en">
-        api/views/route.ts             visit counter (Upstash Redis REST)
+        api/views/route.ts             visit counter (Supabase REST, or Upstash)
         globals.css                    all the styles
         fonts.ts                       next/font faces, exposed as CSS variables
       i18n/
