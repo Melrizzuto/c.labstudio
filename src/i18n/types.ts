@@ -36,6 +36,8 @@ export interface Dictionary {
     lang: { href: string; hreflang: Locale; label: string; text: string };
     theme: { night: string; day: string; toNight: string; toDay: string };
     cta: string;
+    /** the section menu on phones */
+    menu: { text: string; open: string; close: string };
   };
   hero: {
     sticker: string;
@@ -70,6 +72,8 @@ export interface Dictionary {
       nightCat: string;
     };
     pinCatAsleep: string;
+    /** the bar of buttons at the bottom of the screen on phones */
+    dock: { label: string; book: string; desk: string; sofa: string; tv: string };
     /** what Calì says when you tap her (one at random), each with its sound */
     miao: CatLine[];
     /** what she says when she's asleep on the sofa */

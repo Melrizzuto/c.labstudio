@@ -58,12 +58,47 @@ const ENTRY: Record<string, View> = {
   'desk>day': { x: 13, y: 40, z: 3 },
 };
 
+/*
+ * Phones (< 820 px): the picture is much wider than the screen, so every chapter shows its scene first,
+ * full screen, and the card comes up after it (see the mobile CSS). Some views pan sideways while you scroll
+ * through the scene: `pan` is the start and end x (% of the picture).
+ */
+const MOBILE = 820;
+const MOBILE_CAM: Record<string, Cam & { pan?: [number, number] }> = {
+  /* the whole room, from the desk on the left, past the book, to the TV on the right */
+  overview: { s: 'day', x: 13, y: 50, z: 1, pan: [13, 87] },
+  book: { s: 'day', x: 48, y: 38, z: 1.9 },
+  /* along the five folders */
+  desk: { s: 'desk', x: 33, y: 70, z: 1.15, pan: [33, 69] },
+  /* from Mel on the sofa to Calì asleep on the armrest */
+  sofa: { s: 'night', x: 44, y: 60, z: 1.1, pan: [44, 82] },
+  /* the whole TV */
+  tv: { s: 'night', x: 63, y: 31, z: 1.05 },
+  outro: { s: 'night', x: 50, y: 46, z: 1 },
+};
+/** the room's chapters that have a button in the mobile dock */
+const DOCK = ['book', 'desk', 'sofa', 'tv'] as const;
+type DockKey = (typeof DOCK)[number];
+
 const smooth = (x: number) => x * x * (3 - 2 * x);
+const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const mix = (a: View, b: View, t: number): View => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), z: lerp(a.z, b.z, t) });
 
-export function Room({ label, cat, children }: { label: string; cat: { awake: CatLine[]; asleep: CatLine[] }; children: ReactNode }) {
+export function Room({
+  label,
+  cat,
+  dock,
+  children,
+}: {
+  label: string;
+  cat: { awake: CatLine[]; asleep: CatLine[] };
+  /** the mobile dock: its label and one button per corner of the room */
+  dock: { label: string; targets: Record<DockKey, { id: string; text: string }> };
+  children: ReactNode;
+}) {
   const ref = useRef<HTMLElement>(null);
+  const dockRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const roomSec = ref.current;
@@ -86,7 +121,8 @@ export function Room({ label, cat, children }: { label: string; cat: { awake: Ca
        The desk on medium screens has its card below the picture, so the view arrives when the chapter reaches the top
        and holds while the card scrolls past */
     function progress(ch: HTMLElement, rc: DOMRect, vh: number) {
-      if (ch.dataset.cam === 'desk' && innerWidth >= 820 && innerWidth < 1380) {
+      /* phones: every chapter holds its view while its scene is on screen, before and while its card comes up */
+      if (innerWidth < MOBILE || (ch.dataset.cam === 'desk' && innerWidth < 1380)) {
         if (rc.top > 0) return (0.5 * (vh * 0.5 - rc.top)) / (vh * 0.5);
         if (rc.bottom > vh) return 0.5;
         return 0.5 + (0.5 * (vh - rc.bottom)) / (vh * 0.5);
@@ -104,13 +140,26 @@ export function Room({ label, cat, children }: { label: string; cat: { awake: Ca
     }
     function anchorOf(ch: HTMLElement): Anchor {
       const mob = innerWidth < 820;
-      return mob ? { ax: 0.5, ay: 0.3 } : { ax: ch.classList.contains('right') ? 0.34 : 0.66, ay: 0.5 };
+      return mob ? { ax: 0.5, ay: 0.47 } : { ax: ch.classList.contains('right') ? 0.34 : 0.66, ay: 0.5 };
     }
     /* a chapter with fit:[x0,x1,yc] frames that strip of the picture (the folders).
        wide screens: picture pushed right and zoomed until x0 meets the left edge, card beside it.
        medium screens: no room beside the card, so the strip is centred full width and the card scrolls in below it (see CSS) */
-    function fitCam(ch: HTMLElement, cam: Cam): Cam {
-      if (!cam.fit || innerWidth < 820) return cam;
+    /* phones: how far the scene of a chapter has been scrolled through, 0..1, until its card comes up */
+    function panOf(ch: HTMLElement) {
+      const card = ch.querySelector<HTMLElement>('.card');
+      if (!card) return 0;
+      const rc = ch.getBoundingClientRect();
+      const range = card.getBoundingClientRect().top - rc.top - innerHeight * 0.95;
+      return range > 1 ? clamp01(-rc.top / range) : 0;
+    }
+    function fitCam(ch: HTMLElement): Cam {
+      const cam = CAM[ch.dataset.cam!];
+      if (innerWidth < MOBILE) {
+        const m = MOBILE_CAM[ch.dataset.cam!];
+        return m.pan ? { ...m, x: lerp(m.pan[0], m.pan[1], smooth(panOf(ch))) } : m;
+      }
+      if (!cam.fit) return cam;
       const vw = stage!.clientWidth,
         vh = stage!.clientHeight,
         fw = Math.max(vw, vh * R),
@@ -127,8 +176,8 @@ export function Room({ label, cat, children }: { label: string; cat: { awake: Ca
         f = smooth(idx - i),
         A = chapters[i],
         Bc = chapters[i + 1] || A;
-      const a = fitCam(A, CAM[A.dataset.cam!]),
-        b = fitCam(Bc, CAM[Bc.dataset.cam!]),
+      const a = fitCam(A),
+        b = fitCam(Bc),
         aa = anchorOf(A),
         ab = anchorOf(Bc);
       const anc: Anchor = { ax: lerp(aa.ax, ab.ax, f), ay: lerp(aa.ay, ab.ay, f) };
@@ -176,15 +225,36 @@ export function Room({ label, cat, children }: { label: string; cat: { awake: Ca
       if (s === 'night') return idx > 2.6 && idx < 4.6;
       return true;
     }
+    /* the mobile dock: shown while the room is on screen, with the current corner highlighted */
+    const dockEl = dockRef.current;
+    let dockOn = false,
+      dockCur = '';
+    function showDock(on: boolean) {
+      if (!dockEl || on === dockOn) return;
+      dockOn = on;
+      dockEl.classList.toggle('on', on);
+    }
+    function markDock(cam: string | undefined) {
+      const c = cam && (DOCK as readonly string[]).includes(cam) ? cam : '';
+      if (!dockEl || c === dockCur) return;
+      dockCur = c;
+      dockEl.querySelectorAll<HTMLElement>('button').forEach((b) => {
+        if (b.dataset.dock === c) b.setAttribute('aria-current', 'true');
+        else b.removeAttribute('aria-current');
+      });
+    }
+
     let raf = 0;
     function frame() {
       raf = requestAnimationFrame(frame);
       const sec = roomSec!.getBoundingClientRect();
+      showDock(sec.top < innerHeight * 0.6 && sec.bottom > innerHeight * 0.8);
       if (sec.bottom < 0 || sec.top > innerHeight) return;
       const idx = storyIndex(),
         w = views(idx),
         k = reduce || first ? 1 : 0.12;
       first = false;
+      markDock(chapters[Math.round(idx)]?.dataset.cam);
       (Object.keys(scenes) as SceneName[]).forEach((n) => {
         const want = w.v[n];
         const c = (cur[n] ??= { x: 50, y: 50, z: 1, o: 0 });
@@ -306,9 +376,23 @@ export function Room({ label, cat, children }: { label: string; cat: { awake: Ca
     };
   }, [cat]);
 
+  const goTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  };
+
   return (
     <section className="room" id="stanza" aria-label={label} ref={ref}>
       {children}
+      <nav className="room-dock" aria-label={dock.label} ref={dockRef}>
+        {DOCK.map((k) => (
+          <button key={k} type="button" data-dock={k} onClick={() => goTo(dock.targets[k].id)}>
+            {dock.targets[k].text}
+          </button>
+        ))}
+      </nav>
     </section>
   );
 }

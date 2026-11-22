@@ -17,6 +17,7 @@ export const it: Dictionary = {
     lang: { href: '/en/', hreflang: 'en', label: 'Read this site in English', text: 'EN' },
     theme: { night: 'Notte', day: 'Giorno', toNight: 'Passa alla stanza di notte', toDay: 'Passa alla stanza di giorno' },
     cta: 'Scrivimi',
+    menu: { text: 'Menu', open: 'Apri il menu delle sezioni', close: 'Chiudi il menu delle sezioni' },
   },
   hero: {
     sticker: 'Disponibile per nuovi progetti',
@@ -69,6 +70,7 @@ export const it: Dictionary = {
       nightCat: 'Saluta Calì, che dorme',
     },
     pinCatAsleep: 'Calì dorme',
+    dock: { label: 'Gira la stanza', book: 'Libro', desk: 'Scrivania', sofa: 'Divano', tv: 'TV' },
     miao: [
       { word: 'miao', sound: 'meow' },
       { word: 'mrrr', sound: 'trill' },

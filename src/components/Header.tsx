@@ -1,5 +1,6 @@
 import type { Dictionary } from '@/i18n/types';
 import { ThemeToggle } from './ThemeToggle';
+import { HeaderMenu } from './HeaderMenu';
 
 export function Header({ t }: { t: Dictionary['header'] }) {
   return (
@@ -25,6 +26,15 @@ export function Header({ t }: { t: Dictionary['header'] }) {
           <a className="btn small" href="#contatti">
             {t.cta}
           </a>
+          <HeaderMenu
+            t={t.menu}
+            links={[
+              { href: '#percorso', text: t.journey },
+              { href: '#progetti', text: t.projects },
+              { href: '#weekend', text: t.weekend },
+            ]}
+            cta={{ href: '#contatti', text: t.cta }}
+          />
         </nav>
       </div>
     </header>
