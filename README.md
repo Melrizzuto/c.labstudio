@@ -29,7 +29,7 @@ The port is fixed at 3100 so it does not clash with other projects on 3000. With
 ## Deploy (Vercel + Supabase)
 
 1. Import the repository on vercel.com (Add New → Project). Vercel detects Next.js; no settings to change.
-2. Visit counter: in Supabase create a project, open the SQL editor and run `supabase/views.sql` (a `site_counters` table and an `increment_views()` function, closed to the browser by row level security). In Vercel → Settings → Environment Variables add `SUPABASE_URL` (Project URL) and `SUPABASE_SERVICE_ROLE_KEY` (Project Settings → API → service_role, server-only, never `NEXT_PUBLIC_`). Redeploy. Upstash Redis also works: set `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` instead.
+2. Visit counter: in Supabase create a project, open the SQL editor and run `supabase/views.sql` (a `site_counters` table and an `increment_views()` function, closed to the browser by row level security). In Vercel → Settings → Environment Variables add `SUPABASE_URL` (Project URL) and `SUPABASE_SERVICE_ROLE_KEY` (Project Settings → API Keys → a secret key `sb_secret_…`, or the legacy `service_role` key; server-only, never `NEXT_PUBLIC_`). Redeploy. Upstash Redis also works: set `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` instead.
 3. Optional: set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain`) so the link preview image (`og:image`) uses the final domain; otherwise Vercel's production URL is used.
 4. Custom domain: Settings → Domains.
 

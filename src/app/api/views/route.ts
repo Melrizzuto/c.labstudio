@@ -30,7 +30,10 @@ async function supabaseCall(path: string, init: RequestInit): Promise<unknown> {
   if (!s) return undefined;
   const res = await fetch(`${s.url}/rest/v1/${path}`, {
     ...init,
-    headers: { apikey: s.key, Authorization: `Bearer ${s.key}`, 'Content-Type': 'application/json' },
+    // New secret keys (sb_secret_…) go only in `apikey`; legacy service_role JWTs also as Bearer.
+    headers: s.key.startsWith('sb_')
+      ? { apikey: s.key, 'Content-Type': 'application/json' }
+      : { apikey: s.key, Authorization: `Bearer ${s.key}`, 'Content-Type': 'application/json' },
     cache: 'no-store',
     signal: AbortSignal.timeout(3000),
   });
