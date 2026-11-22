@@ -69,7 +69,16 @@ export const en: Dictionary = {
       nightCat: "Say hi to Calì, who's asleep",
     },
     pinCatAsleep: "Calì's asleep",
-    miao: ['miao', 'mrrr', 'prrr…', 'busy working'],
+    miao: [
+      { word: 'miao', sound: 'meow' },
+      { word: 'mrrr', sound: 'trill' },
+      { word: 'prrr…', sound: 'purr' },
+      { word: 'busy working', sound: 'purr' },
+    ],
+    miaoAsleep: [
+      { word: 'prrr…', sound: 'purr' },
+      { word: 'mrrr', sound: 'trill' },
+    ],
   },
   intro: {
     title: 'Welcome to my room',

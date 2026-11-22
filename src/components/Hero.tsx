@@ -13,7 +13,7 @@ export function Hero({ t }: { t: Dictionary['hero'] }) {
           </span>
           <h1 id="title">
             <span className="mark" data-t="c.lab">
-              c.lab
+              <span className="ink">c.lab</span>
             </span>{' '}
             <span className="studio">studio</span>
           </h1>

@@ -104,7 +104,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         </button>
       </div>
       <p className="miao" id="miao" aria-live="polite">
-        {t.miao[0]}
+        {t.miao[0].word}
       </p>
     </div>
   );

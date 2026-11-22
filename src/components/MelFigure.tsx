@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { playCat } from '@/lib/sounds';
 
 /*
  * Felt Mel. She breathes (CSS); every 15 s Calì yawns (CSS), and right away when you tap her,
- * press Enter/Space on her, or when the page turns to night.
+ * press Enter/Space on her, or when the page turns to night. Only a tap or a key makes her meow.
  */
 export function MelFigure({ label, alt, say }: { label: string; alt: string; say: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -17,13 +18,24 @@ export function MelFigure({ label, alt, say }: { label: string; alt: string; say
       clearTimeout(t);
       t = window.setTimeout(() => fig.classList.remove('yawning'), 1500);
     };
+    /* a tap makes her meow too (never the automatic yawns); from the keyboard, at most once a second */
+    let lastKeyMeow = 0;
+    const onTap = () => {
+      yawn();
+      playCat('meow');
+    };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         yawn();
+        const now = performance.now();
+        if (now - lastKeyMeow >= 1000) {
+          lastKeyMeow = now;
+          playCat('meow');
+        }
       }
     };
-    fig.addEventListener('click', yawn);
+    fig.addEventListener('click', onTap);
     fig.addEventListener('keydown', onKey);
     /* when the day turns into night, Calì yawns too.
        `was` starts empty, as in the original page, so a visitor who arrives at night sees her yawn once. */
@@ -35,7 +47,7 @@ export function MelFigure({ label, alt, say }: { label: string; alt: string; say
     });
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-time'] });
     return () => {
-      fig.removeEventListener('click', yawn);
+      fig.removeEventListener('click', onTap);
       fig.removeEventListener('keydown', onKey);
       mo.disconnect();
       clearTimeout(t);

@@ -321,3 +321,28 @@ html[lang="en"] .sticker{white-space:nowrap} /* the English page keeps its stick
 /* ===== footer: the visit counter (ViewCounter.tsx) ===== */
 .views{display:inline-flex;align-items:center;gap:6px;margin-left:14px;white-space:nowrap}
 .views svg{width:18px;height:18px;flex:none}
+
+/* ===== print treatment: wax crayon / risograph, like the c.lab poster (filters in PrintFilters.tsx) =====
+   Only on decorative graphics. Reading text, Mel and Calì in felt, photos and videos stay crisp. */
+:root{--mono:var(--font-space-mono),"Space Mono",ui-monospace,monospace}
+.print-defs{position:absolute;left:0;top:0;width:0;height:0;overflow:hidden}
+/* paper fibres under the page: they show wherever the page has no picture or card on top */
+.paper{position:fixed;inset:0;z-index:-1;pointer-events:none;mix-blend-mode:multiply;opacity:.22}
+:root[data-time="night"] .paper{opacity:.12}
+footer{background-color:transparent} /* same colour as the page, so the paper shows through */
+/* ink plates */
+.stage .pinkblock,.stage .checker,.stage .sun,.hero h1 .mark .ink,.sticker,.pin,.approved,.case .badge .stamp,.tape div,
+.project .sw,.case-top .tag .sw,.scene .steam,.timor span,.bigmark{filter:url(#riso)}
+/* the pink shadow of the wordmark is a second plate, printed slightly off */
+.hero h1 .mark::before{filter:url(#riso-soft)}
+/* the cards keep crisp text; only their printed border and shadow get the ink */
+.card{position:relative;border-color:transparent;box-shadow:none}
+.card::before{content:"";position:absolute;inset:-3px;border:3px solid var(--ink);border-radius:inherit;box-shadow:8px 8px 0 var(--ink);pointer-events:none;filter:url(#riso)}
+:root[data-time="night"] .card{border-color:transparent;box-shadow:none}
+:root[data-time="night"] .card::before{border-color:#05082e;box-shadow:8px 8px 0 var(--cobalt)}
+/* the poster's typewriter face, for the small labels */
+.logo small{font:400 14px/1 var(--mono);letter-spacing:.06em}
+.hero h1 .studio{font:400 clamp(24px,2.5vw,40px)/1 var(--mono);letter-spacing:.06em}
+.bigmark span{font-family:var(--mono);font-weight:400;font-size:.24em;letter-spacing:.06em}
+.project .tarot,.pin.case b,.case-top .tag small{font-family:var(--mono);font-weight:700;letter-spacing:.04em}
+.foot>span:not(.approved){font-family:var(--mono);font-size:14px;letter-spacing:.02em}

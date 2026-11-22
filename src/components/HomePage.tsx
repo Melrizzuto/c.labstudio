@@ -19,7 +19,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <main id="top">
         <Hero t={t.hero} />
         <Tape phrases={t.tape} />
-        <Room label={t.room.label} miaoWords={t.room.miao}>
+        <Room label={t.room.label} cat={{ awake: t.room.miao, asleep: t.room.miaoAsleep }}>
           <RoomStage t={t.room} locale={locale} />
           <Chapters t={t} />
         </Room>

@@ -6,6 +6,8 @@ import type { NextConfig } from 'next';
  */
 const nextConfig: NextConfig = {
   trailingSlash: true,
+  /* don't write an AGENTS.md into the project on `next dev` */
+  agentRules: false,
 };
 
 export default nextConfig;

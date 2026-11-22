@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 import { forcedNight } from '@/lib/theme';
+import { playCat } from '@/lib/sounds';
+import type { CatLine } from '@/i18n/types';
 
 /*
  * The room: the illustrations, full screen, with a camera that moves inside them as you scroll.
@@ -60,7 +62,7 @@ const smooth = (x: number) => x * x * (3 - 2 * x);
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const mix = (a: View, b: View, t: number): View => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), z: lerp(a.z, b.z, t) });
 
-export function Room({ label, miaoWords, children }: { label: string; miaoWords: string[]; children: ReactNode }) {
+export function Room({ label, cat, children }: { label: string; cat: { awake: CatLine[]; asleep: CatLine[] }; children: ReactNode }) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -243,7 +245,12 @@ export function Room({ label, miaoWords, children }: { label: string; miaoWords:
       const r = c.getBoundingClientRect(),
         sr = stage.getBoundingClientRect();
       /* above the cat if there is room under the header, otherwise beside her (right, or left near the edge) */
-      miao.textContent = miaoWords[Math.floor(Math.random() * miaoWords.length)];
+      /* asleep on the sofa she only purrs or trills; each word comes with its own sound */
+      const asleep = !!c.closest('[data-scene="night"]') || (c as HTMLElement).dataset.s === 'night';
+      const lines = asleep ? cat.asleep : cat.awake;
+      const line = lines[Math.floor(Math.random() * lines.length)];
+      miao.textContent = line.word;
+      playCat(line.sound);
       const w = miao.offsetWidth,
         side = r.top < 170,
         left = side && r.right + w + 20 > sr.right && r.left - sr.left > sr.right - r.right;
@@ -297,7 +304,7 @@ export function Room({ label, miaoWords, children }: { label: string; miaoWords:
       paw?.removeEventListener('animationend', onPawEnd);
       clearTimeout(miaoTimer);
     };
-  }, [miaoWords]);
+  }, [cat]);
 
   return (
     <section className="room" id="stanza" aria-label={label} ref={ref}>

@@ -1,4 +1,12 @@
+import type { CatSound } from '@/lib/sounds';
+
 export type Locale = 'it' | 'en';
+
+/** A word in Calì's speech bubble and the sound it makes. */
+export interface CatLine {
+  word: string;
+  sound: CatSound;
+}
 
 /** A piece of inline text: plain, highlighted in handwriting (`span.hl`) or bold. */
 export type Inline = string | { hl: string } | { b: string };
@@ -62,8 +70,10 @@ export interface Dictionary {
       nightCat: string;
     };
     pinCatAsleep: string;
-    /** what Calì says when you tap her (one at random) */
-    miao: string[];
+    /** what Calì says when you tap her (one at random), each with its sound */
+    miao: CatLine[];
+    /** what she says when she's asleep on the sofa */
+    miaoAsleep: CatLine[];
   };
   intro: { title: string; text: string; hand: string };
   journey: { title: string; text: string; timeline: TimelineEntry[] };
