@@ -43,11 +43,11 @@ export const en: Dictionary = {
     noteTap: 'tap me',
   },
   tape: [
-    'From mannequins to components',
-    'If a button needs explaining, blame the button',
-    'Prototype before the meeting',
-    'Claude Code and Blender, side by side',
-    'Small commits, big ideas',
+    'Websites',
+    'Digital platforms',
+    'AI tools, from idea to code',
+    'Prototypes you can click',
+    'Got a project unlike any other? Write to me',
     'Calì approved',
   ],
   room: {

@@ -43,11 +43,11 @@ export const it: Dictionary = {
     noteTap: 'toccami',
   },
   tape: [
-    'Dal manichino al componente',
-    'Se un bottone va spiegato, è colpa del bottone',
-    'Prototipo prima della riunione',
-    'Claude Code e Blender aperti insieme',
-    'Commit piccoli, idee grandi',
+    'Siti web',
+    'Piattaforme digitali',
+    "Strumenti con l'AI, dall'idea al codice",
+    'Prototipi che si cliccano',
+    'Hai un progetto che non somiglia a nessun altro? Scrivimi',
     'Calì approved',
   ],
   room: {
