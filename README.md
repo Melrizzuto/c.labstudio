@@ -63,7 +63,7 @@ How the counter works: `POST /api/views/` adds a visit and returns the total, `G
         cases.ts                       opening the case dialogs
         sounds.ts                      Calì's meow, trill and purr
         metadata.ts                    title, description, Open Graph, favicon
-      config.ts                        YouTube, GitHub and e-mail links
+      config.ts                        e-mail and profile links (Instagram, LinkedIn, YouTube, GitHub)
     public/assets/                     illustrations, photos, videos, sounds (see Licence)
 
 - **Page copy**: `src/i18n/it.ts` and `src/i18n/en.ts`, same structure in both. In the texts, `{ hl: '…' }` becomes the pink handwritten highlight and `{ b: '…' }` bold.

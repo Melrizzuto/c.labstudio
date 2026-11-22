@@ -36,7 +36,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           <Chapters t={t} />
         </Room>
       </main>
-      <Footer t={t.footer} views={t.views} locale={locale} />
+      <Footer t={t.footer} views={t.views} social={t.social} locale={locale} />
       {getCases(locale).map((c) => (
         <CaseDialog key={c.key} c={c} closeLabel={t.caseClose} />
       ))}

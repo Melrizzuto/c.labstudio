@@ -98,6 +98,8 @@ export interface Dictionary {
     selectedOther: string;
   };
   footer: { tagline: string; approved: string; copyright: string; legal: string };
+  /** the profile pills in the footer: the visible label and the label read aloud */
+  social: { label: string; links: Record<'instagram' | 'linkedin' | 'youtube' | 'github', { text: string; aria: string }> };
   caseClose: string;
   views: { one: string; many: string };
 }

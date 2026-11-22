@@ -148,6 +148,15 @@ export const en: Dictionary = {
     legal:
       'Studio AI, STAT and Philo are Witailer products, shown with data and names hidden. Spotify Mood is an academy concept, not affiliated with Spotify. All trademarks belong to their owners.',
   },
+  social: {
+    label: "Melania's profiles",
+    links: {
+      instagram: { text: 'Instagram', aria: 'Melania on Instagram' },
+      linkedin: { text: 'LinkedIn', aria: 'Melania on LinkedIn' },
+      youtube: { text: 'YouTube', aria: 'Melania on YouTube' },
+      github: { text: 'GitHub', aria: 'Melania on GitHub' },
+    },
+  },
   caseClose: 'Close',
   views: { one: 'view', many: 'views' },
 };

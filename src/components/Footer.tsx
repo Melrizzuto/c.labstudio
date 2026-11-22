@@ -1,11 +1,22 @@
 import type { Dictionary } from '@/i18n/types';
 import { ViewCounter } from './ViewCounter';
+import { SocialLinks } from './SocialLinks';
 
 /*
  * Footer: the big wordmark with Calì's stamp on it, one readable line about the studio,
- * then a thin bar with the copyright on the left and the visit counter on the right.
+ * then a thin bar: the copyright on the left; on the right Melania's profiles and the visit counter.
  */
-export function Footer({ t, views, locale }: { t: Dictionary['footer']; views: Dictionary['views']; locale: Dictionary['locale'] }) {
+export function Footer({
+  t,
+  views,
+  social,
+  locale,
+}: {
+  t: Dictionary['footer'];
+  views: Dictionary['views'];
+  social: Dictionary['social'];
+  locale: Dictionary['locale'];
+}) {
   return (
     <footer>
       <div className="wrap">
@@ -18,7 +29,10 @@ export function Footer({ t, views, locale }: { t: Dictionary['footer']; views: D
         <p className="foot-line">{t.tagline}</p>
         <div className="foot">
           <span className="meta">{t.copyright}</span>
-          <ViewCounter locale={locale} t={views} />
+          <div className="foot-end">
+            <SocialLinks t={social} />
+            <ViewCounter locale={locale} t={views} />
+          </div>
         </div>
         <p className="legal">{t.legal}</p>
       </div>
