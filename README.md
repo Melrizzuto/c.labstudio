@@ -1,77 +1,93 @@
 # c.lab studio
 
-Il portfolio di Melania Rizzuto, in Next.js. È la stessa pagina del sito statico in `../site/`, rifatta a componenti: stesso aspetto, stessi movimenti, stessi testi.
+The portfolio of Melania Rizzuto, designer and Junior Product Engineer in Milan. One long page: a poster-like hero with felt Mel and Calì the cat, then a hand-drawn room where the camera moves through three illustrations as you scroll, and the case studies opened from the folders on the desk.
 
-- `/` è la versione italiana, `/en/` quella inglese.
-- Next.js (App Router) + React + TypeScript, nessun'altra libreria.
-- Le due pagine sono HTML statico generato in fase di build; l'unica parte che gira sul server è il contatore delle visite (`/api/views/`).
+- `/` is the Italian site, `/en/` the English one.
+- It started as a static HTML page and was ported to Next.js component by component, keeping the same look and behaviour.
 
-## Provarlo sul Mac
+## Stack
 
-Serve Node 22 (con nvm: `export PATH=$HOME/.nvm/versions/node/v22.22.3/bin:$PATH`).
+- Next.js 16 (App Router), React 19, TypeScript. No other runtime dependency: no UI or animation libraries.
+- Both pages are prerendered as static HTML at build time. The only server code is the visit counter (`/api/views/`), backed by Upstash Redis through its REST API.
+- Fonts via `next/font/google`: Outfit, Figtree, Caveat and Space Mono.
+- Plain CSS in `src/app/globals.css`; the wax-crayon / risograph print look comes from SVG filters (`src/components/PrintFilters.tsx`).
 
-    cd ~/Desktop/clab-sito/web
+## Run it locally
+
+Node 22 or newer.
+
     npm install
-    npm run dev
+    npm run dev          # http://localhost:3100 and http://localhost:3100/en/
 
-poi apri http://localhost:3000 (e http://localhost:3000/en/).
+Production build:
 
-Per provare la versione di produzione:
+    npm run build        # type-checks and prerenders both pages
+    npm start            # http://localhost:3100
 
-    npm run build
-    npm start
+The port is fixed at 3100 so it does not clash with other projects on 3000. Without the Upstash variables (see below) the site works normally and the eye in the footer is simply not shown.
 
-Il contatore delle visite in locale funziona solo con le variabili di Upstash (vedi sotto, `vercel env pull`); senza, l'occhio nel footer semplicemente non compare.
+## Deploy (Vercel + Upstash)
 
-## Metterlo online su Vercel
+1. Import the repository on vercel.com (Add New → Project). Vercel detects Next.js; no settings to change.
+2. Visit counter: in the Vercel project open Storage / Marketplace → **Upstash for Redis** → create a free database and connect it to the project. Vercel adds `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (the route also accepts `KV_REST_API_URL` / `KV_REST_API_TOKEN`). Redeploy so the variables take effect.
+3. Optional: set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain`) so the link preview image (`og:image`) uses the final domain; otherwise Vercel's production URL is used.
+4. Custom domain: Settings → Domains.
 
-1. Metti la cartella `web` su GitHub (o lancia `npx vercel` qui dentro).
-2. Su vercel.com → Add New → Project → importa il repository. Vercel riconosce Next.js da solo: nessuna impostazione da cambiare.
-3. Facoltativo: in Settings → Environment Variables aggiungi `NEXT_PUBLIC_SITE_URL` con l'indirizzo definitivo (es. `https://clab.studio`), così l'immagine di anteprima dei link (og:image) punta al dominio giusto. Senza, Vercel usa il suo indirizzo `.vercel.app`.
-4. Il dominio tuo si collega da Settings → Domains.
+For the counter in local development: `npx vercel link` once, then `npx vercel env pull .env.local`. `.env*` files are git-ignored; `.env.example` lists the variable names.
 
-### Il contatore delle visite (l'occhio nel footer)
+How the counter works: `POST /api/views/` adds a visit and returns the total, `GET /api/views/` only reads it. A browser counts at most once a day (a date kept in `localStorage`). If the variables are missing or Upstash does not answer, the route returns `{ "views": null }` and nothing is shown.
 
-Il numero sta in un piccolo database Redis gratuito di Upstash.
-
-1. Nel progetto su Vercel: Storage (o Marketplace) → **Upstash for Redis** → Create, piano Free, e collegalo al progetto. Vercel aggiunge da solo le variabili `UPSTASH_REDIS_REST_URL` e `UPSTASH_REDIS_REST_TOKEN` (vanno bene anche `KV_REST_API_URL` / `KV_REST_API_TOKEN`, se l'integrazione usa quei nomi).
-2. Rifai il deploy (Deployments → Redeploy) perché le variabili entrino in funzione.
-3. Per averlo anche in locale: `npx vercel link` una volta, poi `npx vercel env pull .env.local`, poi `npm run dev`.
-
-Come conta: `POST /api/views/` aggiunge una visita e restituisce il totale, `GET /api/views/` lo legge e basta. Ogni browser conta al massimo una volta al giorno (una data salvata nel browser). Se le variabili mancano o Upstash non risponde, la risposta è `{ "views": null }` e l'occhio non compare. Il codice è in `src/app/api/views/route.ts` e `src/components/ViewCounter.tsx`.
-
-## Dove stanno le cose
+## Where things live
 
     src/
       app/
-        api/views/route.ts             il contatore delle visite (Upstash Redis)
-        (it)/layout.tsx, page.tsx      la pagina italiana, <html lang="it">
-        (en)/layout.tsx, en/page.tsx   la pagina inglese, <html lang="en">
-        globals.css                    tutti gli stili (gli stessi del sito statico)
-        fonts.ts                       Outfit, Figtree, Caveat via next/font
+        (it)/layout.tsx, page.tsx      Italian page, <html lang="it">
+        (en)/layout.tsx, en/page.tsx   English page, <html lang="en">
+        api/views/route.ts             visit counter (Upstash Redis REST)
+        globals.css                    all the styles
+        fonts.ts                       next/font faces, exposed as CSS variables
       i18n/
-        it.ts, en.ts                   tutti i testi della pagina, uno per lingua
-        types.ts                       la forma dei testi (TypeScript avvisa se manca qualcosa)
+        it.ts, en.ts                   every word of the page, one file per language
+        types.ts                       the shape of the copy (TypeScript flags anything missing)
       content/
-        cases/<progetto>.ts            un file per caso studio, italiano e inglese uno accanto all'altro
-        cases/index.ts                 l'elenco e l'ordine dei casi studio
-        room.ts                        dove stanno le cartelle sulla scrivania
-      components/                      Header, Hero, Tape, room/ (stanza e capitoli), cases/ (i casi studio), Footer
-      lib/                             giorno e notte (theme.ts), apertura dei casi (cases.ts), meta tag
-      config.ts                        link YouTube, GitHub, e-mail
-    public/assets/                     immagini, video e scene, identici al sito statico
+        cases/<case>.ts                one module per case study, Italian and English side by side
+        cases/types.ts                 the blocks a case study is made of
+        cases/index.ts                 the list and order of the case studies
+        room.ts                        where things sit on the illustrations (desk folders, Timor calendar)
+      components/
+        Header, Hero, MelFigure, Tape, Footer, ViewCounter, PrintFilters
+        room/                          Room (scroll camera), RoomStage (scenes, pins), Chapters, TimorDate
+        cases/                         CaseDialog and CaseBlocks
+      lib/
+        theme.ts                       day / night
+        cases.ts                       opening the case dialogs
+        sounds.ts                      Calì's meow, trill and purr
+        metadata.ts                    title, description, Open Graph, favicon
+      config.ts                        YouTube, GitHub and e-mail links
+    public/assets/                     illustrations, photos, videos, sounds (see Licence)
 
-- **Testi della pagina:** `src/i18n/it.ts` e `src/i18n/en.ts`. Stessa struttura nelle due lingue: se ne cambi uno, cambia anche l'altro.
-- **Testi dei casi studio:** `src/content/cases/<progetto>.ts`. Ogni caso è una lista di blocchi (`facts`, `steps`, `figure`, `pair`, `decisions`, `numbers`, `quote`, `tools`…), descritti in `src/content/cases/types.ts`.
-- **Parole evidenziate a mano:** nei testi, `{ hl: '...' }` diventa la scritta rosa in corsivo, `{ b: '...' }` il grassetto.
-- **Link del canale YouTube, GitHub, e-mail:** `src/config.ts`.
-- **Le scene della stanza:** `public/assets/scenes/day.jpg`, `desk.jpg`, `night.jpg`. La camera che si muove dentro le scene è in `src/components/room/Room.tsx` (`CAM`, `EXIT`, `ENTRY`).
-- **Il calendario Timor:** nelle scene le palette sono bianche; la data di oggi (fuso orario e lingua di chi guarda) è scritta sopra da `src/components/room/TimorDate.tsx`. Posizione, grandezza e inclinazione di ogni riga sono in `TIMOR` dentro `src/content/room.ts`; le parole lunghe (MERCOLEDÌ, SEPTEMBER) si stringono da sole per stare nella palette.
+- **Page copy**: `src/i18n/it.ts` and `src/i18n/en.ts`, same structure in both. In the texts, `{ hl: '…' }` becomes the pink handwritten highlight and `{ b: '…' }` bold.
+- **Case studies**: `src/content/cases/<case>.ts`. Each one is a list of blocks (`demo`, `facts`, `figure`, `pair`, `steps`, `decisions`, `numbers`, `quote`, `tools`, `highlight`, `badge`), described in `src/content/cases/types.ts` and rendered by `src/components/cases/CaseBlocks.tsx`.
+- **The room camera**: `src/components/room/Room.tsx` (`CAM`, `EXIT`, `ENTRY`, `fitCam`, `progress`).
+- **The Timor calendar**: the flaps are blank in the pictures; `TimorDate.tsx` writes today's date on them in the visitor's timezone and language. Position, size and slant per line are in `TIMOR` in `src/content/room.ts`; long words shrink to fit their flap.
+- **The print look**: the scene pictures are already crayon-processed (no filters on them). The decorative graphics use `filter:url(#riso)` and friends, listed at the end of `globals.css` under "print treatment". Reading text, felt Mel and Calì, photos and videos are never filtered.
+- **Calì's voice**: sounds play only on a tap or click, never on load. The word in her speech bubble picks the sound (`room.miao` and `room.miaoAsleep` in the dictionaries).
 
-## Aggiungere un progetto
+## Add a project
 
-1. Crea `src/content/cases/<nome>.ts` copiando uno esistente (per esempio `stat.ts`): `it` e `en`, con titolo, carta dei tarocchi, frase per la lista (`blurb`), etichetta per la cartella sulla scrivania (`hitLabel`) e i blocchi.
-2. Aggiungi la chiave in `CaseKey` (`src/content/cases/types.ts`) e il progetto in `src/content/cases/index.ts` con il suo motivo (`swatch`). Se il motivo è nuovo, aggiungi la classe `.sw-<motivo>` in `globals.css`.
-3. In `src/content/room.ts` mettilo in `PROJECT_GROUPS` (Witailer o accademia) e, se ha una cartella disegnata sulla scrivania, in `DESK_FOLDERS` con l'area cliccabile e il punto dell'adesivo (in % della scena).
-4. Immagini in `public/assets/cases/<nome>/`, video in `public/assets/videos/`.
-5. `npm run build` controlla che non manchi niente.
+1. Copy an existing module, e.g. `src/content/cases/stat.ts`, to `src/content/cases/<name>.ts` and fill in `it` and `en`: folder label, tarot name, title, `hitLabel` (the clickable folder on the desk), `blurb` (the line in the project list), owner, tagline, blocks and the buttons at the bottom.
+2. Add the key to `CaseKey` in `src/content/cases/types.ts` and the project to `src/content/cases/index.ts` with its swatch. A new swatch needs a `.sw-<swatch>` class in `globals.css`.
+3. In `src/content/room.ts` add it to `PROJECT_GROUPS` (Witailer or academy) and, if it has a folder drawn on the desk, to `DESK_FOLDERS` with its hit area and sticker point (% of the picture).
+4. Images go in `public/assets/cases/<name>/`, the demo video in `public/assets/videos/`.
+5. `npm run build` checks that nothing is missing.
+
+## Credits
+
+- Design, illustration direction, felt characters, copy and case studies: Melania Rizzuto.
+- Sounds, all CC0 from Freesound: "Cat meow" by philsapphire (https://freesound.org/s/256452/), "Cat trill 1" by MBPL (https://freesound.org/s/668822/), "Cat Purr / gato ronroneando" by yetcop (https://freesound.org/s/252645/).
+- Fonts (SIL Open Font License): Outfit, Figtree, Caveat, Space Mono, served through Google Fonts at build time.
+
+## Licence
+
+- **Code**: MIT, see [`LICENSE`](LICENSE).
+- **Everything else is all rights reserved**: the files under `public/assets/` (illustrations, felt Mel and Calì, photos, videos, case-study images) and the site copy and case-study texts in `src/i18n/` and `src/content/` are © 2026 Melania Rizzuto and are not covered by the MIT licence. Case-study images of Witailer products are shown with permission and are not reusable. The third-party sounds keep their CC0 status. Details in [`public/assets/LICENSE.md`](public/assets/LICENSE.md).
