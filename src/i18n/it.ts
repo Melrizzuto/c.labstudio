@@ -140,6 +140,7 @@ export const it: Dictionary = {
     copied: 'Indirizzo copiato',
     selectedMac: 'Selezionato: premi ⌘C',
     selectedOther: 'Selezionato: premi Ctrl+C',
+    book: 'Prenota 30 minuti',
   },
   footer: {
     tagline: "Progettazione e sviluppo con l'AI, e l'accento calabrese.",

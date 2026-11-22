@@ -96,6 +96,8 @@ export interface Dictionary {
     copied: string;
     selectedMac: string;
     selectedOther: string;
+    /** the link to book a call on Calendly */
+    book: string;
   };
   footer: { tagline: string; approved: string; copyright: string; legal: string };
   /** the profile pills in the footer: the visible label and the label read aloud */
