@@ -122,7 +122,7 @@ export const en: Dictionary = {
     title: 'On TV, my weekend',
     paragraphs: [
       [
-        { b: 'Rifatto.' },
+        { b: 'Rifatto' },
         ' is my YouTube series: I take a famous product and redesign it in one evening, together with Claude. Only rule: you have to get the improvement in five seconds.',
       ],
       "First episode: TikTok's AI assistant, which answered with a 162-word wall of text. After, you get the gist at a glance.",

@@ -62,7 +62,8 @@ const ENTRY: Record<string, View> = {
 /*
  * Phones (< 820 px): the picture is much wider than the screen, so every chapter shows its scene first,
  * full screen, and the card comes up after it (see the mobile CSS). Some views pan sideways while you scroll
- * through the scene: `pan` is the start and end x (% of the picture).
+ * through the scene: `pan` is the start and end x (% of the picture). In those views a sideways swipe moves
+ * the picture too, so you can look around without scrolling the page.
  */
 const MOBILE = 820;
 const MOBILE_CAM: Record<string, Cam & { pan?: [number, number] }> = {
@@ -196,14 +197,30 @@ export function Room({
       const range = cardTop[i] - innerHeight * 0.95;
       return range > 1 ? clamp01(-rects[i].top / range) : 0;
     }
+    /* phones: how far each panning view has been swiped sideways, in % of the picture, on top of the scroll pan */
+    const swiped: number[] = chapters.map(() => 0);
+    /* the pan's x from the scroll alone */
+    function panBase(i: number) {
+      const m = MOBILE_CAM[chapters[i].dataset.cam!];
+      return m.pan ? lerp(m.pan[0], m.pan[1], smooth(panOf(i))) : m.x;
+    }
+    /* scroll pan + swipe, kept inside the picture (anchor at mid-screen on phones) */
+    function panX(i: number) {
+      const m = MOBILE_CAM[chapters[i].dataset.cam!];
+      const edge = ((0.5 * vw) / (fw * m.z)) * 100;
+      return Math.min(100 - edge, Math.max(edge, panBase(i) + swiped[i]));
+    }
+    /* screens taller than the picture (tablets, narrow windows) already see it enlarged to cover their height:
+       ease the zooms there, or a cushion ends up filling the screen. Wide screens are untouched (fw ≈ vw) */
+    const tame = (z: number) => (innerWidth < MOBILE ? z : Math.max(1, z / Math.sqrt(Math.max(1, fw / vw))));
     function fitCam(i: number): Cam {
       const ch = chapters[i];
       const cam = CAM[ch.dataset.cam!];
       if (innerWidth < MOBILE) {
         const m = MOBILE_CAM[ch.dataset.cam!];
-        return m.pan ? { ...m, x: lerp(m.pan[0], m.pan[1], smooth(panOf(i))) } : m;
+        return m.pan ? { ...m, x: panX(i) } : m;
       }
-      if (!cam.fit) return cam;
+      if (!cam.fit) return { ...cam, z: tame(cam.z) };
       const f = cam.fit;
       if (innerWidth < 1380) {
         const z = Math.max(1, Math.min(1.8, (vw * 0.92) / (((f[1] - f[0]) / 100) * fw)));
@@ -228,8 +245,8 @@ export function Room({
         out[a.s] = { c: mix(a, b, f), o: 1 };
       } else {
         const k = a.s + '>' + b.s,
-          ex = EXIT[k] || a,
-          en = ENTRY[k] || b;
+          ex = EXIT[k] ? { ...EXIT[k], z: tame(EXIT[k].z) } : a,
+          en = ENTRY[k] ? { ...ENTRY[k], z: tame(ENTRY[k].z) } : b;
         out[a.s] = { c: mix(a, ex, smooth(Math.min(1, f * 1.6))), o: 1 - smooth(Math.min(1, Math.max(0, (f - 0.35) / 0.4))) };
         out[b.s] = { c: mix(en, b, smooth(Math.max(0, (f - 0.35) / 0.65))), o: smooth(Math.min(1, Math.max(0, (f - 0.35) / 0.4))) };
       }
@@ -297,7 +314,12 @@ export function Room({
       rects = chapters.map((c) => c.getBoundingClientRect());
       const idx = storyIndex(),
         w = views(idx),
-        k = reduce || first ? 1 : 0.12;
+        k = reduce || first ? 1 : swipe.moving ? 0.3 : 0.12;
+      storyAt = idx;
+      /* a swiped view goes back to its scroll pan once you are well away from it */
+      swiped.forEach((v, i) => {
+        if (v && Math.abs(idx - i) > 1.2) swiped[i] = 0;
+      });
       first = false;
       markDock(chapters[Math.round(idx)]?.dataset.cam);
       if (idx > 0.5) load('desk');
@@ -326,8 +348,10 @@ export function Room({
           on = !!g && g.o > 0.6 && pinFor(p, idx);
         p.classList.toggle('off', !on);
         if (!on || !g) return;
-        p.style.left = g.left + (g.fw * Number(p.dataset.x)) / 100 + 'px';
-        p.style.top = g.top + (g.fh * Number(p.dataset.y)) / 100 + 'px';
+        /* moved with a transform, not left/top: no layout on every frame, no layout shift */
+        const px = g.left + (g.fw * Number(p.dataset.x)) / 100,
+          py = g.top + (g.fh * Number(p.dataset.y)) / 100;
+        p.style.transform = `translate3d(${px.toFixed(1)}px,${py.toFixed(1)}px,0) translate(-50%,-50%)`;
       });
       /* the TV plays the weekend clip when we get close */
       const near = Math.abs(idx - 4) < 0.6;
@@ -349,7 +373,50 @@ export function Room({
       if (root.dataset.time !== t) root.dataset.time = t;
     }
 
+    /* phones: a sideways swipe on a panning view moves the picture; vertical swipes stay the page's scroll
+       (touch-action: pan-y in the CSS). Not on the cards, and a swipe never counts as a tap on what it started on */
+    let storyAt = 0;
+    const swipe = { id: -1, i: -1, x0: 0, last: 0, moving: false };
+    const onSwipeStart = (e: PointerEvent) => {
+      if (innerWidth >= MOBILE || e.pointerType === 'mouse' || swipe.id !== -1) return;
+      if ((e.target as Element).closest('.card, .room-dock')) return;
+      const i = Math.round(storyAt);
+      if (!chapters[i] || !MOBILE_CAM[chapters[i].dataset.cam!]?.pan || Math.abs(storyAt - i) > 0.2) return;
+      Object.assign(swipe, { id: e.pointerId, i, x0: e.clientX, last: e.clientX, moving: false });
+    };
+    const onSwipeMove = (e: PointerEvent) => {
+      if (e.pointerId !== swipe.id) return;
+      if (!swipe.moving && Math.abs(e.clientX - swipe.x0) > 8) swipe.moving = true;
+      if (swipe.moving) {
+        const i = swipe.i,
+          z = MOBILE_CAM[chapters[i].dataset.cam!].z;
+        swiped[i] -= ((e.clientX - swipe.last) / (fw * z)) * 100;
+        /* no dead zone past the edges: keep the offset where the picture actually stops */
+        swiped[i] = panX(i) - panBase(i);
+      }
+      swipe.last = e.clientX;
+    };
+    const onSwipeEnd = (e: PointerEvent) => {
+      if (e.pointerId !== swipe.id) return;
+      if (swipe.moving) {
+        /* swallow the click that follows the swipe */
+        const stop = (ev: Event) => {
+          ev.stopPropagation();
+          ev.preventDefault();
+        };
+        addEventListener('click', stop, { capture: true, once: true });
+        setTimeout(() => removeEventListener('click', stop, { capture: true }), 400);
+      }
+      swipe.id = -1;
+      swipe.moving = false;
+    };
+    roomSec.addEventListener('pointerdown', onSwipeStart, { passive: true });
+    addEventListener('pointermove', onSwipeMove, { passive: true });
+    addEventListener('pointerup', onSwipeEnd);
+    addEventListener('pointercancel', onSwipeEnd);
+
     const onPointer = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return;
       mouse.x = (e.clientX / innerWidth) * 2 - 1;
       mouse.y = (e.clientY / innerHeight) * 2 - 1;
     };
@@ -437,6 +504,10 @@ export function Room({
       ro.disconnect();
       removeEventListener('load', onPageLoad);
       removeEventListener('pointermove', onPointer);
+      roomSec.removeEventListener('pointerdown', onSwipeStart);
+      removeEventListener('pointermove', onSwipeMove);
+      removeEventListener('pointerup', onSwipeEnd);
+      removeEventListener('pointercancel', onSwipeEnd);
       removeEventListener('scroll', onScroll);
       stage.removeEventListener('click', onStageClick);
       document.removeEventListener('click', onPawGreet);

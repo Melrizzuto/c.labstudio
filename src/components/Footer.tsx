@@ -24,7 +24,10 @@ export function Footer({
           <p className="bigmark" aria-hidden="true">
             c.lab <span>studio</span>
           </p>
-          <span className="approved stamp">{t.approved}</span>
+          {/* stuck on the b of the wordmark: positioned in em of the wordmark, so it follows it at every width */}
+          <span className="stamp-at">
+            <span className="approved stamp">{t.approved}</span>
+          </span>
         </div>
         <p className="foot-line">{t.tagline}</p>
         <div className="foot">

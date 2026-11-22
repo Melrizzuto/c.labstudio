@@ -160,6 +160,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .pin.case::before{background:var(--pink)}
 .pin:hover,.pin.hot{scale:1.08}
 .pin.off{opacity:0;pointer-events:none}
+.pin{will-change:transform}
 .miao{position:absolute;z-index:4;margin:0;transform:translate(-50%,-120%) rotate(-3deg);background:var(--paper);color:var(--ink);font:700 28px/1 var(--hand);padding:8px 16px 10px;border:3px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s}
 .miao.side{transform:translate(0,-50%) rotate(-3deg)}.miao.side.left{transform:translate(-100%,-50%) rotate(3deg)}
 .miao.on{opacity:1}
@@ -170,6 +171,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .chapter .wrap{width:100%}
 .card{width:min(520px,100%);background:var(--ground);color:var(--text);border-radius:22px;padding:30px 30px 32px;transition:background-color .8s var(--ease),color .8s var(--ease)}
 .chapter.right .card{margin-left:auto}
+/* tablets and narrow windows: a slimmer card, so it never covers Mel in the scene beside it */
+@media (min-width:820px) and (max-width:1100px){.chapter .card{width:min(420px,46vw)}}
 .card h2{margin:0;font:800 clamp(34px,3.6vw,52px)/1 var(--display);letter-spacing:-.04em;text-wrap:balance}
 .card p{margin:16px 0 0}
 .card .hand{font:700 26px/1.1 var(--hand);color:var(--note);margin-top:14px}
@@ -212,8 +215,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 footer{position:relative;z-index:2;background:var(--ground);padding-block:120px 32px;transition:background-color .8s}
 .bigmark{margin:0;font:900 clamp(72px,21vw,320px)/.8 var(--display);letter-spacing:-.06em;white-space:nowrap}
 .bigmark span{font-weight:500;font-size:.28em;letter-spacing:0}
-.bigwrap{position:relative;display:inline-block;max-width:100%}
-.bigwrap .stamp{position:absolute;right:-3%;top:34%;rotate:9deg;font-size:clamp(11px,1.1vw,15px);padding:9px 16px}
+.bigwrap{position:relative;display:inline-block;max-width:100%;font-size:clamp(72px,21vw,320px)}
+.bigwrap .stamp-at{position:absolute;left:1.66em;top:.12em;display:flex} /* flex: no 300px-tall line box around the sticker */
+.bigwrap .stamp{display:inline-flex;rotate:9deg;font-size:clamp(10px,1.1vw,15px);padding:9px 16px;white-space:nowrap}
 .foot-line{margin:30px 0 0;font:500 clamp(18px,1.6vw,22px)/1.45 var(--body);color:var(--text);max-width:36em}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 24px;margin-top:40px;padding-top:18px;border-top:1.5px solid color-mix(in srgb,currentColor 22%,transparent);color:var(--text-2)}
 .foot .meta{font:400 13px/1.4 var(--mono);letter-spacing:.04em}
@@ -373,7 +377,7 @@ footer{background-color:transparent} /* same colour as the page, so the paper sh
 .project .tarot,.pin.case b,.case-top .tag small{font-family:var(--mono);font-weight:700;letter-spacing:.04em}
 
 
-@media (max-width:600px){.bigwrap .stamp{right:0;top:-18px;rotate:6deg}.foot-line{margin-top:22px}.foot{margin-top:28px}}
+@media (max-width:600px){.bigwrap .stamp-at{left:1.5em;top:-.2em}.bigwrap .stamp{padding:6px 10px;rotate:8deg}.foot-line{margin-top:22px}.foot{margin-top:28px}}
 
 /* ===== phones (< 820 px): the room scene first, then the card; a dock to walk around; a section menu =====
    The camera side of this is in Room.tsx (MOBILE_CAM, progress, panOf). Desktop and tablet are untouched. */
@@ -403,6 +407,8 @@ footer{background-color:transparent} /* same colour as the page, so the paper sh
   .room-dock button[aria-current="true"]{background:var(--sun);rotate:-3deg}
   .room-dock button:active{transform:translateY(1px)}
   .scene .hit{min-width:40px;min-height:40px}
+  /* vertical swipes scroll the page; sideways swipes move the picture in the panning views (Room.tsx) */
+  .room{touch-action:pan-y pinch-zoom}
 }
 @media (max-width:819.98px) and (prefers-reduced-motion:reduce){.room-dock{transition:none}}
 

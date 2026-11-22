@@ -1,7 +1,7 @@
 import type { Dictionary } from '@/i18n/types';
 import { getCase, caseDialogId, type CaseKey } from '@/content/cases';
 import { PROJECT_GROUPS } from '@/content/room';
-import { EMAIL, GITHUB_URL, YOUTUBE_URL } from '@/config';
+import { EMAIL, GITHUB_URL, SOCIALS, YOUTUBE_URL } from '@/config';
 import { RichText } from '../RichText';
 import { MailCopy } from '../MailCopy';
 
@@ -130,6 +130,9 @@ export function Chapters({ t }: { t: Dictionary }) {
             <p>{t.contact.text}</p>
             <MailCopy email={EMAIL} t={t.contact} />
             <div className="chips">
+              <a className="chip" href={SOCIALS.linkedin} target="_blank" rel="noopener">
+                LinkedIn
+              </a>
               <a className="chip" href={GITHUB_URL} target="_blank" rel="noopener">
                 GitHub
               </a>

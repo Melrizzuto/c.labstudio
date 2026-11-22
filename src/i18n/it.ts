@@ -122,7 +122,7 @@ export const it: Dictionary = {
     title: 'In TV, il mio weekend',
     paragraphs: [
       [
-        { b: 'Rifatto.' },
+        { b: 'Rifatto' },
         ' è la mia serie su YouTube: prendo un prodotto famoso e lo riprogetto in una sera, insieme a Claude. Unica regola: il miglioramento si deve capire in cinque secondi.',
       ],
       "Primo episodio: l'assistente AI di TikTok, che rispondeva con un muro di 162 parole. Dopo, il succo si capisce al volo.",
