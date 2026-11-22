@@ -16,7 +16,11 @@ export function buildMetadata(locale: Locale): Metadata {
     description: meta.description,
     /* the c. of the wordmark in cream over its pink offset, on ink (public/favicon.ico, icon.png, apple-touch-icon.png) */
     icons: { icon: [{ url: '/favicon.ico', sizes: 'any' }, { url: '/icon.png', type: 'image/png', sizes: '512x512' }], apple: '/apple-touch-icon.png' },
-    openGraph: { title: meta.title, description: meta.ogDescription, images: ['/assets/og.jpg'] },
+    openGraph: {
+      title: meta.title,
+      description: meta.ogDescription,
+      images: [{ url: locale === 'en' ? '/assets/og-en.jpg' : '/assets/og.jpg', width: 1200, height: 630 }],
+    },
     twitter: { card: 'summary_large_image' },
     other: { 'claude:viewport-fit-sides': 'cover' },
   };
