@@ -2,9 +2,9 @@
 export const YOUTUBE_URL = 'https://www.youtube.com/@Melerre';
 export const GITHUB_URL = 'https://github.com/Melrizzuto';
 export const EMAIL = 'melrizzuto4@gmail.com';
-/** Melania's profiles, in the order of the footer pills (Instagram handle: @clabstudi0, the last character is a zero) */
+/** Melania's profiles, in the order of the footer pills (Instagram handle: @c.labstudi0, with a dot, the last character is a zero) */
 export const SOCIALS = {
-  instagram: 'https://www.instagram.com/clabstudi0/',
+  instagram: 'https://www.instagram.com/c.labstudi0/',
   linkedin: 'https://www.linkedin.com/in/melania-rizzuto-57a42790/',
   youtube: YOUTUBE_URL,
   github: GITHUB_URL,
