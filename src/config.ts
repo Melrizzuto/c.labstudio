@@ -1,5 +1,5 @@
 /** Links and addresses that are the same in every language. */
-export const YOUTUBE_URL = 'https://www.youtube.com/@Melerre';
+export const YOUTUBE_URL = 'https://www.youtube.com/@c.labstudio.milano';
 export const GITHUB_URL = 'https://github.com/Melrizzuto';
 export const EMAIL = 'melrizzuto4@gmail.com';
 /** Melania's profiles, in the order of the footer pills (Instagram handle: @c.labstudi0, with a dot, the last character is a zero) */
