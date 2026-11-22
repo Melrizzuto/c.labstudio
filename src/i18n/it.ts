@@ -94,7 +94,7 @@ export const it: Dictionary = {
       { when: '2025 – oggi', title: 'Witailer, gruppo Alkemy', text: "Progetto e sviluppo prodotti digitali per l'e-commerce di Amazon." },
       { when: '2024 – 2025', title: 'Talent Garden e Boolean', text: 'Master in UX/UI Design e master in Full Stack Web Development.' },
       { when: '2023 – 2024', title: 'IED Milano', text: 'Design software: rendering, 2D e modellazione 3D. Più corsi di fumetto e fotografia.' },
-      { when: '2022 – 2025', title: 'Product Design', text: 'Laurea triennale, Università Mercatorum.' },
+      { when: '2022 – 2026', title: 'Product Design', text: 'Laurea triennale, Università Mercatorum.' },
       {
         when: '2016 – 2023',
         title: 'H&M e Primark',

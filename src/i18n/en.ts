@@ -94,7 +94,7 @@ export const en: Dictionary = {
       { when: '2025 – now', title: 'Witailer, Alkemy group', text: 'I design and build digital products for Amazon e-commerce.' },
       { when: '2024 – 2025', title: 'Talent Garden and Boolean', text: "Master's in UX/UI Design and master's in Full Stack Web Development." },
       { when: '2023 – 2024', title: 'IED Milano', text: 'Design software: rendering, 2D and 3D modeling. Plus comics and photography courses.' },
-      { when: '2022 – 2025', title: 'Product Design', text: "Bachelor's degree, Università Mercatorum." },
+      { when: '2022 – 2026', title: 'Product Design', text: "Bachelor's degree, Università Mercatorum." },
       {
         when: '2016 – 2023',
         title: 'H&M and Primark',
