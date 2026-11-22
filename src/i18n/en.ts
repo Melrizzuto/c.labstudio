@@ -1,0 +1,142 @@
+import type { Dictionary } from './types';
+
+/* Every word of the English page (/en/). The case studies live in src/content/cases/. */
+export const en: Dictionary = {
+  locale: 'en',
+  meta: {
+    title: 'c.lab studio',
+    description: "c.lab studio is Melania Rizzuto's studio: UX/UI design and frontend in Milan. Step into her room.",
+    ogDescription: 'Melania Rizzuto: design and frontend in Milan. Step into her hand-drawn room and open the project folders.',
+  },
+  header: {
+    logoLabel: 'c.lab studio, back to top',
+    navLabel: 'Sections',
+    journey: 'Journey',
+    projects: 'Projects',
+    weekend: 'Weekend',
+    lang: { href: '/', hreflang: 'it', label: 'Leggi il sito in italiano', text: 'IT' },
+    theme: { night: 'Night', day: 'Day', toNight: 'Switch the room to night', toDay: 'Switch the room to day' },
+    cta: 'Say hi',
+  },
+  hero: {
+    sticker: 'Available for new projects',
+    lead: [
+      'For years I studied ',
+      { hl: 'what makes people stop' },
+      ' in front of a shop window: how to set up a store and guide their eye. Today I use that eye to design AI-powered digital tools, and then ',
+      { hl: 'I engineer them' },
+      '.',
+    ],
+    sub: [
+      "I'm Melania, I'm from Calabria and I've lived in Milan for a few years now. After visual merchandising I studied product design, 3D, UX/UI and full-stack development. At Witailer I'm a ",
+      { hl: 'Junior Product Engineer' },
+      ': I design and build digital products for e-commerce with a really fun team. When I work from home, my coworker is Calì.',
+    ],
+    enter: 'Step into my room',
+    toProjects: 'See the projects',
+    stageLabel: 'Mel and Calì',
+    melLabel: 'Make Calì yawn',
+    melAlt: 'Mel, my character: blonde bob, dark glasses, striped sweater and a red book, with Calì the cat on her head',
+    noteCat: 'Calì, the real boss',
+    caliSay: 'miaaauuuh…',
+    noteTap: 'tap me',
+  },
+  tape: [
+    'From mannequins to components',
+    'If a button needs explaining, blame the button',
+    'Prototype before the meeting',
+    'Claude Code and Blender, side by side',
+    'Small commits, big ideas',
+    'Calì approved',
+  ],
+  room: {
+    label: 'My room',
+    dayAlt:
+      'My room by day, hand-drawn: me on the bench under the window with Calì on my head and a red book, the desk on the left, the green sofa, the TV and the monstera',
+    deskAlt:
+      "My desk from above, hand-drawn: monitor, keyboard, laptop with stickers, the duck, the calendar, a cup of coffee, Calì's paw and the patterned folders",
+    nightAlt:
+      'My room in the evening, hand-drawn: me on the green sofa under a blanket, the TV on, Calì asleep on the armrest, the moon in the window',
+    places: { book: 'The book', desk: 'The desk', sofa: 'The sofa', tv: 'The TV' },
+    hits: {
+      dayDesk: 'The desk: my projects',
+      dayBook: 'The book: my story',
+      daySofa: 'The sofa: when I close the laptop',
+      dayTv: 'The TV: my weekend',
+      deskCat: "Say hi to Calì, who's reaching out a paw",
+      nightTv: 'The TV: my weekend',
+      nightSofa: 'The sofa',
+      nightCat: "Say hi to Calì, who's asleep",
+    },
+    pinCatAsleep: "Calì's asleep",
+    miao: ['miao', 'mrrr', 'prrr…', 'busy working'],
+  },
+  intro: {
+    title: 'Welcome to my room',
+    text: "That's me on the bench with the cat on my head (yes, Calì is always up there). Scroll and I'll show you around: every corner is a piece of me.",
+    hand: 'or tap whatever catches your eye',
+  },
+  journey: {
+    title: "The book I'm reading is my life",
+    text: "Shop windows, product design, 3D, then code. It wasn't a straight road, but from every stop I took something I still use.",
+    timeline: [
+      { when: '2025 – now', title: 'Witailer, Alkemy group', text: 'I design and build digital products for Amazon e-commerce.' },
+      { when: '2024 – 2025', title: 'Talent Garden and Boolean', text: "Master's in UX/UI Design and master's in Full Stack Web Development." },
+      { when: '2023 – 2024', title: 'IED Milano', text: 'Design software: rendering, 2D and 3D modeling. Plus comics and photography courses.' },
+      { when: '2022 – 2025', title: 'Product Design', text: "Bachelor's degree, Università Mercatorum." },
+      {
+        when: '2016 – 2023',
+        title: 'H&M and Primark',
+        text: 'From shop windows in Bari to those in Calabria, where in 2022 I was named employee of the year. Then visual merchandiser manager in Milan.',
+      },
+    ],
+  },
+  desk: {
+    title: 'On the desk, five folders',
+    text: 'Three projects born at Witailer and two from the academy. Draw one like a tarot card: inside is how it really went, wobbly bits included.',
+    read: 'Read',
+    academy: 'From the academy',
+  },
+  sofa: {
+    title: 'When I close the laptop',
+    text: 'Evening comes, Calì crashes on the armrest and I finally switch off. More or less.',
+    hobbies: [
+      { title: 'I draw', text: 'I went to the Scuola Internazionale di Comics and I draw whenever I can. Favorite cartoonist: Zerocalcare.' },
+      { title: 'I read', text: "My favourite is Don Norman's The Design of Everyday Things: it's where my thesis started." },
+      { title: 'I move', text: 'Surfskate, wakeboard, snowboard and boxing. And an Interrail trip across 2016 and 2017 that I still carry with me.' },
+      { title: 'I play', text: 'Classical guitar, strictly alone and with the door closed.' },
+    ],
+  },
+  weekend: {
+    title: 'On TV, my weekend',
+    paragraphs: [
+      [
+        { b: 'Rifatto.' },
+        ' is my YouTube series: I take a famous product and redesign it in one evening, together with Claude. Only rule: you have to get the improvement in five seconds.',
+      ],
+      "First episode: TikTok's AI assistant, which answered with a 162-word wall of text. After, you get the gist at a glance.",
+    ],
+    covers: [
+      { src: '/assets/tv/rifatto-cover-a.jpg', alt: "Cover: I redid TikTok's AI" },
+      { src: '/assets/tv/rifatto-cover-b.jpg', alt: 'Before, 162 words; after, 5 seconds to get the gist' },
+    ],
+    channel: 'Watch the channel on YouTube',
+  },
+  contact: {
+    title: 'Fancy a chat?',
+    text: "Whether it's a whole project or a small piece to design or build, write to me. I reply in English or Italian, usually within a day (Calì permitting).",
+    copy: 'Copy address',
+    copied: 'Address copied',
+    selectedMac: 'Selected: press ⌘C',
+    selectedOther: 'Selected: press Ctrl+C',
+  },
+  footer: {
+    tagline: 'Design and development with AI, and a Calabrian accent.',
+    approved: 'Calì approved ✓',
+    copyright: '© 2026 Melania Rizzuto',
+    legal:
+      'Studio AI, STAT and Philo are Witailer products, shown with data and names hidden. Spotify Mood is an academy concept, not affiliated with Spotify. All trademarks belong to their owners.',
+  },
+  caseClose: 'Close',
+  views: { one: 'view', many: 'views' },
+};

@@ -1,0 +1,142 @@
+import type { Dictionary } from './types';
+
+/* Every word of the Italian page (/). The case studies live in src/content/cases/. */
+export const it: Dictionary = {
+  locale: 'it',
+  meta: {
+    title: 'c.lab studio',
+    description: 'c.lab studio è lo studio di Melania Rizzuto: UX/UI design e frontend a Milano. Entra nella sua stanza.',
+    ogDescription: 'Melania Rizzuto: design e frontend a Milano. Entra nella sua stanza disegnata e apri le cartelle dei progetti.',
+  },
+  header: {
+    logoLabel: 'c.lab studio, inizio pagina',
+    navLabel: 'Sezioni',
+    journey: 'Percorso',
+    projects: 'Progetti',
+    weekend: 'Weekend',
+    lang: { href: '/en/', hreflang: 'en', label: 'Read this site in English', text: 'EN' },
+    theme: { night: 'Notte', day: 'Giorno', toNight: 'Passa alla stanza di notte', toDay: 'Passa alla stanza di giorno' },
+    cta: 'Scrivimi',
+  },
+  hero: {
+    sticker: 'Disponibile per nuovi progetti',
+    lead: [
+      'Per molti anni ho studiato ',
+      { hl: 'cosa fa fermare le persone' },
+      " davanti a una vetrina: come allestire un negozio e guidare il loro sguardo. Oggi uso quello sguardo per disegnare strumenti digitali potenziati dall'AI, e poi ",
+      { hl: 'li ingegnerizzo' },
+      '.',
+    ],
+    sub: [
+      'Sono Melania, vengo dalla Calabria e vivo a Milano da qualche anno ormai. Dopo il visual merchandising ho studiato product design, 3D, UX/UI e sviluppo full stack. In Witailer sono ',
+      { hl: 'Junior Product Engineer' },
+      ": seguo la progettazione e lo sviluppo dei prodotti digitali per l'e-commerce con un team simpaticissimo. Quando lavoro da casa, la mia collega è Calì.",
+    ],
+    enter: 'Entra nella mia stanza',
+    toProjects: 'Vai ai progetti',
+    stageLabel: 'Mel e Calì',
+    melLabel: 'Fai sbadigliare Calì',
+    melAlt: 'Mel, il mio personaggio: caschetto biondo, occhiali scuri, maglione a righe e un libro rosso, con la gatta Calì sulla testa',
+    noteCat: 'Calì, la vera direttrice',
+    caliSay: 'miaaauuuh…',
+    noteTap: 'toccami',
+  },
+  tape: [
+    'Dal manichino al componente',
+    'Se un bottone va spiegato, è colpa del bottone',
+    'Prototipo prima della riunione',
+    'Claude Code e Blender aperti insieme',
+    'Commit piccoli, idee grandi',
+    'Calì approved',
+  ],
+  room: {
+    label: 'La mia stanza',
+    dayAlt:
+      'La mia stanza di giorno, disegnata: io sulla panca sotto la finestra con Calì sulla testa e un libro rosso, la scrivania a sinistra, il divano verde, la TV e la monstera',
+    deskAlt:
+      "La mia scrivania vista dall'alto, disegnata: monitor, tastiera, portatile con gli adesivi, la papera, il calendario, una tazza di caffè, la zampa di Calì e le cartelle a fantasia",
+    nightAlt:
+      'La mia stanza di sera, disegnata: io sul divano verde con la coperta, la TV accesa, Calì che dorme sul bracciolo, la luna alla finestra',
+    places: { book: 'Il libro', desk: 'La scrivania', sofa: 'Il divano', tv: 'La TV' },
+    hits: {
+      dayDesk: 'La scrivania: i progetti',
+      dayBook: 'Il libro: la mia storia',
+      daySofa: 'Il divano: quando chiudo il portatile',
+      dayTv: 'La TV: il mio weekend',
+      deskCat: 'Saluta Calì, che allunga la zampa',
+      nightTv: 'La TV: il mio weekend',
+      nightSofa: 'Il divano',
+      nightCat: 'Saluta Calì, che dorme',
+    },
+    pinCatAsleep: 'Calì dorme',
+    miao: ['miao', 'mrrr', 'prrr…', 'sto lavorando'],
+  },
+  intro: {
+    title: 'Benvenuti nella mia stanza',
+    text: 'Quella sulla panca con la gatta in testa sono io (sì, Calì sta sempre lì). Scorri e ti faccio fare il giro: ogni angolo è un pezzo di me.',
+    hand: 'o tocca quello che ti incuriosisce',
+  },
+  journey: {
+    title: 'Il libro che sto leggendo è la mia vita',
+    text: 'Vetrine, design di prodotto, 3D e poi codice. Non è stata una strada dritta, ma da ogni tappa mi sono portata via qualcosa che uso ancora.',
+    timeline: [
+      { when: '2025 – oggi', title: 'Witailer, gruppo Alkemy', text: "Progetto e sviluppo prodotti digitali per l'e-commerce di Amazon." },
+      { when: '2024 – 2025', title: 'Talent Garden e Boolean', text: 'Master in UX/UI Design e master in Full Stack Web Development.' },
+      { when: '2023 – 2024', title: 'IED Milano', text: 'Design software: rendering, 2D e modellazione 3D. Più corsi di fumetto e fotografia.' },
+      { when: '2022 – 2025', title: 'Product Design', text: 'Laurea triennale, Università Mercatorum.' },
+      {
+        when: '2016 – 2023',
+        title: 'H&M e Primark',
+        text: "Dalle vetrine di Bari a quelle della Calabria, dove nel 2022 sono stata scelta come dipendente dell'anno. Poi visual merchandiser manager a Milano.",
+      },
+    ],
+  },
+  desk: {
+    title: 'Sulla scrivania, cinque cartelle',
+    text: "Tre progetti nati in Witailer e due dall'accademia. Pescane uno come una carta dei tarocchi: dentro c'è com'è andata davvero, anche le parti storte.",
+    read: 'Leggi',
+    academy: "Dall'accademia",
+  },
+  sofa: {
+    title: 'Quando chiudo il portatile',
+    text: 'Si fa sera, Calì crolla sul bracciolo e io finalmente stacco. Più o meno.',
+    hobbies: [
+      { title: 'Disegno', text: 'Ho fatto la Scuola Internazionale di Comics e disegno appena posso. Fumettista del cuore: Zerocalcare.' },
+      { title: 'Leggo', text: 'Il mio preferito è La caffettiera del masochista di Don Norman: è da lì che è partita la mia tesi.' },
+      { title: 'Mi muovo', text: 'Surfskate, wakeboard, snowboard e boxe. E un Interrail tra il 2016 e il 2017 che mi porto ancora dentro.' },
+      { title: 'Suono', text: 'Chitarra classica, rigorosamente da sola e con la porta chiusa.' },
+    ],
+  },
+  weekend: {
+    title: 'In TV, il mio weekend',
+    paragraphs: [
+      [
+        { b: 'Rifatto.' },
+        ' è la mia serie su YouTube: prendo un prodotto famoso e lo riprogetto in una sera, insieme a Claude. Unica regola: il miglioramento si deve capire in cinque secondi.',
+      ],
+      "Primo episodio: l'assistente AI di TikTok, che rispondeva con un muro di 162 parole. Dopo, il succo si capisce al volo.",
+    ],
+    covers: [
+      { src: '/assets/tv/rifatto-cover-a.jpg', alt: "Copertina: ho rifatto l'AI di TikTok" },
+      { src: '/assets/tv/rifatto-cover-b.jpg', alt: 'Prima 162 parole, dopo 5 secondi per il succo' },
+    ],
+    channel: 'Guarda il canale su YouTube',
+  },
+  contact: {
+    title: 'Ci facciamo una chiacchierata?',
+    text: 'Che sia un progetto intero o un pezzetto da disegnare o sviluppare, scrivimi. Rispondo in italiano o in inglese, di solito entro un giorno (Calì permettendo).',
+    copy: "Copia l'indirizzo",
+    copied: 'Indirizzo copiato',
+    selectedMac: 'Selezionato: premi ⌘C',
+    selectedOther: 'Selezionato: premi Ctrl+C',
+  },
+  footer: {
+    tagline: "Progettazione e sviluppo con l'AI, e l'accento calabrese.",
+    approved: 'Calì approved ✓',
+    copyright: '© 2026 Melania Rizzuto',
+    legal:
+      'Studio AI, STAT e Philo sono prodotti di Witailer, mostrati con dati e nomi coperti. Spotify Mood è un concept accademico non affiliato a Spotify. I marchi appartengono ai rispettivi proprietari.',
+  },
+  caseClose: 'Chiudi',
+  views: { one: 'visita', many: 'visite' },
+};
