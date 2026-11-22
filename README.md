@@ -4,6 +4,7 @@ Il portfolio di Melania Rizzuto, in Next.js. È la stessa pagina del sito static
 
 - `/` è la versione italiana, `/en/` quella inglese.
 - Next.js (App Router) + React + TypeScript, nessun'altra libreria.
+- Le due pagine sono HTML statico generato in fase di build; l'unica parte che gira sul server è il contatore delle visite (`/api/views/`).
 
 ## Provarlo sul Mac
 
@@ -18,7 +19,9 @@ poi apri http://localhost:3000 (e http://localhost:3000/en/).
 Per provare la versione di produzione:
 
     npm run build
-    npx serve out
+    npm start
+
+Il contatore delle visite in locale funziona solo con le variabili di Upstash (vedi sotto, `vercel env pull`); senza, l'occhio nel footer semplicemente non compare.
 
 ## Metterlo online su Vercel
 
@@ -27,10 +30,21 @@ Per provare la versione di produzione:
 3. Facoltativo: in Settings → Environment Variables aggiungi `NEXT_PUBLIC_SITE_URL` con l'indirizzo definitivo (es. `https://clab.studio`), così l'immagine di anteprima dei link (og:image) punta al dominio giusto. Senza, Vercel usa il suo indirizzo `.vercel.app`.
 4. Il dominio tuo si collega da Settings → Domains.
 
+### Il contatore delle visite (l'occhio nel footer)
+
+Il numero sta in un piccolo database Redis gratuito di Upstash.
+
+1. Nel progetto su Vercel: Storage (o Marketplace) → **Upstash for Redis** → Create, piano Free, e collegalo al progetto. Vercel aggiunge da solo le variabili `UPSTASH_REDIS_REST_URL` e `UPSTASH_REDIS_REST_TOKEN` (vanno bene anche `KV_REST_API_URL` / `KV_REST_API_TOKEN`, se l'integrazione usa quei nomi).
+2. Rifai il deploy (Deployments → Redeploy) perché le variabili entrino in funzione.
+3. Per averlo anche in locale: `npx vercel link` una volta, poi `npx vercel env pull .env.local`, poi `npm run dev`.
+
+Come conta: `POST /api/views/` aggiunge una visita e restituisce il totale, `GET /api/views/` lo legge e basta. Ogni browser conta al massimo una volta al giorno (una data salvata nel browser). Se le variabili mancano o Upstash non risponde, la risposta è `{ "views": null }` e l'occhio non compare. Il codice è in `src/app/api/views/route.ts` e `src/components/ViewCounter.tsx`.
+
 ## Dove stanno le cose
 
     src/
       app/
+        api/views/route.ts             il contatore delle visite (Upstash Redis)
         (it)/layout.tsx, page.tsx      la pagina italiana, <html lang="it">
         (en)/layout.tsx, en/page.tsx   la pagina inglese, <html lang="en">
         globals.css                    tutti gli stili (gli stessi del sito statico)
@@ -52,6 +66,7 @@ Per provare la versione di produzione:
 - **Parole evidenziate a mano:** nei testi, `{ hl: '...' }` diventa la scritta rosa in corsivo, `{ b: '...' }` il grassetto.
 - **Link del canale YouTube, GitHub, e-mail:** `src/config.ts`.
 - **Le scene della stanza:** `public/assets/scenes/day.jpg`, `desk.jpg`, `night.jpg`. La camera che si muove dentro le scene è in `src/components/room/Room.tsx` (`CAM`, `EXIT`, `ENTRY`).
+- **Il calendario Timor:** nelle scene le palette sono bianche; la data di oggi (fuso orario e lingua di chi guarda) è scritta sopra da `src/components/room/TimorDate.tsx`. Posizione, grandezza e inclinazione di ogni riga sono in `TIMOR` dentro `src/content/room.ts`; le parole lunghe (MERCOLEDÌ, SEPTEMBER) si stringono da sole per stare nella palette.
 
 ## Aggiungere un progetto
 

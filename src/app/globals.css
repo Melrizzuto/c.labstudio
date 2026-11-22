@@ -313,3 +313,11 @@ html[lang="en"] .sticker{white-space:nowrap} /* the English page keeps its stick
 @keyframes pop{from{transform:translateY(40px) scale(.9);opacity:0}}
 @keyframes popc{from{transform:translateX(-50%) translateY(40px) scale(.9);opacity:0}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}dialog.case[open]{animation:none}*{transition-duration:.01ms!important}.tape div{animation:none}}
+
+/* ===== Timor calendar: today's date on the blank flaps (TimorDate.tsx) ===== */
+.scene .timor{inset:0;container-type:inline-size}
+.timor span{position:absolute;transform:translate(-50%,-50%) rotate(var(--r));font:800 calc(var(--fs) * var(--k,1))/1 var(--display);text-box:trim-both cap alphabetic;color:#16130F;white-space:nowrap;text-transform:uppercase}
+
+/* ===== footer: the visit counter (ViewCounter.tsx) ===== */
+.views{display:inline-flex;align-items:center;gap:6px;margin-left:14px;white-space:nowrap}
+.views svg{width:18px;height:18px;flex:none}

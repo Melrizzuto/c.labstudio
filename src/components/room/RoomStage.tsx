@@ -1,6 +1,7 @@
 import type { Dictionary } from '@/i18n/types';
 import { getCase, caseDialogId, type CaseStudy } from '@/content/cases';
 import { DESK_FOLDERS } from '@/content/room';
+import { TimorDate } from './TimorDate';
 
 /*
  * The pinned stage: the three illustrations (day, desk, night), their clickable spots, the animated bits (.fx),
@@ -14,6 +15,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
       <div className="scene" data-scene="day">
         <img src="/assets/scenes/day.jpg" alt={t.dayAlt} width={2688} height={1520} />
         <img className="nightwin" src="/assets/scenes/day-night.jpg" alt="" aria-hidden="true" width={2688} height={1520} decoding="async" />
+        <TimorDate scene="day" locale={locale} />
         <div className="fx glow" style={{ left: '53%', top: '2%', width: '11%', height: '19%' }}></div>
         <button className="hit" data-go="progetti" aria-label={t.hits.dayDesk} style={{ left: 0, top: '20%', width: '27%', height: '44%' }}></button>
         <button className="hit" data-go="percorso" aria-label={t.hits.dayBook} style={{ left: '40%', top: '14%', width: '16%', height: '56%' }}></button>
@@ -23,6 +25,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
       </div>
       <div className="scene" data-scene="desk">
         <img src="/assets/scenes/desk.jpg" alt={t.deskAlt} width={2688} height={1520} />
+        <TimorDate scene="desk" locale={locale} />
         <img
           className="fx steam"
           src="/assets/scenes/coffee-steam.svg"
