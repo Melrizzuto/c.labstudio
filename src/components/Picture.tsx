@@ -25,9 +25,17 @@ export function Picture({ src, avif, webp, sizes, defer, ...img }: Props) {
   );
 }
 
+/*
+ * The scene pictures are cached for a week under their names: bump this when a scene picture changes,
+ * so browsers fetch the new one.
+ */
+export const SCENE_VERSION = '2';
+/** a scene file, with the version that busts the browser cache */
+export const sceneSrc = (file: string) => `/assets/scenes/${file}?v=${SCENE_VERSION}`;
+
 /** srcset for the room scenes, made by scripts/optimize-images.mjs */
 export const sceneSet = (name: string, ext: 'avif' | 'webp') =>
-  [1344, 2016, 2688].map((w) => `/assets/scenes/${name}-${w}.${ext} ${w}w`).join(', ');
+  [1344, 2016, 2688].map((w) => `${sceneSrc(`${name}-${w}.${ext}`)} ${w}w`).join(', ');
 
 /*
  * The scenes are as wide as the screen or as tall as it (whichever covers it) and the camera zooms in about 2×,

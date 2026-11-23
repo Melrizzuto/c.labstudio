@@ -64,7 +64,7 @@ export const en: Dictionary = {
       dayBook: 'The book: my story',
       daySofa: 'The sofa: when I close the laptop',
       dayTv: 'The TV: my weekend',
-      dayCv: 'The painting: open my CV',
+      deskCv: 'My CV on the desk: open it',
       deskCat: "Say hi to Calì, who's reaching out a paw",
       nightTv: 'The TV: my weekend',
       nightSofa: 'The sofa',

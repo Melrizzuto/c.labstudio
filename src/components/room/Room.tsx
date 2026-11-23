@@ -40,7 +40,7 @@ const R = 2688 / 1520;
 const CAM: Record<string, Cam> = {
   overview: { s: 'day', x: 50, y: 50, z: 1 },
   book: { s: 'day', x: 48, y: 36, z: 2.1 },
-  desk: { s: 'desk', x: 44, y: 62, z: 1.3, fit: [25, 76, 71] },
+  desk: { s: 'desk', x: 44, y: 62, z: 1.3, fit: [25, 76, 57] },
   sofa: { s: 'night', x: 50, y: 56, z: 1.12 },
   tv: { s: 'night', x: 63, y: 31, z: 2.4 },
   outro: { s: 'night', x: 50, y: 46, z: 1 },
@@ -417,6 +417,8 @@ export function Room({
 
     const onPointer = (e: PointerEvent) => {
       if (e.pointerType === 'touch') return;
+      /* the room holds still under something you can click, or it slides away from the cursor */
+      if ((e.target as Element).closest?.('.pin, .hit, .card, .room-dock')) return;
       mouse.x = (e.clientX / innerWidth) * 2 - 1;
       mouse.y = (e.clientY / innerHeight) * 2 - 1;
     };
@@ -453,6 +455,23 @@ export function Room({
       miaoTimer = window.setTimeout(() => miao.classList.remove('on'), 1500);
     };
     stage.addEventListener('click', onStageClick);
+
+    /* hovering a folder (or its sticker) opens it: the matching sheet slides up */
+    const fx = Array.from(stage.querySelectorAll<HTMLElement>('.ffx'));
+    let openFx = '';
+    const setOpen = (id: string) => {
+      if (id === openFx) return;
+      openFx = id;
+      fx.forEach((f) => f.classList.toggle('open', f.dataset.fx === id));
+    };
+    const onFolderOver = (e: PointerEvent | FocusEvent) => {
+      const c = (e.target as Element).closest?.<HTMLElement>('[data-case]');
+      setOpen(c && fx.some((f) => f.dataset.fx === c.dataset.case) ? c.dataset.case! : '');
+    };
+    const onFolderLeave = () => setOpen('');
+    stage.addEventListener('pointerover', onFolderOver);
+    stage.addEventListener('focusin', onFolderOver);
+    stage.addEventListener('pointerleave', onFolderLeave);
 
     /* Calì's paw on the desk pokes the cup now and then, and right away when you greet her */
     const paw = stage.querySelector<HTMLElement>('.paw');
@@ -510,6 +529,9 @@ export function Room({
       removeEventListener('pointercancel', onSwipeEnd);
       removeEventListener('scroll', onScroll);
       stage.removeEventListener('click', onStageClick);
+      stage.removeEventListener('pointerover', onFolderOver);
+      stage.removeEventListener('focusin', onFolderOver);
+      stage.removeEventListener('pointerleave', onFolderLeave);
       document.removeEventListener('click', onPawGreet);
       paw?.removeEventListener('animationend', onPawEnd);
       clearTimeout(miaoTimer);

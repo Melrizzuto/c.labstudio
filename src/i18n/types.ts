@@ -66,7 +66,7 @@ export interface Dictionary {
       dayBook: string;
       daySofa: string;
       dayTv: string;
-      dayCv: string;
+      deskCv: string;
       deskCat: string;
       nightTv: string;
       nightSofa: string;

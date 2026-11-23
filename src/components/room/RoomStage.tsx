@@ -1,8 +1,9 @@
+import type { CSSProperties } from 'react';
 import type { Dictionary } from '@/i18n/types';
 import { getCase, caseDialogId, type CaseStudy } from '@/content/cases';
-import { DESK_FOLDERS } from '@/content/room';
+import { DESK_FOLDERS, FOLDER_FX } from '@/content/room';
 import { TimorDate } from './TimorDate';
-import { Picture, SCENE_SIZES, sceneSet } from '../Picture';
+import { Picture, SCENE_SIZES, sceneSet, sceneSrc } from '../Picture';
 
 /*
  * The pinned stage: the three illustrations (day, desk, night), their clickable spots, the animated bits (.fx),
@@ -15,12 +16,12 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
   return (
     <div className="room-stage" id="roomStage">
       <div className="scene" data-scene="day">
-        <Picture defer data-load="day" src="/assets/scenes/day.jpg" avif={sceneSet('day', 'avif')} webp={sceneSet('day', 'webp')} sizes={SCENE_SIZES} alt={t.dayAlt} width={2688} height={1520} decoding="async" />
+        <Picture defer data-load="day" src={sceneSrc('day.jpg')} avif={sceneSet('day', 'avif')} webp={sceneSet('day', 'webp')} sizes={SCENE_SIZES} alt={t.dayAlt} width={2688} height={1520} decoding="async" />
         <Picture
           defer
           data-load="daynight"
           className="nightwin"
-          src="/assets/scenes/day-night.jpg"
+          src={sceneSrc('day-night.jpg')}
           avif={sceneSet('day-night', 'avif')}
           webp={sceneSet('day-night', 'webp')}
           sizes={SCENE_SIZES}
@@ -37,25 +38,9 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="hit" data-go="divano" aria-label={t.hits.daySofa} style={{ left: '40%', top: '69%', width: '53%', height: '30%' }}></button>
         <button className="hit" data-go="weekend" aria-label={t.hits.dayTv} style={{ left: '75%', top: '21%', width: '25%', height: '42%' }}></button>
         <button className="hit" data-case={caseDialogId('cali')} aria-label={cali.hitLabel} style={{ left: '44%', top: '4%', width: '9%', height: '11%' }}></button>
-        {/* the portrait of Mel and Calì hanging on the wall above the binders: it opens the CV */}
-        <div className="portrait-wall">
-          <a className="portrait" href={cvHref} target="_blank" rel="noopener" aria-label={t.hits.dayCv} style={{ left: '17.8%', top: '5%', width: '7%' }}>
-            <Picture
-              defer
-              data-load="day"
-              src="/assets/portrait/mel-cali.jpg"
-              avif="/assets/portrait/mel-cali.avif"
-              webp="/assets/portrait/mel-cali.webp"
-              alt=""
-              width={640}
-              height={857}
-              decoding="async"
-            />
-          </a>
-        </div>
       </div>
       <div className="scene" data-scene="desk">
-        <Picture defer data-load="desk" src="/assets/scenes/desk.jpg" avif={sceneSet('desk', 'avif')} webp={sceneSet('desk', 'webp')} sizes={SCENE_SIZES} alt={t.deskAlt} width={2688} height={1520} decoding="async" />
+        <Picture defer data-load="desk" src={sceneSrc('desk.jpg')} avif={sceneSet('desk', 'avif')} webp={sceneSet('desk', 'webp')} sizes={SCENE_SIZES} alt={t.deskAlt} width={2688} height={1520} decoding="async" />
         <TimorDate scene="desk" locale={locale} />
         <img
           className="fx steam"
@@ -79,13 +64,24 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
           height={335}
           style={{ left: '85.640%', top: '77.961%', width: '13.504%', height: '22.039%' }}
         />
+        {/* the folders open on hover: a sheet slides up from behind each folder's own sprite */}
+        <div className="folders-fx" aria-hidden="true">
+          {FOLDER_FX.map((f) => (
+            <div key={f.key} className="ffx" data-fx={caseDialogId(f.key)}>
+              <div className="sheet" style={{ ...f.paper, '--tilt': `${f.tilt}deg`, '--band': f.color } as CSSProperties}></div>
+              <img className="fsprite" src={sceneSrc(`folders/${f.key}.webp`)} alt="" width={1} height={1} decoding="async" style={f.sprite} />
+            </div>
+          ))}
+        </div>
         {folders.map((f) => (
-          <button key={f.key} className="hit" data-case={caseDialogId(f.key)} aria-label={f.c.hitLabel} style={f.hit}></button>
+          <button key={f.key} className="hit folder" data-case={caseDialogId(f.key)} aria-label={f.c.hitLabel} style={f.hit}></button>
         ))}
+        {/* the CV lying on the keyboard: it opens the CV page */}
+        <a className="hit" href={cvHref} target="_blank" rel="noopener" aria-label={t.hits.deskCv} style={{ left: '46.3%', top: '26.3%', width: '10.7%', height: '23.6%' }}></a>
         <button className="hit" data-cat="1" aria-label={t.hits.deskCat} style={{ left: '85%', top: '76%', width: '15%', height: '24%' }}></button>
       </div>
       <div className="scene" data-scene="night">
-        <Picture defer data-load="night" src="/assets/scenes/night.jpg" avif={sceneSet('night', 'avif')} webp={sceneSet('night', 'webp')} sizes={SCENE_SIZES} alt={t.nightAlt} width={2688} height={1520} decoding="async" />
+        <Picture defer data-load="night" src={sceneSrc('night.jpg')} avif={sceneSet('night', 'avif')} webp={sceneSet('night', 'webp')} sizes={SCENE_SIZES} alt={t.nightAlt} width={2688} height={1520} decoding="async" />
         <video
           className="tvclip"
           id="tvclip"
@@ -125,15 +121,15 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="pin" data-s="day" data-x="88" data-y="27" data-go="weekend" tabIndex={-1}>
           {t.places.tv}
         </button>
-        <a className="pin" data-s="day" data-x="21.5" data-y="24.5" href={cvHref} target="_blank" rel="noopener" tabIndex={-1}>
-          {t.places.cv}
-        </a>
         {folders.map((f) => (
           <button key={f.key} className="pin case" data-s="desk" data-x={f.pin.x} data-y={f.pin.y} data-case={caseDialogId(f.key)} tabIndex={-1}>
             <b>{f.c.tarot}</b>
             {f.c.title}
           </button>
         ))}
+        <a className="pin" data-s="desk" data-x="43.2" data-y="34" href={cvHref} target="_blank" rel="noopener" tabIndex={-1}>
+          {t.places.cv}
+        </a>
         <button className="pin" data-s="night" data-x="63" data-y="16" data-go="weekend" tabIndex={-1}>
           {t.places.tv}
         </button>

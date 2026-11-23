@@ -15,6 +15,25 @@ export const DESK_FOLDERS: { key: CaseKey; hit: CSSProperties; pin: { x: string;
   { key: 'newsquest', hit: { left: '62%', top: '54%', width: '12.5%', height: '36%' }, pin: { x: '65', y: '64' } },
 ];
 
+/*
+ * Hovering a folder opens it: a sheet slides up out of it. Each folder has a sprite cut from the desk picture
+ * (everything below its top edge, scripts in the c.lab scratch notes) drawn over its own sheet, so the sheet
+ * only shows above the folder's edge. Boxes are % of the picture; tilt follows the folder.
+ */
+export const FOLDER_FX: {
+  key: CaseKey;
+  sprite: CSSProperties;
+  paper: CSSProperties;
+  tilt: number;
+  color: string;
+}[] = [
+  { key: 'studio', sprite: { left: '25.298%', top: '57.171%', width: '13.653%', height: '26.908%' }, paper: { left: '29.390%', top: '60.197%', width: '5.580%', height: '11.184%' }, tilt: -16, color: '#1D3FD1' },
+  { key: 'stat', sprite: { left: '34.524%', top: '53.618%', width: '14.025%', height: '25.724%' }, paper: { left: '38.132%', top: '56.250%', width: '6.324%', height: '11.184%' }, tilt: -6, color: '#F25AA6' },
+  { key: 'philo', sprite: { left: '44.196%', top: '51.908%', width: '13.839%', height: '26.382%' }, paper: { left: '47.991%', top: '55.132%', width: '5.952%', height: '11.184%' }, tilt: -3, color: '#F26B1D' },
+  { key: 'spotify', sprite: { left: '53.757%', top: '52.829%', width: '13.951%', height: '27.895%' }, paper: { left: '56.734%', top: '56.579%', width: '5.580%', height: '11.184%' }, tilt: 4, color: '#2E9E3E' },
+  { key: 'newsquest', sprite: { left: '63.43%', top: '55.263%', width: '14.695%', height: '31.908%' }, paper: { left: '66.592%', top: '59.539%', width: '5.208%', height: '11.184%' }, tilt: 13, color: '#5B3FD9' },
+];
+
 /** The project list in the desk chapter: Witailer first, then the academy. */
 export const PROJECT_GROUPS: { work: CaseKey[]; academy: CaseKey[] } = {
   work: ['studio', 'stat', 'philo'],
