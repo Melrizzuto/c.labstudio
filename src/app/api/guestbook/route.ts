@@ -7,6 +7,7 @@
  * Without Supabase, GET says `{ "entries": null }` and POST answers 503.
  */
 import { supabase, supabaseFetch } from '@/lib/supabase';
+import { isStickerKey } from '@/content/stickers';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,9 +19,12 @@ const MIN_ELAPSED_MS = 3000;
 
 export async function GET() {
   try {
-    const res = await supabaseFetch('guestbook?approved=is.true&select=name,message,mood,created_at&order=created_at.desc&limit=40', { method: 'GET' });
+    // select=* so it works before and after the sticker column exists (supabase/guestbook-2.sql)
+    const res = await supabaseFetch('guestbook?approved=is.true&select=*&order=created_at.desc&limit=40', { method: 'GET' });
     if (!res?.ok) return Response.json({ entries: null }, { headers: NO_STORE });
-    return Response.json({ entries: await res.json() }, { headers: NO_STORE });
+    const rows = (await res.json()) as Record<string, unknown>[];
+    const entries = rows.map((r) => ({ name: r.name ?? null, message: r.message, mood: r.mood, created_at: r.created_at, sticker: isStickerKey(r.sticker) ? r.sticker : null }));
+    return Response.json({ entries }, { headers: NO_STORE });
   } catch {
     return Response.json({ entries: null }, { headers: NO_STORE });
   }
@@ -42,16 +46,17 @@ export async function POST(req: Request) {
   const name = typeof body.name === 'string' ? body.name.trim().slice(0, MAX_NAME) : '';
   const mood = body.mood === 'like' || body.mood === 'dislike' ? body.mood : null;
   const locale = body.locale === 'en' ? 'en' : 'it';
+  const sticker = isStickerKey(body.sticker) ? body.sticker : null;
   if (message.length < 2 || message.length > MAX_MESSAGE || !mood) {
     return Response.json({ ok: false }, { status: 400, headers: NO_STORE });
   }
   if (!supabase()) return Response.json({ ok: false }, { status: 503, headers: NO_STORE });
   try {
-    const res = await supabaseFetch('guestbook', {
-      method: 'POST',
-      headers: { Prefer: 'return=minimal' },
-      body: JSON.stringify({ name: name || null, message, mood, locale }),
-    });
+    const row = { name: name || null, message, mood, locale };
+    const insert = (data: object) => supabaseFetch('guestbook', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(data) });
+    let res = await insert(sticker ? { ...row, sticker } : row);
+    /* the sticker column may not exist yet: keep the note anyway */
+    if (res && !res.ok && sticker) res = await insert(row);
     if (!res?.ok) return Response.json({ ok: false }, { status: 502, headers: NO_STORE });
     return Response.json({ ok: true }, { headers: NO_STORE });
   } catch {

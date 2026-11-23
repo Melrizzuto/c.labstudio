@@ -2,13 +2,15 @@
 
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { Dictionary, Locale } from '@/i18n/types';
+import { Sticker, STICKER_KEYS, type StickerKey } from '@/content/stickers';
 
 type Mood = 'like' | 'dislike';
-type Entry = { name: string | null; message: string; mood: Mood; created_at: string };
+type Entry = { name: string | null; message: string; mood: Mood; created_at: string; sticker?: StickerKey | null };
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 /*
- * The desk notebook, open: the approved notes on the left page, the form on the right.
+ * The desk notebook, open. Left page: a dark wall where the approved notes hang as neon signs
+ * (after Insulti Luminosi), each with the sticker its writer picked. Right page: the form.
  * Opened by any [data-guestbook] (the notebook and the pencil in the desk scene); closed by
  * the button, Esc or a click outside the book. Notes wait for Mel's approval (see /api/guestbook).
  */
@@ -18,6 +20,7 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
   const [entries, setEntries] = useState<Entry[] | null | undefined>(undefined);
   const [status, setStatus] = useState<Status>('idle');
   const [mood, setMood] = useState<Mood>('like');
+  const [sticker, setSticker] = useState<StickerKey | null>(null);
 
   useEffect(() => {
     const d = dialog.current;
@@ -58,6 +61,7 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
           name: data.get('name'),
           message: data.get('message'),
           mood,
+          sticker,
           locale,
           website: data.get('website'),
           elapsed: Date.now() - openedAt.current,
@@ -66,6 +70,7 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
       if (!res.ok) throw new Error(String(res.status));
       form.reset();
       setMood('like');
+      setSticker(null);
       setStatus('sent');
     } catch {
       setStatus('error');
@@ -87,18 +92,19 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
             ))}
             <circle cx="32" cy="32" r="8" fill="#FFC21A" stroke="#16130F" strokeWidth="2.5" />
           </svg>
-          <h2 id="guest-title">{t.title}</h2>
+          <h2 id="guest-title" className="neon-title">{t.title}</h2>
           <p className="gb-intro">{t.intro}</p>
           <h3 id="guest-read">{t.readTitle}</h3>
           {entries === undefined ? null : entries === null ? (
-            <p className="gb-empty">{t.offline}</p>
+            <p className="gb-empty neon n2">{t.offline}</p>
           ) : entries.length === 0 ? (
-            <p className="gb-empty">{t.empty}</p>
+            <p className="gb-empty neon n2">{t.empty}</p>
           ) : (
             <ul className="gb-list">
-              {entries.map((n) => (
-                <li key={n.created_at + n.message.slice(0, 12)}>
-                  <p className="gb-msg">{n.message}</p>
+              {entries.map((n, i) => (
+                <li key={n.created_at + n.message.slice(0, 12)} className={`n${i % 4}`}>
+                  {n.sticker && <Sticker k={n.sticker} className="gb-stuck" />}
+                  <p className="gb-msg neon">{n.message}</p>
                   <p className="gb-meta">
                     <span className={`gb-mood ${n.mood}`}>{n.mood === 'like' ? t.like : t.dislike}</span>
                     {n.name || t.anon} · {date.format(new Date(n.created_at))}
@@ -128,6 +134,19 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
                 <span>{t.name}</span>
                 <input name="name" type="text" maxLength={40} autoComplete="nickname" />
               </label>
+              <fieldset className="gb-stickers">
+                <legend>{t.stickerLabel}</legend>
+                <label className={sticker === null ? 'on none' : 'none'}>
+                  <input type="radio" name="sticker" value="" checked={sticker === null} onChange={() => setSticker(null)} />
+                  {t.stickerNone}
+                </label>
+                {STICKER_KEYS.map((k) => (
+                  <label key={k} className={sticker === k ? 'on' : ''} title={t.stickerNames[k]}>
+                    <input type="radio" name="sticker" value={k} checked={sticker === k} onChange={() => setSticker(k)} aria-label={t.stickerNames[k]} />
+                    <Sticker k={k} />
+                  </label>
+                ))}
+              </fieldset>
               <fieldset className="gb-mood-pick">
                 <legend>{t.moodLabel}</legend>
                 {(['like', 'dislike'] as const).map((m) => (

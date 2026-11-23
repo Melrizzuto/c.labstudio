@@ -129,6 +129,10 @@ export interface Dictionary {
     dislike: string;
     send: string;
     sending: string;
+    /** the sticker picker: its label, the "no sticker" option and each sticker's name (read aloud) */
+    stickerLabel: string;
+    stickerNone: string;
+    stickerNames: Record<'daisy' | 'heart' | 'star' | 'bolt' | 'cali' | 'fire' | 'wow' | 'sun', string>;
     thanks: string;
     another: string;
     error: string;

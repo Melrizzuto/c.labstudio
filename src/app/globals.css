@@ -219,6 +219,66 @@ dialog.guest[open]{animation:guestIn .35s cubic-bezier(.3,1.3,.5,1)}
   .gb-close{position:fixed;right:14px;top:14px;width:42px;height:42px}
   .gb-daisy{right:58px;top:10px;width:42px;height:42px}
 }
+/* the left page is a dark brick wall; the title and the approved notes glow on it as neon signs (after Insulti Luminosi) */
+.gb-read{--wall:#120E1C;background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 2px,transparent 2px 34px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 2px,transparent 2px 72px) 0 0/72px 68px,
+    radial-gradient(120% 80% at 30% 20%,#221a33,var(--wall));color:#EDE6F7;border-color:var(--ink)}
+.gb-read .gb-intro{color:#BDB3CF}
+.gb-read h3{color:#FF8CC6}
+.neon{--glow:#FF4FB0;color:#FFF5FB;text-shadow:0 0 1px #fff,0 0 4px var(--glow),0 0 10px var(--glow),0 0 22px var(--glow),0 0 40px color-mix(in srgb,var(--glow) 60%,transparent)}
+.gb-read .neon-title{font:700 clamp(46px,5vw,64px)/.95 var(--hand);letter-spacing:.01em;--glow:#FF4FB0;color:#FFF5FB;
+  text-shadow:0 0 1px #fff,0 0 5px var(--glow),0 0 12px var(--glow),0 0 26px var(--glow),0 0 52px color-mix(in srgb,var(--glow) 55%,transparent);animation:neonFlicker 7s linear infinite}
+@keyframes neonFlicker{0%,18%,21%,23%,62%,64%,100%{opacity:1}19%,22%,63%{opacity:.55}}
+.gb-list li.n0{--glow:#FF4FB0}.gb-list li.n1{--glow:#4FE3FF}.gb-list li.n2{--glow:#FFD34D}.gb-list li.n3{--glow:#5DFF8F}
+.gb-list li{position:relative;padding:6px 52px 4px 0}
+.gb-list .gb-msg{font:700 29px/1.15 var(--hand);--glow:inherit}
+.gb-list li .neon{--glow:inherit}
+.gb-list li.n0 .neon{--glow:#FF4FB0}.gb-list li.n1 .neon{--glow:#4FE3FF}.gb-list li.n2 .neon{--glow:#FFD34D}.gb-list li.n3 .neon{--glow:#5DFF8F}
+.gb-read .gb-meta{color:#A79DBA}
+.gb-read .gb-empty.neon{--glow:#FFD34D;font:700 30px/1.15 var(--hand);color:#FFFBEA}
+.gb-stuck{position:absolute;right:0;top:0;width:46px;height:46px;rotate:9deg;filter:drop-shadow(0 0 0 #fff) drop-shadow(2px 2px 0 #fff) drop-shadow(-2px -2px 0 #fff) drop-shadow(2px -2px 0 #fff) drop-shadow(-2px 2px 0 #fff)}
+.gb-list li:nth-child(even) .gb-stuck{rotate:-8deg}
+/* sticker picker on the paper page */
+.gb-stickers{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.gb-stickers legend{font:600 15px/1.2 var(--body);color:var(--ink);margin-bottom:8px;padding:0}
+.gb-stickers label{position:relative;width:48px;height:48px;display:grid;place-items:center;border-radius:12px;border:2px dashed rgba(22,19,15,.25);background:#fff;cursor:pointer;transition:transform .15s,border-color .15s}
+.gb-stickers label svg{width:36px;height:36px}
+.gb-stickers label:hover{transform:translateY(-2px) rotate(-4deg)}
+.gb-stickers label.on{border:2px solid var(--ink);background:var(--sun);box-shadow:3px 3px 0 var(--ink);transform:rotate(-4deg)}
+.gb-stickers label.none{width:auto;padding:0 12px;font:700 14px/1 var(--body)}
+.gb-stickers input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.gb-stickers label:has(input:focus-visible){outline:3px solid var(--cobalt);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.gb-read .neon-title{animation:none}}
+
+/* the owner's page (/owner/): read, publish, hide, delete the notes */
+.owner{min-height:100dvh;background:var(--paper);color:var(--ink);padding:clamp(24px,5vw,56px) clamp(16px,5vw,56px);max-width:980px;margin:0 auto}
+.owner h1{margin:4px 0 0;font:900 clamp(40px,6vw,64px)/.95 var(--display);letter-spacing:-.04em}
+.owner-kicker{margin:0;font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--note)}
+.owner-login{display:grid;place-items:center}
+.owner-card{width:min(420px,100%);display:grid;gap:16px;background:#fff;border:3px solid var(--ink);border-radius:20px;box-shadow:6px 6px 0 var(--ink);padding:28px}
+.owner-card label{display:grid;gap:6px;font:600 15px/1.2 var(--body)}
+.owner-card input{font:500 18px/1.3 var(--body);padding:12px 14px;border:2px solid var(--ink);border-radius:12px;background:var(--paper)}
+.owner-card .btn{justify-self:start;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.owner-error{margin:0;min-height:1.2em;font:600 15px/1.3 var(--body);color:var(--note)}
+.owner-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.owner-actions{display:flex;gap:8px}
+.owner-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 8px}
+.owner-tabs button{font:700 15px/1 var(--body);padding:10px 14px;border-radius:999px;border:2px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer}
+.owner-tabs button.on{background:var(--ink);color:var(--paper)}
+.owner-empty{font:700 28px/1.2 var(--hand);color:var(--ink-2);margin-top:24px}
+.owner-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:14px}
+.owner-list li{position:relative;background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);padding:18px 76px 16px 20px}
+.owner-list li.live{background:#F3FFF2}
+.owner-sticker{position:absolute;right:14px;top:12px;width:52px;height:52px;rotate:8deg}
+.owner-msg{margin:0;font:700 26px/1.2 var(--hand);overflow-wrap:anywhere;white-space:pre-wrap}
+.owner-meta{margin:10px 0 0;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font:500 14px/1.3 var(--body);color:var(--ink-2)}
+.owner-state{font:700 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--note)}
+.owner-list li.live .owner-state{color:var(--leaf)}
+.owner-buttons{display:flex;gap:8px;margin-top:14px}
+.owner .chip{border:2px solid var(--ink)}
+.owner-delete{color:var(--note)!important}
+@media (max-width:560px){.owner-list li{padding:16px 16px 14px}.owner-sticker{width:40px;height:40px;right:10px;top:-14px}}
 @media (prefers-reduced-motion:reduce){dialog.guest[open]{animation:none}.scene .toy.notebook{transition:none}}
 /* the CV at the end of the journey: a yellow sticker button */
 .btn.cv-btn{margin-top:22px;background:var(--sun);color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-weight:800;rotate:-1.5deg}

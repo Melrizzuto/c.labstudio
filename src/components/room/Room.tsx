@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react';
 import { forcedNight } from '@/lib/theme';
 import { activatePicture } from '@/lib/pictures';
 import { playCat, playSfx } from '@/lib/sounds';
+import { openCase } from '@/lib/cases';
 import type { CatLine } from '@/i18n/types';
 
 /*
@@ -482,13 +483,39 @@ export function Room({
       playSfx(id ? 'paperOpen' : 'paperClose');
     };
     const onFolderOver = (e: PointerEvent | FocusEvent) => {
+      /* a finger has no hover: on touch the folders open on a tap (below), never while scrolling past them */
+      if ('pointerType' in e && e.pointerType !== 'mouse') return;
       const c = (e.target as Element).closest?.<HTMLElement>('[data-case]');
       setOpen(c && fx.some((f) => f.dataset.fx === c.dataset.case) ? c.dataset.case! : '');
     };
-    const onFolderLeave = () => setOpen('');
+    const onFolderLeave = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      setOpen('');
+    };
     stage.addEventListener('pointerover', onFolderOver);
     stage.addEventListener('focusin', onFolderOver);
     stage.addEventListener('pointerleave', onFolderLeave);
+    /* touch: a tap lifts the folder and swings its cover open, then the case opens; closing the case closes the folder */
+    let lastPointer = 'mouse';
+    let caseTimer: number | undefined;
+    const onPointerKind = (e: PointerEvent) => {
+      lastPointer = e.pointerType;
+    };
+    const onFolderTap = (e: MouseEvent) => {
+      if (lastPointer === 'mouse') return;
+      const c = (e.target as Element).closest?.<HTMLElement>('.hit.folder[data-case]');
+      if (!c) return;
+      e.stopPropagation(); // the page-wide handler would open the case right away
+      const id = c.dataset.case!;
+      setOpen(id);
+      clearTimeout(caseTimer);
+      caseTimer = window.setTimeout(() => openCase(id), reduce ? 0 : 520);
+    };
+    const caseDialogs = Array.from(document.querySelectorAll<HTMLDialogElement>('dialog.case'));
+    const onCaseClose = () => setOpen('');
+    stage.addEventListener('pointerdown', onPointerKind, { capture: true });
+    stage.addEventListener('click', onFolderTap, { capture: true });
+    caseDialogs.forEach((d) => d.addEventListener('close', onCaseClose));
 
     /* the desk toys: the duck squeaks, the mouse clicks, the keyboard types a line in a little terminal */
     const term = stage.querySelector<HTMLElement>('.term');
@@ -602,6 +629,10 @@ export function Room({
       stage.removeEventListener('pointerover', onFolderOver);
       stage.removeEventListener('focusin', onFolderOver);
       stage.removeEventListener('pointerleave', onFolderLeave);
+      stage.removeEventListener('pointerdown', onPointerKind, { capture: true });
+      stage.removeEventListener('click', onFolderTap, { capture: true });
+      caseDialogs.forEach((d) => d.removeEventListener('close', onCaseClose));
+      clearTimeout(caseTimer);
       clearTimeout(fxIdle);
       document.removeEventListener('click', onPawGreet);
       clip?.removeEventListener('timeupdate', onClipTime);
