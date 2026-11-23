@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Dictionary } from '@/i18n/types';
 
-/** The e-mail address with its "copy" button (falls back to selecting the text). */
+/** The "copy my address" button: the address itself stays hidden, and only shows (selected) if the clipboard is blocked. */
 export function MailCopy({ email, t }: { email: string; t: Dictionary['contact'] }) {
   const mail = useRef<HTMLSpanElement>(null);
   const [label, setLabel] = useState(t.copy);
+  const [shown, setShown] = useState(false);
   const timer = useRef<number | undefined>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
   const onClick = () => {
@@ -17,6 +18,7 @@ export function MailCopy({ email, t }: { email: string; t: Dictionary['contact']
     const fallback = () => {
       const el = mail.current;
       if (!el) return;
+      setShown(true);
       const r = document.createRange();
       r.selectNodeContents(el);
       const s = getSelection();
@@ -31,13 +33,13 @@ export function MailCopy({ email, t }: { email: string; t: Dictionary['contact']
     }
   };
   return (
-    <p className="mail">
-      <span id="mail" ref={mail}>
-        {email}
-      </span>{' '}
-      <button className="btn small" id="copyMail" type="button" onClick={onClick}>
+    <>
+      <button className="btn small ghost" id="copyMail" type="button" onClick={onClick}>
         {label}
       </button>
-    </p>
+      <span id="mail" ref={mail} className={shown ? 'mail-out shown' : 'mail-out'}>
+        {email}
+      </span>
+    </>
   );
 }

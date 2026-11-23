@@ -10,16 +10,19 @@ export function Hero({ t }: { t: Dictionary['hero'] }) {
     <section className="hero" aria-labelledby="title">
       <div className="wrap">
         <div className="hero-copy">
-          <span className="sticker avail">
-            <i></i>
-            {t.sticker}
-          </span>
-          <h1 id="title">
-            <span className="mark" data-t="c.lab">
-              <span className="ink">c.lab</span>
-            </span>{' '}
-            <span className="studio">studio</span>
-          </h1>
+          {/* the sticker is positioned against the title, so it always leans on the "b" */}
+          <div className="title">
+            <span className="sticker avail">
+              <i></i>
+              {t.sticker}
+            </span>
+            <h1 id="title">
+              <span className="mark" data-t="c.lab">
+                <span className="ink">c.lab</span>
+              </span>{' '}
+              <span className="studio">studio</span>
+            </h1>
+          </div>
           <p className="lead">
             <RichText value={t.lead} />
           </p>

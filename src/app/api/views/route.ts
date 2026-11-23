@@ -8,6 +8,8 @@
  * `{ "views": null }` and the footer simply shows no eye.
  */
 
+import { supabase, supabaseFetch } from '@/lib/supabase';
+
 export const dynamic = 'force-dynamic';
 
 const reply = (views: number | null) => Response.json({ views }, { headers: { 'Cache-Control': 'no-store' } });
@@ -19,24 +21,9 @@ const toCount = (v: unknown): number | null => {
 
 /* ---------- Supabase ---------- */
 
-function supabase() {
-  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  return url && key ? { url: url.replace(/\/$/, ''), key } : null;
-}
-
 async function supabaseCall(path: string, init: RequestInit): Promise<unknown> {
-  const s = supabase();
-  if (!s) return undefined;
-  const res = await fetch(`${s.url}/rest/v1/${path}`, {
-    ...init,
-    // New secret keys (sb_secret_…) go only in `apikey`; legacy service_role JWTs also as Bearer.
-    headers: s.key.startsWith('sb_')
-      ? { apikey: s.key, 'Content-Type': 'application/json' }
-      : { apikey: s.key, Authorization: `Bearer ${s.key}`, 'Content-Type': 'application/json' },
-    cache: 'no-store',
-    signal: AbortSignal.timeout(3000),
-  });
+  const res = await supabaseFetch(path, init);
+  if (!res) return undefined;
   if (!res.ok) throw new Error(`supabase ${res.status}`);
   return res.json();
 }

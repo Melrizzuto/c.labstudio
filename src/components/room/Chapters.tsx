@@ -1,7 +1,7 @@
 import type { Dictionary } from '@/i18n/types';
 import { getCase, caseDialogId, type CaseKey } from '@/content/cases';
 import { PROJECT_GROUPS } from '@/content/room';
-import { CALENDLY_URL, EMAIL, GITHUB_URL, SOCIALS, YOUTUBE_URL } from '@/config';
+import { CALENDLY_URL, EMAIL, YOUTUBE_URL } from '@/config';
 import { RichText } from '../RichText';
 import { MailCopy } from '../MailCopy';
 
@@ -67,6 +67,9 @@ export function Chapters({ t }: { t: Dictionary }) {
                 </li>
               ))}
             </ol>
+            <a className="btn cv-btn" href={`/cv/?lang=${t.locale}`} target="_blank" rel="noopener">
+              {t.journey.cv} ↗
+            </a>
           </div>
         </div>
       </article>
@@ -128,17 +131,11 @@ export function Chapters({ t }: { t: Dictionary }) {
           <div className="card">
             <h2>{t.contact.title}</h2>
             <p>{t.contact.text}</p>
-            <MailCopy email={EMAIL} t={t.contact} />
-            <div className="chips">
-              <a className="chip chip-book" href={CALENDLY_URL} target="_blank" rel="noopener">
+            <div className="contact-actions">
+              <a className="btn small" href={CALENDLY_URL} target="_blank" rel="noopener">
                 {t.contact.book}
               </a>
-              <a className="chip" href={SOCIALS.linkedin} target="_blank" rel="noopener">
-                LinkedIn
-              </a>
-              <a className="chip" href={GITHUB_URL} target="_blank" rel="noopener">
-                GitHub
-              </a>
+              <MailCopy email={EMAIL} t={t.contact} />
             </div>
           </div>
         </div>

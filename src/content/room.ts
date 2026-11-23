@@ -6,26 +6,28 @@ import type { CaseKey } from './cases/types';
  * Hit areas are % of the picture; pins are the % point they stick to.
  */
 
-/** The five folders on the desk: the clickable area on the picture and the sticker that follows it. */
-export const DESK_FOLDERS: { key: CaseKey; hit: CSSProperties; pin: { x: string; y: string } }[] = [
-  { key: 'studio', hit: { left: '27.5%', top: '56%', width: '12.5%', height: '36%' }, pin: { x: '33.5', y: '61' } },
-  { key: 'stat', hit: { left: '37%', top: '53%', width: '10%', height: '35%' }, pin: { x: '42', y: '57' } },
-  { key: 'philo', hit: { left: '45%', top: '51%', width: '10.5%', height: '36%' }, pin: { x: '50.5', y: '55' } },
-  { key: 'spotify', hit: { left: '55%', top: '52%', width: '7%', height: '36%' }, pin: { x: '60', y: '49' } },
-  { key: 'newsquest', hit: { left: '62%', top: '54%', width: '12.5%', height: '36%' }, pin: { x: '65', y: '64' } },
+/** The five folders on the desk: the clickable area on the picture (the labels are on the folders themselves, see FOLDER_FX). */
+export const DESK_FOLDERS: { key: CaseKey; hit: CSSProperties }[] = [
+  { key: 'studio', hit: { left: '26.814%', top: '56%', width: '13.871%', height: '36%' } },
+  { key: 'stat', hit: { left: '36.303%', top: '53%', width: '11.393%', height: '35%' } },
+  { key: 'philo', hit: { left: '43.845%', top: '51%', width: '12.810%', height: '36%' } },
+  { key: 'spotify', hit: { left: '54.403%', top: '52%', width: '8.193%', height: '36%' } },
+  { key: 'newsquest', hit: { left: '62.687%', top: '54%', width: '11.125%', height: '36%' } },
 ];
 
 /*
- * Hovering a folder lifts it and opens its cover. Each folder is a sprite cut exactly along its outline from the desk
- * picture (box = % of the picture); the groups are drawn in the picture's order, so a folder stays under the ones on top.
- * spine = where the cover hinges (% of the box width), tilt = the folder's slant, tint = the inside of the folder.
+ * The five folders are real objects on the empty desk mat (redrawn whole, front, back of the cover and inside),
+ * all on Philo's shape and size so they read as one set; each keeps its pattern and its colour.
+ * box = % of the picture before the tilt, tilt in degrees, pad = the room around each image for its outline (% of the box);
+ * drawn in this order, so each one sits on the previous.
+ * Hovering one lifts it to the front and its cover swings open on its left edge.
  */
-export const FOLDER_FX: { key: CaseKey; box: CSSProperties; spine: number; tilt: number; tint: string }[] = [
-  { key: 'studio', box: { left: '27.344%', top: '56.974%', width: '13.095%', height: '35.855%' }, spine: 18.2, tilt: -16, tint: '#C9D6FF' },
-  { key: 'stat', box: { left: '35.751%', top: '53.224%', width: '13.281%', height: '36.184%' }, spine: 19, tilt: -12, tint: '#F7CFE6' },
-  { key: 'philo', box: { left: '44.234%', top: '51.776%', width: '11.496%', height: '35.592%' }, spine: 8.7, tilt: 4, tint: '#FFE9A6' },
-  { key: 'spotify', box: { left: '49.405%', top: '52.566%', width: '15.96%', height: '35.724%' }, spine: 24.9, tilt: 14, tint: '#BFE8CB' },
-  { key: 'newsquest', box: { left: '54.539%', top: '55.197%', width: '21.726%', height: '39.474%' }, spine: 29.6, tilt: 24, tint: '#D7CCFF' },
+export const FOLDER_FX: { key: CaseKey; box: CSSProperties; tilt: number; pad: [number, number] }[] = [
+  { key: 'studio', box: { left: '29.071%', top: '57.026%', width: '9.337%', height: '34.896%' }, tilt: -18.33, pad: [2.692, 1.273] },
+  { key: 'stat', box: { left: '37.532%', top: '53.524%', width: '9.337%', height: '34.896%' }, tilt: -13.42, pad: [2.692, 1.273] },
+  { key: 'philo', box: { left: '44.608%', top: '52.270%', width: '9.337%', height: '34.896%' }, tilt: 7.17, pad: [2.692, 1.273] },
+  { key: 'spotify', box: { left: '52.981%', top: '53.815%', width: '9.337%', height: '34.896%' }, tilt: 13.93, pad: [2.692, 1.273] },
+  { key: 'newsquest', box: { left: '62.211%', top: '57.140%', width: '9.337%', height: '34.896%' }, tilt: 21.21, pad: [2.692, 1.273] },
 ];
 
 /** The project list in the desk chapter: Witailer first, then the academy. */

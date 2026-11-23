@@ -66,13 +66,21 @@ export interface Dictionary {
       dayBook: string;
       daySofa: string;
       dayTv: string;
-      deskCv: string;
       deskCat: string;
       nightTv: string;
+      deskDuck: string;
+      deskMouse: string;
+      deskKeyboard: string;
+      deskNotebook: string;
+      deskPencil: string;
       nightSofa: string;
       nightCat: string;
     };
     pinCatAsleep: string;
+    /** the episode title in the YouTube-style player on the TV */
+    tvTitle: string;
+    /** what the keyboard types in its little terminal: a command and its answer, one pair picked at random */
+    terminal: [string, string][];
     /** the bar of buttons at the bottom of the screen on phones */
     dock: { label: string; book: string; desk: string; sofa: string; tv: string };
     /** what Calì says when you tap her (one at random), each with its sound */
@@ -81,7 +89,7 @@ export interface Dictionary {
     miaoAsleep: CatLine[];
   };
   intro: { title: string; text: string; hand: string };
-  journey: { title: string; text: string; timeline: TimelineEntry[] };
+  journey: { title: string; text: string; timeline: TimelineEntry[]; cv: string };
   desk: { title: string; text: string; read: string; academy: string };
   sofa: { title: string; text: string; hobbies: { title: string; text: string }[] };
   weekend: {
@@ -105,4 +113,24 @@ export interface Dictionary {
   social: { label: string; links: Record<'instagram' | 'linkedin' | 'youtube' | 'github', { text: string; aria: string }> };
   caseClose: string;
   views: { one: string; many: string };
+  /** the notebook on the desk: notes and feedback, shown after Mel approves them */
+  guestbook: {
+    title: string;
+    intro: string;
+    readTitle: string;
+    empty: string;
+    offline: string;
+    anon: string;
+    writeTitle: string;
+    name: string;
+    message: string;
+    moodLabel: string;
+    like: string;
+    dislike: string;
+    send: string;
+    sending: string;
+    thanks: string;
+    another: string;
+    error: string;
+  };
 }

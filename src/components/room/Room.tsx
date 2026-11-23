@@ -3,7 +3,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { forcedNight } from '@/lib/theme';
 import { activatePicture } from '@/lib/pictures';
-import { playCat } from '@/lib/sounds';
+import { playCat, playSfx } from '@/lib/sounds';
 import type { CatLine } from '@/i18n/types';
 
 /*
@@ -40,7 +40,7 @@ const R = 2688 / 1520;
 const CAM: Record<string, Cam> = {
   overview: { s: 'day', x: 50, y: 50, z: 1 },
   book: { s: 'day', x: 48, y: 36, z: 2.1 },
-  desk: { s: 'desk', x: 44, y: 62, z: 1.3, fit: [25, 76, 57] },
+  desk: { s: 'desk', x: 44, y: 62, z: 1.3, fit: [4, 78, 57] },
   sofa: { s: 'night', x: 50, y: 56, z: 1.12 },
   tv: { s: 'night', x: 63, y: 31, z: 2.4 },
   outro: { s: 'night', x: 50, y: 46, z: 1 },
@@ -70,8 +70,8 @@ const MOBILE_CAM: Record<string, Cam & { pan?: [number, number] }> = {
   /* the whole room, from the desk on the left, past the book, to the TV on the right */
   overview: { s: 'day', x: 13, y: 50, z: 1, pan: [13, 87] },
   book: { s: 'day', x: 48, y: 38, z: 1.9 },
-  /* along the five folders */
-  desk: { s: 'desk', x: 33, y: 70, z: 1.15, pan: [33, 69] },
+  /* from the notebook along the five folders */
+  desk: { s: 'desk', x: 14, y: 70, z: 1.15, pan: [14, 69] },
   /* from Mel on the sofa to Calì asleep on the armrest */
   sofa: { s: 'night', x: 44, y: 60, z: 1.1, pan: [44, 82] },
   /* the whole TV */
@@ -90,11 +90,14 @@ const mix = (a: View, b: View, t: number): View => ({ x: lerp(a.x, b.x, t), y: l
 export function Room({
   label,
   cat,
+  terminal,
   dock,
   children,
 }: {
   label: string;
   cat: { awake: CatLine[]; asleep: CatLine[] };
+  /** what the desk keyboard types: a command and its answer */
+  terminal: [string, string][];
   /** the mobile dock: its label and one button per corner of the room */
   dock: { label: string; targets: Record<DockKey, { id: string; text: string }> };
   children: ReactNode;
@@ -117,6 +120,18 @@ export function Room({
     const placed: Partial<Record<SceneName, Placed | null>> = {};
     const pins = Array.from(stage.querySelectorAll<HTMLElement>('.pin'));
     const clip = stage.querySelector<HTMLVideoElement>('#tvclip');
+    /* the YouTube-style bar under the clip: progress and time from the real video */
+    const player = clip?.closest<HTMLElement>('.tvplayer');
+    const ytTime = player?.querySelector<HTMLElement>('.yt-time');
+    const mmss = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+    const onClipTime = () => {
+      if (!clip || !player) return;
+      const d = Number.isFinite(clip.duration) ? clip.duration : 0;
+      player.style.setProperty('--p', d ? (clip.currentTime / d).toFixed(4) : '0');
+      if (ytTime) ytTime.textContent = `${mmss(clip.currentTime)} / ${mmss(d)}`;
+    };
+    clip?.addEventListener('timeupdate', onClipTime);
+    clip?.addEventListener('loadedmetadata', onClipTime);
     const chapters = Array.from(roomSec.querySelectorAll<HTMLElement>('.chapter'));
 
     /* sizes that only change on resize (or when the fonts arrive): measured then, never inside the frame loop */
@@ -254,14 +269,14 @@ export function Room({
     }
 
     const cur: Partial<Record<SceneName, View & { o: number }>> = {};
-    const mouse = { x: 0, y: 0 };
     let first = true;
     const sized: Partial<Record<SceneName, number>> = {};
     function place(name: SceneName, c: View, o: number, anc: Anchor) {
       const el = scenes[name],
         z = c.z;
-      const px = reduce ? 0 : mouse.x * 0.012 * vw,
-        py = reduce ? 0 : mouse.y * 0.012 * vh;
+      /* no drift with the mouse: the stickers and the folders stay put under the cursor */
+      const px = 0,
+        py = 0;
       let left = anc.ax * vw - (c.x / 100) * fw * z + px,
         top = anc.ay * vh - (c.y / 100) * fh * z + py;
       left = Math.min(0, Math.max(vw - fw * z, left));
@@ -359,6 +374,9 @@ export function Room({
         if (near && !clip.classList.contains('on')) {
           clip.classList.add('on');
           clip.preload = 'auto';
+          /* every visit starts the episode from the top */
+          if (clip.readyState > 0) clip.currentTime = 0;
+          onClipTime();
           clip.play()?.catch(() => {});
         }
         if (!near && clip.classList.contains('on')) {
@@ -415,14 +433,6 @@ export function Room({
     addEventListener('pointerup', onSwipeEnd);
     addEventListener('pointercancel', onSwipeEnd);
 
-    const onPointer = (e: PointerEvent) => {
-      if (e.pointerType === 'touch') return;
-      /* the room holds still under something you can click, or it slides away from the cursor */
-      if ((e.target as Element).closest?.('.pin, .hit, .card, .room-dock')) return;
-      mouse.x = (e.clientX / innerWidth) * 2 - 1;
-      mouse.y = (e.clientY / innerHeight) * 2 - 1;
-    };
-    addEventListener('pointermove', onPointer, { passive: true });
 
     /* Calì says something */
     let miaoTimer: number | undefined;
@@ -469,6 +479,7 @@ export function Room({
       if (id) fxLayer?.classList.add('active');
       else fxIdle = window.setTimeout(() => fxLayer?.classList.remove('active'), 650);
       fx.forEach((f) => f.classList.toggle('open', f.dataset.fx === id));
+      playSfx(id ? 'paperOpen' : 'paperClose');
     };
     const onFolderOver = (e: PointerEvent | FocusEvent) => {
       const c = (e.target as Element).closest?.<HTMLElement>('[data-case]');
@@ -478,6 +489,58 @@ export function Room({
     stage.addEventListener('pointerover', onFolderOver);
     stage.addEventListener('focusin', onFolderOver);
     stage.addEventListener('pointerleave', onFolderLeave);
+
+    /* the desk toys: the duck squeaks, the mouse clicks, the keyboard types a line in a little terminal */
+    const term = stage.querySelector<HTMLElement>('.term');
+    let typing = 0;
+    const replay = (el: Element, cls: string) => {
+      el.classList.remove(cls);
+      void (el as HTMLElement).offsetWidth;
+      el.classList.add(cls);
+    };
+    const typeLine = () => {
+      if (!term || typing) return;
+      const [cmd, out] = terminal[Math.floor(Math.random() * terminal.length)];
+      const b = term.querySelector('b')!,
+        sp = term.querySelector('span')!;
+      b.textContent = '';
+      sp.textContent = '';
+      term.classList.add('on');
+      let i = 0;
+      const step = () => {
+        if (i < cmd.length) {
+          b.textContent = cmd.slice(0, ++i);
+          if (cmd[i - 1] !== ' ') playSfx('key');
+          typing = window.setTimeout(step, 55 + Math.random() * 45);
+          return;
+        }
+        typing = window.setTimeout(() => {
+          sp.textContent = out;
+          typing = window.setTimeout(() => {
+            term.classList.remove('on');
+            typing = 0;
+          }, 2600);
+        }, 350);
+      };
+      step();
+    };
+    const onToy = (e: MouseEvent) => {
+      const el = e.target as Element;
+      const duck = el.closest('.toy.duck');
+      if (duck) {
+        replay(duck, 'boing');
+        playSfx('squeak');
+        return;
+      }
+      const mouseToy = el.closest('.toy.mouse');
+      if (mouseToy) {
+        replay(mouseToy, 'press');
+        playSfx('click');
+        return;
+      }
+      if (el.closest('.hit.keyboard')) typeLine();
+    };
+    stage.addEventListener('click', onToy);
 
     /* Calì's paw on the desk pokes the cup now and then, and right away when you greet her */
     const paw = stage.querySelector<HTMLElement>('.paw');
@@ -528,22 +591,25 @@ export function Room({
       io.disconnect();
       ro.disconnect();
       removeEventListener('load', onPageLoad);
-      removeEventListener('pointermove', onPointer);
       roomSec.removeEventListener('pointerdown', onSwipeStart);
       removeEventListener('pointermove', onSwipeMove);
       removeEventListener('pointerup', onSwipeEnd);
       removeEventListener('pointercancel', onSwipeEnd);
       removeEventListener('scroll', onScroll);
       stage.removeEventListener('click', onStageClick);
+      stage.removeEventListener('click', onToy);
+      clearTimeout(typing);
       stage.removeEventListener('pointerover', onFolderOver);
       stage.removeEventListener('focusin', onFolderOver);
       stage.removeEventListener('pointerleave', onFolderLeave);
       clearTimeout(fxIdle);
       document.removeEventListener('click', onPawGreet);
+      clip?.removeEventListener('timeupdate', onClipTime);
+      clip?.removeEventListener('loadedmetadata', onClipTime);
       paw?.removeEventListener('animationend', onPawEnd);
       clearTimeout(miaoTimer);
     };
-  }, [cat]);
+  }, [cat, terminal]);
 
   const goTo = (id: string) => {
     const el = document.getElementById(id);

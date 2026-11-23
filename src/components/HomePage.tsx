@@ -9,6 +9,7 @@ import { Chapters } from './room/Chapters';
 import { Footer } from './Footer';
 import { CaseDialog } from './cases/CaseDialog';
 import { PageScripts } from './PageScripts';
+import { Guestbook } from './Guestbook';
 
 /** The whole one-page site, in one language. */
 export function HomePage({ locale }: { locale: Locale }) {
@@ -22,6 +23,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         <Room
           label={t.room.label}
           cat={{ awake: t.room.miao, asleep: t.room.miaoAsleep }}
+          terminal={t.room.terminal}
           dock={{
             label: t.room.dock.label,
             targets: {
@@ -40,6 +42,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       {getCases(locale).map((c) => (
         <CaseDialog key={c.key} c={c} closeLabel={t.caseClose} />
       ))}
+      <Guestbook t={t.guestbook} locale={locale} closeLabel={t.caseClose} />
       <PageScripts />
     </>
   );

@@ -106,8 +106,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   .stage .note.cat{left:8px;top:-9%;font-size:24px}
   /* on phones felt Mel comes right under the wordmark, the words after her */
   .hero-copy{display:contents}
-  .hero .sticker.avail{order:1;justify-self:start;margin-bottom:0}
-  .hero h1{order:2}
   .hero .stage{order:3;margin-top:28px}
   .hero .lead{order:4;margin-top:8px}
   .hero .sub{order:5;margin-top:-6px}
@@ -121,28 +119,124 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .scene img{display:block;width:100%;height:100%;user-select:none;-webkit-user-drag:none}
 .scene .hit{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:14px;padding:0}
 .scene .hit:hover,.scene .hit:focus-visible{background:rgba(255,194,26,.14);outline:4px solid rgba(255,194,26,.9);outline-offset:0}
-.scene .tvclip{position:absolute;object-fit:cover;opacity:0;transition:opacity .5s}
+.scene .tvplayer{position:absolute;container-type:inline-size;overflow:hidden;border-radius:.4%;pointer-events:none;--p:0;-webkit-mask:url(/assets/tv/tv-mask.png) 0 0/100% 100% no-repeat;mask:url(/assets/tv/tv-mask.png) 0 0/100% 100% no-repeat} /* the mask keeps Mel's hair in front of the screen */
+.scene .tvclip{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s;background:#000}
 .scene .tvclip.on{opacity:1}
+/* the YouTube-style chrome: title on top, red progress bar and controls at the bottom, over soft dark gradients */
+.scene .yt{position:absolute;inset:0;opacity:0;transition:opacity .5s .2s;color:#fff;font-family:Roboto,Arial,var(--body),sans-serif}
+.scene .tvplayer:has(.tvclip.on) .yt{opacity:1}
+/* like on YouTube, the title and the controls show at the start and then fade, leaving only the thin red bar */
+.scene .tvplayer:has(.tvclip.on) .yt-top,.scene .tvplayer:has(.tvclip.on) .yt-row,.scene .tvplayer:has(.tvclip.on) .yt-bottom::before{animation:ytHide 4.2s forwards}
+@keyframes ytHide{0%,75%{opacity:1}100%{opacity:0}}
+.scene .yt-top{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:1.6cqw;padding:2cqw 2.4cqw 6cqw;background:linear-gradient(rgba(0,0,0,.6),transparent)}
+.scene .yt-avatar{flex:none;width:4.6cqw;height:4.6cqw;border-radius:50%;background:var(--sun);color:#16130F;display:grid;place-items:center;font:800 1.25cqw/1 var(--display);letter-spacing:-.02em}
+.scene .yt-title{font:500 2.2cqw/1.2 inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 0 .4cqw rgba(0,0,0,.5)}
+.scene .yt-title small{display:block;font-size:1.55cqw;opacity:.8;margin-top:.2cqw}
+.scene .yt-bottom{position:absolute;left:0;right:0;bottom:0;padding:0 1.6cqw .5cqw}
+.scene .yt-bottom::before{content:"";position:absolute;inset:-7cqw 0 0;background:linear-gradient(transparent,rgba(0,0,0,.65));z-index:-1}
+.scene .yt-bar{position:relative;height:.45cqw;background:rgba(255,255,255,.3)}
+.scene .yt-fill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--p) * 100%);background:#f03;transition:width .26s linear}
+.scene .yt-dot{position:absolute;top:50%;left:calc(var(--p) * 100%);width:1.5cqw;height:1.5cqw;border-radius:50%;background:#f03;transform:translate(-50%,-50%);transition:left .26s linear}
+.scene .yt-row{display:flex;align-items:center;gap:2cqw;height:5.4cqw;padding:0 .4cqw}
+.scene .yt-row svg{width:3cqw;height:3cqw;fill:#fff;flex:none}
+.scene .yt-row svg .yt-stroke{fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.scene .yt-time{font:400 1.7cqw/1 inherit;letter-spacing:.02em;font-variant-numeric:tabular-nums;margin-left:.4cqw}
+.scene .yt-gap{flex:1}
+.scene .tvplayer:has(.tvclip.on) .yt-dot{animation:ytHide 4.2s forwards}
 .fx{position:absolute;pointer-events:none}
-/* the desk folders lift and open on hover. Copies of the folders (cut along their outline) sit over the picture,
-   hidden until one opens, so the closed desk is the untouched picture */
-.scene .folders-fx{position:absolute;inset:0;container-type:inline-size;pointer-events:none}
-.scene .ffx{position:absolute;inset:0;visibility:hidden}
-.scene .folders-fx.active .ffx{visibility:visible}
-.scene .ffx .lift{position:absolute;transform-origin:50% 60%;transition:transform .4s cubic-bezier(.3,1.45,.5,1)}
-.scene .ffx .fshadow,.scene .ffx .finside,.scene .ffx .finner,.scene .ffx .fcover{position:absolute;inset:0;width:100%;height:100%}
-.scene .ffx .fshadow,.scene .ffx .finner{-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
-.scene .ffx .fshadow{background:#0b0a08;opacity:0;transition:opacity .3s,transform .4s cubic-bezier(.3,1.45,.5,1)}
-.scene .ffx .finside{filter:drop-shadow(.12cqw 0 0 #16130F) drop-shadow(-.12cqw 0 0 #16130F) drop-shadow(0 .12cqw 0 #16130F) drop-shadow(0 -.12cqw 0 #16130F)}
-.scene .ffx .finner{background:var(--tint)}
-.scene .ffx .fpage{position:absolute;left:16%;top:12%;width:68%;height:76%;rotate:var(--tilt);background:#FFF8EA repeating-linear-gradient(transparent 0 1.1cqw,rgba(22,19,15,.2) 1.1cqw 1.2cqw) 0 3.2cqw/100% 100% no-repeat;border:.16cqw solid #16130F;border-radius:.35cqw;text-align:center;padding-top:.9cqw}
-.scene .ffx .fpage b{font:700 1.9cqw/1 var(--hand);color:#16130F;white-space:nowrap}
-.scene .ffx .fcover{max-width:none;transform:perspective(90cqw) rotateY(0);transition:transform .55s cubic-bezier(.3,1.25,.4,1) .05s;backface-visibility:visible}
-.scene .ffx.open .lift{transform:translate(-.15cqw,-.6cqw) scale(1.035)}
-.scene .ffx.open .fshadow{opacity:.45;transform:translate(.45cqw,.8cqw)}
-.scene .ffx.open .fcover{transform:perspective(90cqw) rotateY(48deg)}
 .scene .hit.folder:hover{background:none;outline:none}
-@media (prefers-reduced-motion:reduce){.scene .ffx .lift,.scene .ffx .fcover,.scene .ffx .fshadow{transition:none}}
+/* the desk toys: the duck is off the picture (wood under it), so it can jump and squash; the mouse only grows, so the picture under it stays hidden */
+.scene .toy{position:absolute;padding:0;border:0;background:none;cursor:pointer}
+.scene .toy img{width:100%;height:100%;pointer-events:none}
+.scene .toy:focus-visible{outline:4px solid rgba(255,194,26,.9);outline-offset:4px;border-radius:14px}
+.scene .toy.duck{transform-origin:50% 90%}
+.scene .toy.duck.boing{animation:duckBoing .6s cubic-bezier(.3,1.5,.5,1)}
+@keyframes duckBoing{0%{transform:none}15%{transform:scale(1.14,.84)}40%{transform:translateY(-22%) scale(.94,1.08) rotate(-8deg)}62%{transform:translateY(0) scale(1.1,.9) rotate(4deg)}80%{transform:scale(.97,1.03) rotate(-2deg)}100%{transform:none}}
+.scene .toy.mouse.press{animation:mousePress .28s ease-out}
+@keyframes mousePress{0%{transform:scale(1)}35%{transform:scale(1.07)}100%{transform:scale(1)}}
+.scene .hit.keyboard:hover{background:none;outline:none}
+/* the little terminal the keyboard types into */
+.scene .term{position:absolute;transform:translate(-50%,-100%) scale(.9);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s cubic-bezier(.3,1.4,.5,1);background:#16130F;color:#F7EFE1;border:3px solid #16130F;outline:3px solid #F7EFE1;box-shadow:5px 5px 0 rgba(22,19,15,.45);border-radius:12px;padding:10px 14px;min-width:260px;font:400 14px/1.45 var(--mono);white-space:nowrap;z-index:4}
+.scene .term.on{opacity:1;transform:translate(-50%,-100%) scale(1)}
+.scene .term b{display:block;font-weight:400;color:#3BE36B}
+.scene .term b::after{content:"▍";margin-left:2px;animation:termBlink 1s steps(1) infinite}
+@keyframes termBlink{50%{opacity:0}}
+.scene .term span{display:block;color:#FFC21A;min-height:1.45em}
+@media (prefers-reduced-motion:reduce){.scene .toy.duck.boing,.scene .toy.mouse.press{animation:none}}
+/* the notebook (and its pencil) opens the guestbook: on hover it grows a little and casts a shadow, never moving off its spot */
+.scene .toy.notebook{transition:transform .25s cubic-bezier(.3,1.4,.5,1),filter .25s}
+.scene .toy.notebook:hover,.scene .hit.pencil:hover+.toy.notebook,.scene .toy.notebook:focus-visible{transform:scale(1.05) rotate(-1.5deg);filter:drop-shadow(.5cqw .8cqw .2cqw rgba(10,8,6,.35))}
+.scene .hit.pencil:hover{background:none;outline:none}
+
+/* the guestbook: the desk notebook, open. Cobalt cover, two ruled pages, the rings in the middle */
+dialog.guest{width:min(980px,calc(100vw - 24px));max-width:none;max-height:calc(100dvh - 24px);padding:0;border:0;background:none;color:var(--ink);overflow:visible}
+dialog.guest::backdrop{background:rgba(15,21,82,.55)}
+dialog.guest[open]{animation:guestIn .35s cubic-bezier(.3,1.3,.5,1)}
+@keyframes guestIn{from{opacity:0;transform:translateY(24px) rotate(-1.5deg) scale(.96)}}
+.gb-book{position:relative;display:grid;grid-template-columns:1fr 34px 1fr;height:min(660px,calc(100dvh - 24px));background:var(--cobalt);border:3px solid var(--ink);border-radius:22px;box-shadow:8px 8px 0 var(--ink);padding:14px}
+.gb-page{--line:32px;background:#FBF4E6 repeating-linear-gradient(transparent 0 calc(var(--line) - 1px),rgba(29,63,209,.16) calc(var(--line) - 1px) var(--line)) 0 14px;border:2.5px solid var(--ink);overflow:auto;overscroll-behavior:contain;padding:26px 30px 30px;min-height:0}
+.gb-read{border-radius:12px 4px 4px 12px;position:relative}
+.gb-write{border-radius:4px 12px 12px 4px}
+.gb-rings{position:relative;z-index:2;margin:0 -21px;pointer-events:none;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='76' height='44' viewBox='0 0 76 44'><circle cx='13' cy='26' r='4.5' fill='%2316130F'/><circle cx='63' cy='26' r='4.5' fill='%2316130F'/><path d='M13 26C13 8 63 8 63 26' fill='none' stroke='%2316130F' stroke-width='8' stroke-linecap='round'/><path d='M13 26C13 8 63 8 63 26' fill='none' stroke='%23EADFC6' stroke-width='3.6' stroke-linecap='round'/><path d='M22 15.5C30 11 46 11 54 15.5' fill='none' stroke='%23fff' stroke-width='1.4' stroke-linecap='round' opacity='.8'/></svg>") 50% 10px/76px 44px repeat-y} /* metal rings: from a hole in the left page, over the gutter, into the right page */
+.gb-daisy{position:absolute;right:18px;top:14px;width:54px;height:54px;rotate:12deg}
+.gb-page h2{margin:0;font:800 clamp(32px,3.4vw,44px)/1 var(--display);letter-spacing:-.03em}
+.gb-intro{margin:12px 0 0;font:500 16px/1.5 var(--body);color:var(--ink-2);max-width:34ch}
+.gb-page h3{margin:24px 0 10px;font:700 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--note)}
+.gb-write h3{margin-top:4px}
+.gb-empty{font:700 26px/1.2 var(--hand);color:var(--ink-2);margin:6px 0 0}
+.gb-list{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.gb-msg{margin:0;font:700 25px/1.25 var(--hand);overflow-wrap:anywhere}
+.gb-meta{margin:6px 0 0;font:500 13px/1.3 var(--body);color:var(--ink-2);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.gb-mood{font:700 11px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:4px 7px;border-radius:999px;border:1.5px solid var(--ink)}
+.gb-mood.like{background:var(--pink);color:var(--ink)}
+.gb-mood.dislike{background:#E6DED0;color:var(--ink)}
+.gb-write form{display:grid;gap:18px}
+.gb-field{display:grid;gap:6px}
+.gb-field span,.gb-mood-pick legend{font:600 15px/1.2 var(--body);color:var(--ink)}
+.gb-field textarea,.gb-field input{font:700 24px/32px var(--hand);color:var(--ink);background:transparent;border:0;border-bottom:2px solid var(--ink);border-radius:0;padding:0 2px;width:100%;resize:vertical}
+.gb-field textarea{background:repeating-linear-gradient(transparent 0 31px,rgba(22,19,15,.35) 31px 32px);border-bottom:0;min-height:160px}
+.gb-field textarea:focus,.gb-field input:focus{outline:3px solid var(--sun);outline-offset:4px}
+.gb-mood-pick{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.gb-mood-pick legend{float:left;margin-right:6px}
+.gb-mood-pick label{position:relative;cursor:pointer;font:700 15px/1 var(--body);padding:10px 14px;border-radius:999px;border:2px solid var(--ink);background:#fff;transition:transform .15s}
+.gb-mood-pick label:hover{transform:translateY(-2px)}
+.gb-mood-pick label.on{background:var(--sun);box-shadow:3px 3px 0 var(--ink)}
+.gb-mood-pick input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.gb-mood-pick label:has(input:focus-visible){outline:3px solid var(--cobalt);outline-offset:3px}
+.gb-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.gb-write .btn{justify-self:start;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.gb-write .btn[disabled]{opacity:.7;cursor:wait}
+.gb-status{margin:0;min-height:1.3em;font:600 15px/1.3 var(--body);color:var(--note)}
+.gb-thanks p{margin:6px 0 16px;font:700 30px/1.2 var(--hand)}
+.gb-close{position:absolute;right:-14px;top:-14px;z-index:2;width:46px;height:46px;border-radius:50%;border:3px solid var(--ink);background:var(--sun);color:var(--ink);font:700 26px/1 var(--body);cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
+.gb-close:hover{transform:rotate(90deg);transition:transform .2s}
+/* phones: one page under the other, the whole book scrolls, the close button stays in the corner */
+@media (max-width:760px){
+  dialog.guest{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}
+  .gb-book{grid-template-columns:1fr;height:auto;max-height:calc(100dvh - 16px);overflow:auto;overscroll-behavior:contain;padding:10px;gap:10px;border-radius:18px;box-shadow:5px 5px 0 var(--ink)}
+  .gb-rings{display:none}
+  .gb-page{overflow:visible;padding:22px 20px 24px;border-radius:10px}
+  .gb-close{position:fixed;right:14px;top:14px;width:42px;height:42px}
+  .gb-daisy{right:58px;top:10px;width:42px;height:42px}
+}
+@media (prefers-reduced-motion:reduce){dialog.guest[open]{animation:none}.scene .toy.notebook{transition:none}}
+/* the CV at the end of the journey: a yellow sticker button */
+.btn.cv-btn{margin-top:22px;background:var(--sun);color:var(--ink);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-weight:800;rotate:-1.5deg}
+.btn.cv-btn:hover{transform:translate(-2px,-2px)}
+/* the desk folders: on hover one lifts to the front and its cover swings open on its left edge */
+.scene .folders-fx{position:absolute;inset:0;container-type:inline-size;pointer-events:none}
+.scene .ffx{position:absolute;transform:rotate(var(--r));perspective:140cqw;z-index:0;transition:transform .4s cubic-bezier(.3,1.4,.5,1),filter .3s,z-index 0s .65s}
+.scene .ffx img{position:absolute;left:calc(var(--px) * -1);top:calc(var(--py) * -1);width:calc(100% + 2 * var(--px));height:calc(100% + 2 * var(--py));max-width:none}
+.scene .ffx .fcover{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:0 50%;transition:transform .65s cubic-bezier(.35,.9,.3,1)}
+.scene .ffx .ffront,.scene .ffx .fback{backface-visibility:hidden}
+.scene .ffx .fback{transform:rotateY(180deg)}
+/* the folder's name, a paper label stuck low on the cover like on a file folder: it lifts and turns with the cover */
+.scene .ffx .flabel{position:absolute;left:12%;right:16%;bottom:9%;backface-visibility:hidden;background:#FFF8EA;border:.16cqw solid #16130F;border-radius:.25cqw;padding:.45cqw .5cqw .5cqw;text-align:left;font:800 .95cqw/1.05 var(--display);text-transform:uppercase;letter-spacing:-.01em;color:#16130F;box-shadow:inset 0 -.12cqw 0 rgba(22,19,15,.08)}
+.scene .ffx .flabel small{display:block;margin-bottom:.25cqw;font:700 .52cqw/1 var(--mono);letter-spacing:.04em;color:#C81D74;text-transform:uppercase}
+.scene .ffx.open{transform:rotate(var(--r)) translateY(-4%) scale(1.1);z-index:10;filter:drop-shadow(.9cqw 1.3cqw .25cqw rgba(10,8,6,.45));transition:transform .4s cubic-bezier(.3,1.4,.5,1),filter .3s,z-index 0s}
+.scene .ffx.open .fcover{transform:rotateY(-180deg)}
+@media (prefers-reduced-motion:reduce){.scene .ffx,.scene .ffx .fcover{transition:none}}
+
 .case .owner{margin:10px 0 0;font:600 15px/1.4 var(--body);letter-spacing:.02em;color:var(--ink-2)}
 .legal{margin:14px 0 0;font-size:13px;line-height:1.55;color:var(--text-2);max-width:62em}
 .sw-cali{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='4' cy='4' r='3.4' fill='%23F26B1D'/%3E%3Ccircle cx='12' cy='12' r='3.4' fill='%2316130F'/%3E%3C/svg%3E") 0 0/16px 16px}
@@ -220,8 +314,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .after p{margin:4px 0 0;font-size:16px}
 .covers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
 .covers img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
-.mail{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:20px}
-.mail span{font:600 22px/1.36 var(--body);user-select:all;overflow-wrap:anywhere}
+/* contact card: book a call or copy the address; the address is not printed, it only appears if copying fails */
+.contact-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:24px}
+.btn.small.ghost{background:transparent;color:var(--text);box-shadow:inset 0 0 0 2px currentColor}
+.mail-out{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.mail-out.shown{position:static;width:auto;height:auto;clip-path:none;flex-basis:100%;font:600 18px/1.36 var(--body);user-select:all;overflow-wrap:anywhere}
 @media (min-width:821px) and (max-width:1379px){#progetti{align-items:flex-end;padding-top:92svh}}
 @media (max-width:820px){
   .chapter{align-items:flex-end;min-height:120svh;padding-block:40svh 6svh}
@@ -309,8 +406,13 @@ dialog.case[open]{animation:slide .45s var(--ease)}
 html[lang="en"] .sticker{white-space:nowrap} /* the English page keeps its sticker on one line */
 .sticker i{width:10px;height:10px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);animation:blink 1.6s steps(1) infinite}
 @keyframes blink{50%{background:var(--ink)}}
-.hero-copy{position:relative}
-.hero .sticker.avail{left:min(52%,420px);top:-8px}
+.hero-copy,.hero .title{position:relative}
+/* the sticker leans on the "b" of c.lab at every width: everything follows the title size (--h, same clamp as the h1);
+   the b starts 1.53 title-sizes in, the sticker's middle sits on the top of the letters.
+   On very narrow phones it slides left just enough to stay on screen (--sw = its width there) */
+.hero .sticker.avail{--h:clamp(92px,15.5vw,250px);--sw:222px;left:min(calc(var(--h) * 1.53),calc(100% - var(--sw)));top:calc(var(--h) * .05);translate:0 -50%;
+  white-space:nowrap;font-size:clamp(10px,calc(var(--h) * .063),14px);padding:.72em 1em .66em;gap:.55em}
+html[lang="en"] .hero .sticker.avail{--sw:206px}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .tape{position:relative;z-index:3;background:var(--ink);color:var(--sun);overflow:hidden;white-space:nowrap;border-block:3px solid var(--ink)}
 .tape div{display:inline-block;padding:16px 0;font:800 clamp(18px,2.2vw,28px)/1 var(--display);text-transform:uppercase;letter-spacing:-.01em;animation:tape 32s linear infinite}
@@ -343,7 +445,12 @@ html[lang="en"] .sticker{white-space:nowrap} /* the English page keeps its stick
   .stage .note{animation:rise .6s 1.3s var(--ease) both}
   .tape{animation:rise .6s 1s var(--ease) both}
 }
-@media (max-width:900px){.hero .sticker.avail{position:relative;left:auto;top:auto;display:inline-flex;margin-bottom:18px;rotate:-3deg}}
+@media (max-width:900px){
+  /* phones and tablets: a lighter sticker (position and size come from the rule above) */
+  .hero .title{order:2;margin-top:34px}
+  .hero .sticker.avail{border-width:2px;outline-width:3px;box-shadow:3px 3px 0 var(--ink)}
+  .hero .sticker.avail i{width:8px;height:8px}
+}
 @keyframes stamp{0%{transform:scale(1.35);opacity:0;filter:blur(6px)}100%{transform:none;opacity:1;filter:none}}
 @keyframes misreg{0%{transform:translate(-.06em,-.06em);opacity:0}100%{transform:none;opacity:1}}
 @keyframes rise{from{transform:translateY(24px);opacity:0}}
