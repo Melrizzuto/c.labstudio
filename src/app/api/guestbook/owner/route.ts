@@ -46,6 +46,7 @@ export async function GET(req: Request) {
       locale: r.locale,
       approved: r.approved === true,
       sticker: isStickerKey(r.sticker) ? r.sticker : null,
+      color: typeof r.color === 'string' ? r.color : null,
     }));
     return reply({ notes });
   } catch {

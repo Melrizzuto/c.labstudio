@@ -16,7 +16,7 @@ import path from 'node:path';
 import { turbulence } from './turbulence.mjs';
 
 const ASSETS = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'public', 'assets');
-const SCENES = ['day', 'day-night', 'desk', 'night'];
+const SCENES = ['day', 'day-night', 'desk', 'desk-night', 'sofa-day', 'sofa-night'];
 const SCENE_WIDTHS = [1344, 2016, 2688];
 
 async function variants(src, outBase, width, { avif, webp }) {

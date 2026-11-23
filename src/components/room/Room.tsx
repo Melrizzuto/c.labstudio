@@ -111,7 +111,6 @@ export function Room({
     const stage = roomSec?.querySelector<HTMLElement>('#roomStage');
     const miao = roomSec?.querySelector<HTMLElement>('#miao');
     if (!roomSec || !stage || !miao) return;
-    const root = document.documentElement;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const scenes = {} as Record<SceneName, HTMLElement>;
@@ -164,7 +163,7 @@ export function Room({
     /* never before the page itself (fonts, felt Mel) has finished loading */
     let pageLoaded = document.readyState === 'complete';
     const waiting = new Set<string>();
-    const load = (key: 'day' | 'daynight' | 'desk' | 'night') => {
+    const load = (key: 'day' | 'daynight' | 'desk' | 'desknight' | 'night' | 'sofanight') => {
       if (loaded.has(key)) return;
       if (!pageLoaded) {
         waiting.add(key);
@@ -340,7 +339,12 @@ export function Room({
       markDock(chapters[Math.round(idx)]?.dataset.cam);
       if (idx > 0.5) load('desk');
       if (idx > 1.5) load('night');
-      if (idx > 2.5 || forcedNight()) load('daynight');
+      /* the night pictures, only when the page is on night */
+      if (forcedNight()) {
+        load('daynight');
+        if (idx > 0.5) load('desknight');
+        if (idx > 1.5) load('sofanight');
+      }
       (Object.keys(scenes) as SceneName[]).forEach((n) => {
         const want = w.v[n];
         const c = (cur[n] ??= { x: 50, y: 50, z: 1, o: 0 });
@@ -385,11 +389,6 @@ export function Room({
           clip.pause();
         }
       }
-      /* page colours follow the picture: evening scenes turn the page to night */
-      const night = forcedNight() || w.scene === 'night';
-      if (root.dataset.timeLock !== '1') root.dataset.timeLock = '1';
-      const t = night ? 'night' : 'day';
-      if (root.dataset.time !== t) root.dataset.time = t;
     }
 
     /* phones: a sideways swipe on a panning view moves the picture; vertical swipes stay the page's scroll
@@ -581,18 +580,6 @@ export function Room({
     document.addEventListener('click', onPawGreet);
     paw?.addEventListener('animationend', onPawEnd);
 
-    /* leaving the room: the page goes back to the theme */
-    const onScroll = () => {
-      const sec = roomSec.getBoundingClientRect();
-      if (sec.top > innerHeight * 0.5) {
-        delete root.dataset.timeLock;
-        const b = forcedNight() ? 'night' : 'day';
-        if (root.dataset.time !== b) root.dataset.time = b;
-      } else if (sec.bottom < innerHeight * 0.5) {
-        root.dataset.time = 'night';
-      }
-    };
-    addEventListener('scroll', onScroll, { passive: true });
 
     const io = new IntersectionObserver(
       ([e]) => {
@@ -622,7 +609,6 @@ export function Room({
       removeEventListener('pointermove', onSwipeMove);
       removeEventListener('pointerup', onSwipeEnd);
       removeEventListener('pointercancel', onSwipeEnd);
-      removeEventListener('scroll', onScroll);
       stage.removeEventListener('click', onStageClick);
       stage.removeEventListener('click', onToy);
       clearTimeout(typing);

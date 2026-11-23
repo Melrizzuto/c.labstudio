@@ -14,23 +14,24 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
   const folders = DESK_FOLDERS.map((f) => ({ ...f, c: getCase(locale, f.key) as CaseStudy }));
   return (
     <div className="room-stage" id="roomStage">
+      {/* the night light for the things drawn over the desk picture: the same blue ambient as desk-night.jpg,
+          a bit brighter near the monitor (see .scene[data-scene="desk"] in globals.css) */}
+      <svg className="night-filters" aria-hidden="true" width="0" height="0">
+        <filter id="nite" colorInterpolationFilters="sRGB">
+          <feColorMatrix type="matrix" values="0.55 0 0 0 0  0 0.58 0 0 0  0 0 0.9 0 0  0 0 0 1 0" />
+        </filter>
+        <filter id="nite-mid" colorInterpolationFilters="sRGB">
+          <feColorMatrix type="matrix" values="0.67 0 0 0 0  0 0.69 0 0 0  0 0 0.88 0 0  0 0 0 1 0" />
+        </filter>
+        <filter id="nite-screen" colorInterpolationFilters="sRGB">
+          <feColorMatrix type="matrix" values="0.78 0 0 0 0  0 0.86 0 0 0  0 0 1 0 0  0 0 0 1 0" />
+        </filter>
+      </svg>
       <div className="scene" data-scene="day">
         <Picture defer data-load="day" src={sceneSrc('day.jpg')} avif={sceneSet('day', 'avif')} webp={sceneSet('day', 'webp')} sizes={SCENE_SIZES} alt={t.dayAlt} width={2688} height={1520} decoding="async" />
-        <Picture
-          defer
-          data-load="daynight"
-          className="nightwin"
-          src={sceneSrc('day-night.jpg')}
-          avif={sceneSet('day-night', 'avif')}
-          webp={sceneSet('day-night', 'webp')}
-          sizes={SCENE_SIZES}
-          alt=""
-          aria-hidden="true"
-          width={2688}
-          height={1520}
-          decoding="async"
-        />
+        <NightPicture name="day-night" load="daynight" />
         <TimorDate scene="day" locale={locale} />
+        <Twinkle stars={DAY_STARS} />
         <div className="fx glow" style={{ left: '53%', top: '2%', width: '11%', height: '19%' }}></div>
         <button className="hit" data-go="progetti" aria-label={t.hits.dayDesk} style={{ left: 0, top: '20%', width: '27%', height: '44%' }}></button>
         <button className="hit" data-go="percorso" aria-label={t.hits.dayBook} style={{ left: '40%', top: '14%', width: '16%', height: '56%' }}></button>
@@ -40,6 +41,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
       </div>
       <div className="scene" data-scene="desk">
         <Picture defer data-load="desk" src={sceneSrc('desk.jpg')} avif={sceneSet('desk', 'avif')} webp={sceneSet('desk', 'webp')} sizes={SCENE_SIZES} alt={t.deskAlt} width={2688} height={1520} decoding="async" />
+        <NightPicture name="desk-night" load="desknight" />
         <TimorDate scene="desk" locale={locale} />
         <img
           className="fx steam"
@@ -107,7 +109,8 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="hit" data-cat="1" aria-label={t.hits.deskCat} style={{ left: '85%', top: '76%', width: '15%', height: '24%' }}></button>
       </div>
       <div className="scene" data-scene="night">
-        <Picture defer data-load="night" src={sceneSrc('night.jpg')} avif={sceneSet('night', 'avif')} webp={sceneSet('night', 'webp')} sizes={SCENE_SIZES} alt={t.nightAlt} width={2688} height={1520} decoding="async" />
+        <Picture defer data-load="night" src={sceneSrc('sofa-day.jpg')} avif={sceneSet('sofa-day', 'avif')} webp={sceneSet('sofa-day', 'webp')} sizes={SCENE_SIZES} alt={t.nightAlt} width={2688} height={1520} decoding="async" />
+        <NightPicture name="sofa-night" load="sofanight" />
         {/* the TV screen, edge to edge: the weekend clip in a YouTube-style player (the bar follows the real video time) */}
         <div className="tvplayer" style={{ left: '50.372%', top: '19.934%', width: '25.260%', height: '24.671%' }}>
           <video className="tvclip" id="tvclip" src="/assets/tv/rifatto-tv.mp4" muted loop playsInline preload="none"></video>
@@ -149,12 +152,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
             </div>
           </div>
         </div>
-        <div className="fx twinkle" style={{ left: '2%', top: '3%', width: '31%', height: '36%' }}>
-          <i style={{ left: '12%', top: '20%' }}></i>
-          <i style={{ left: '58%', top: '12%', animationDelay: '.8s' }}></i>
-          <i style={{ left: '30%', top: '55%', animationDelay: '1.6s' }}></i>
-          <i style={{ left: '80%', top: '40%', animationDelay: '.4s' }}></i>
-        </div>
+        <Twinkle stars={SOFA_STARS} />
         <div className="fx zzz" style={{ left: '86.6%', top: '53%', width: '3%', height: '3%' }}>
           <span>z</span>
           <span>z</span>
@@ -189,5 +187,39 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         {t.miao[0].word}
       </p>
     </div>
+  );
+}
+
+/* the stars drawn in the night windows, in % of the picture: they twinkle at night (globals.css) */
+const DAY_STARS: [number, number][] = [[33.48, 4.97], [39.99, 3.17], [51.98, 4.94], [63.98, 5.97], [38.48, 17.95], [63.43, 16.78]];
+const SOFA_STARS: [number, number][] = [[9.41, 10.16], [25.58, 16.51], [16.49, 26.12]];
+
+function Twinkle({ stars }: { stars: [number, number][] }) {
+  return (
+    <div className="fx twinkle" aria-hidden="true">
+      {stars.map(([x, y], i) => (
+        <i key={i} style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${(i * 0.7) % 2.6}s` }}></i>
+      ))}
+    </div>
+  );
+}
+
+/** A scene's night picture, over its day picture: shown when the page is on night (globals.css), loaded only then (Room). */
+function NightPicture({ name, load }: { name: string; load: string }) {
+  return (
+    <Picture
+      defer
+      data-load={load}
+      className="nightwin"
+      src={sceneSrc(`${name}.jpg`)}
+      avif={sceneSet(name, 'avif')}
+      webp={sceneSet(name, 'webp')}
+      sizes={SCENE_SIZES}
+      alt=""
+      aria-hidden="true"
+      width={2688}
+      height={1520}
+      decoding="async"
+    />
   );
 }

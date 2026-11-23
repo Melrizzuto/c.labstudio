@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { Sticker, type StickerKey } from '@/content/stickers';
+import { NOTE_FILL, isNoteColor } from '@/content/board';
 
-type Note = { id: number; created_at: string; name: string | null; message: string; mood: 'like' | 'dislike'; locale: 'it' | 'en'; approved: boolean; sticker: StickerKey | null };
+type Note = { id: number; created_at: string; name: string | null; message: string; mood: 'like' | 'dislike'; locale: 'it' | 'en'; approved: boolean; sticker: StickerKey | null; color?: string | null };
 type Tab = 'todo' | 'live' | 'all';
 
 const API = '/api/guestbook/owner/';
@@ -117,7 +118,7 @@ export function OwnerNotes() {
       ) : (
         <ul className="owner-list">
           {shown.map((n) => (
-            <li key={n.id} className={n.approved ? 'live' : ''}>
+            <li key={n.id} className={n.approved ? 'live' : ''} style={isNoteColor(n.color) ? { background: NOTE_FILL[n.color] } : undefined}>
               {n.sticker && <Sticker k={n.sticker} className="owner-sticker" />}
               <p className="owner-msg">{n.message}</p>
               <p className="owner-meta">

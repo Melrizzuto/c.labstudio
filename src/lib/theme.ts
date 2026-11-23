@@ -2,7 +2,7 @@
  * Day and night. The page colours follow `data-time` on <html> ("day" | "night").
  * It comes from the visitor's choice (the button, saved in localStorage as `clab-time`),
  * otherwise from `data-theme` on <html>, otherwise from the system's dark mode.
- * While the room is on screen, the room sets `data-time-lock` and drives `data-time` itself (see Room).
+ * The whole site follows it, the room too: each scene has a night picture shown over its day one (see RoomStage).
  */
 
 const KEY = 'clab-time';
@@ -30,10 +30,10 @@ export function forcedNight(): boolean {
   return root.dataset.theme === 'dark' || (!root.dataset.theme && darkQuery().matches);
 }
 
-/** Puts the page back on the visitor's time, unless the room holds it. */
+/** Puts the page on the visitor's time. */
 export function baseTime(): void {
   const root = document.documentElement;
-  if (!root.dataset.timeLock) root.dataset.time = forcedNight() ? 'night' : 'day';
+  root.dataset.time = forcedNight() ? 'night' : 'day';
   listeners.forEach((fn) => fn());
 }
 

@@ -29,7 +29,7 @@ export function Picture({ src, avif, webp, sizes, defer, ...img }: Props) {
  * The scene pictures are cached for a week under their names: bump this when a scene picture changes,
  * so browsers fetch the new one.
  */
-export const SCENE_VERSION = '21';
+export const SCENE_VERSION = '30';
 /** a scene file, with the version that busts the browser cache */
 export const sceneSrc = (file: string) => `/assets/scenes/${file}?v=${SCENE_VERSION}`;
 

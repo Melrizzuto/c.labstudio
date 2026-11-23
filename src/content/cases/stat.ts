@@ -10,15 +10,19 @@ export const stat: Record<Locale, CaseCopy> = {
     hitLabel: "Cartella a righe rosa: STAT",
     blurb: "Rifare uno strumento che tutti sapevano già usare, senza farglielo odiare.",
     owner: "Progetto per Witailer (gruppo Alkemy)",
-    tagline: "Rifare da zero uno strumento che tutti sapevano già usare, senza farglielo odiare. Dal prototipo su dati finti ai feedback, fino a STAT 2.0.",
+    tagline: "Il rifacimento di STAT, lo strumento interno che racconta come le persone cercano su Amazon. Il vecchio lo sapevano usare tutti: il nuovo doveva fare di più restando semplice come prima.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/stat.mp4", poster: "/assets/videos/stat.jpg", label: "Video demo di STAT" },
+      { kind: "demo", src: "/assets/videos/stat-product.mp4?v=2", poster: "/assets/videos/stat-product.jpg?v=2", label: "Video demo di STAT" },
       {
         kind: "facts",
         items: [
           { label: "Quando", value: "Luglio – novembre 2026" },
-          { label: "Il mio ruolo", value: "UX, UI e tutto il frontend. Il backend l'ha fatto un collega" },
-          { label: "Per chi", value: "I team che seguono i clienti su Amazon: account, strategia, contenuti, advertising" },
+          { label: "Il mio ruolo", value: "Ricerca, UX e UI, tutto il frontend e il flusso con l'AI" },
+          { label: "Per chi", value: "I team che seguono i clienti su Amazon: account, strategia, contenuti e pubblicità" },
+          {
+            label: "Con",
+            value: "Il senior product designer e il customer success manager, con cui ho intervistato gli utenti interni; il tech lead, che ha costruito il backend",
+          },
         ],
       },
       {
@@ -37,59 +41,76 @@ export const stat: Record<Locale, CaseCopy> = {
           },
         ],
       },
-      { kind: "heading", text: "Da dove partivamo" },
-      {
-        kind: "text",
-        text: "STAT racconta come le persone cercano su Amazon: parole chiave, marchi, categorie, mese per mese. Col tempo però era diventato poco più di una barra di ricerca:",
-      },
-      {
-        kind: "list",
-        items: [
-          "per un'analisi di categoria bisognava saltare tra cinque o più strumenti diversi;",
-          "con la fine del vecchio sistema di report si erano persi l'export dello storico e la ricerca da prodotto a parole chiave;",
-          "la crescita rispetto alla categoria si calcolava a mano, e le categorie su misura si costruivano fuori dallo strumento;",
-          "dietro, il sistema era fermo al 2024: dati aggiornati a mano, solo mensili, solo confrontati con l'anno prima.",
-        ],
-      },
-      { kind: "text", text: "A maggio 2026 abbiamo deciso di rifarlo da zero, con il vecchio come punto di riferimento e non come base." },
-      { kind: "heading", text: "Com'è andata" },
+      { kind: "heading", text: "Design thinking" },
       {
         kind: "steps",
         items: [
           {
-            when: "Luglio – ottobre",
+            title: "Il bisogno",
+            text: "STAT racconta come le persone cercano su Amazon: parole chiave, marchi, categorie, mese per mese. Col tempo era diventato poco più di una barra di ricerca. Per un'analisi di categoria bisognava saltare tra cinque o più strumenti. Con la fine del vecchio sistema di report si erano persi l'export dello storico e la ricerca da prodotto a parole chiave. La crescita rispetto alla categoria si calcolava a mano e le categorie su misura si costruivano fuori dallo strumento.",
+          },
+          {
+            when: "Maggio 2026",
+            title: "La decisione",
+            text: "È stata una decisione del team: il prodotto era molto legacy e andava aggiornato. L'obiettivo era rifarlo da zero, smart e moderno, con il vecchio come punto di riferimento e non come base.",
+          },
+          {
+            title: "La complessità",
+            text: "Dietro, il sistema era fermo al 2024: dati aggiornati a mano, solo mensili, confrontati solo con l'anno prima. Davanti, uno strumento che le persone sapevano già usare. Il nuovo doveva fare molto di più senza togliere quella semplicità.",
+          },
+        ],
+      },
+      { kind: "heading", text: "Ricerca UX" },
+      {
+        kind: "steps",
+        items: [
+          {
+            title: "Il vecchio STAT e le interviste",
+            text: "Sono partita dal vecchio STAT e, insieme al senior product designer e al customer success manager, ho intervistato gli utenti interni che lo usavano.",
+          },
+          {
+            title: "Il PRD",
+            text: "Ho scritto il PRD, il documento di prodotto, con i profili delle persone che avrebbero usato STAT.",
+          },
+          {
+            when: "Ottobre 2026",
+            title: "I primi feedback sul prototipo",
+            text: "Ho messo il prototipo davanti a chi l'avrebbe usato davvero. Una richiesta del team contenuti è diventata una schermata utile a tutti. Un responsabile l'ha trovato «molto tecnico»: andava bene per i team interni, meno per clienti e management.",
+          },
+          {
+            when: "28 ottobre – 11 novembre 2026",
+            title: "Il feedback dei colleghi",
+            text: "Nelle prove dei colleghi tornava sempre la stessa frase: «il vecchio STAT lo poteva usare anche mia mamma». Il nuovo sembrava complicato: tre campi di ricerca, troppi numeri, etichette in inglese.",
+          },
+          {
+            when: "28 ottobre – 7 novembre 2026",
+            title: "I flussi del vecchio STAT, rimappati",
+            text: "Con gli utenti pilota interni ho rimappato il vecchio STAT schermata per schermata: 19 schermate e 10 percorsi, con tutti i clic. Poi l'ho confrontato pezzo per pezzo con il nuovo, per capire cosa si aspettavano di trovare.",
+          },
+        ],
+      },
+      { kind: "heading", text: "Processo di design" },
+      {
+        kind: "steps",
+        items: [
+          {
+            title: "Un flusso per profilo, poi uno solo",
+            text: "Per ogni profilo del PRD ho disegnato i percorsi di navigazione. Poi li ho uniti in un unico flusso su Forest UI, la UI di Witailer fatta dal senior product designer.",
+          },
+          {
+            when: "Luglio – ottobre 2026",
             title: "Un prototipo cliccabile su dati finti",
-            text: "Niente backend, niente login, tutto cliccabile. Un'unica struttura: menu per fasi (scopri, analizza, agisci, rivedi), periodo e mercato sempre in alto, il design system di Witailer per ogni componente. 144 commit pieni di idee nuove: perimetri di lavoro per cliente, liste, avvisi, stagionalità, ricerca a parole.",
+            text: "Niente backend, niente login, tutto cliccabile. Un'unica struttura: menu per fasi (scopri, analizza, agisci, rivedi), periodo e mercato sempre in alto, Forest UI per ogni componente. Dentro, le idee nuove: perimetri di lavoro per cliente, liste, avvisi, stagionalità, ricerca a parole.",
           },
           {
-            when: "Ottobre",
-            title: "I primi feedback",
-            text: "Ho messo il prototipo davanti a chi l'avrebbe usato davvero. Una richiesta del team contenuti è diventata una schermata utile a tutti. Un responsabile invece l'ha trovato «molto tecnico»: ok per i team interni, poco chiaro per clienti e management. Appuntato.",
+            when: "7 novembre 2026",
+            title: "La nuova direzione",
+            text: "Dopo i feedback e la rimappatura la direzione era chiara: «STAT torna a sembrare il vecchio STAT, a prova di errore». Ho adattato la UX a quello che gli utenti pilota si aspettavano.",
           },
           {
-            when: "Da fine settembre",
-            title: "Il prodotto vero, in parallelo",
-            text: "Mentre il prototipo girava, ho cominciato il frontend vero di STAT 2.0 in Next.js, collegato ai dati reali. Il 12 ottobre è uscita la prima versione.",
-          },
-          {
-            when: "25 ottobre",
-            title: "Un test di navigazione",
-            text: "Sei profili presi dal documento di prodotto, ognuno con un compito vero, tutti registrati in video. Risultato: due compiti riusciti su sei. Ha fatto male, ma è servito. Ho messo in fila i problemi per gravità: pagine che non dicono a cosa servono, la stessa parola con tre significati, colonne vuote senza una spiegazione.",
-          },
-          {
-            when: "28 ottobre – 11 novembre",
-            title: "Il feedback che ha cambiato direzione",
-            text: "Nelle prove dei colleghi tornava sempre la stessa frase: «il vecchio STAT lo poteva usare anche mia mamma». Il nuovo sembrava complicato: tre campi di ricerca, troppi numeri, etichette in inglese. Avevano ragione.",
-          },
-          {
-            when: "28 ottobre – 7 novembre",
-            title: "Ripartire da quello che funzionava",
-            text: "Ho rismontato il vecchio STAT schermata per schermata, 19 schermate e 10 percorsi con tutti i clic, e l'ho confrontato pezzo per pezzo con il nuovo. Il 7 novembre la direzione era chiara: «STAT torna a sembrare il vecchio STAT, a prova di errore».",
-          },
-          {
-            when: "11 – 20 novembre",
+            when: "11 – 20 novembre 2026",
             title: "Il modello finale",
-            text: "Una sola porta: la barra di ricerca. Ogni ricerca porta a una panoramica con le risposte che tutti si aspettano: cresce? quanto? chi vince? Tutte le novità stanno un passo dietro, mai davanti.",
+            text: "Una sola porta: la barra di ricerca. Ogni ricerca porta a una panoramica con le risposte che tutti si aspettano: cresce? quanto? chi vince? Le novità stanno un passo dietro, mai davanti.",
           },
         ],
       },
@@ -119,23 +140,26 @@ export const stat: Record<Locale, CaseCopy> = {
           },
         ],
       },
-      { kind: "heading", text: "Le decisioni" },
+      { kind: "heading", text: "UI" },
       {
-        kind: "decisions",
+        kind: "steps",
         items: [
           {
             title: "Familiare, ma più potente",
-            text: "Chi apre il nuovo STAT deve pensare «è lui, ma fa di più». Le persone il vecchio lo sapevano già usare: le novità non devono essere la prima cosa che si trovano davanti.",
+            text: "Chi apre il nuovo STAT deve riconoscere il vecchio e trovare di più. Le persone il vecchio lo sapevano già usare, quindi le novità non sono la prima cosa che si trovano davanti.",
           },
           {
             title: "Invio fa sempre la stessa cosa",
-            text: "Apre l'elenco delle parole che contengono quel testo. Cercare di indovinare se volevi un marchio o una parola sbagliava una volta su due.",
+            text: "Apre l'elenco delle parole che contengono quel testo. Provare a indovinare se si cercava un marchio o una parola sbagliava una volta su due.",
           },
           {
-            title: "«Salva» chiede a cosa ti serve",
-            text: "Per un lavoro, da seguire ogni settimana, o «non lo so ancora». Meglio scegliere cosa vuoi fare che imparare un termine nuovo.",
+            title: "«Salva» chiede a cosa serve",
+            text: "Per un lavoro, da seguire ogni settimana, o «non lo so ancora». Si sceglie cosa si vuole fare invece di imparare un termine nuovo.",
           },
-          { title: "Ogni crescita ha un nome", text: "Mai un «+12%» buttato lì: ogni percentuale dice di cosa parla e rispetto a quando." },
+          {
+            title: "Ogni crescita ha un nome",
+            text: "Nessuna percentuale da sola: ogni crescita dice di cosa parla e rispetto a quando.",
+          },
         ],
       },
       {
@@ -148,21 +172,69 @@ export const stat: Record<Locale, CaseCopy> = {
           caption: "La pagina di una parola in STAT 2.0: di nuovo tre numeri grandi, con Panoramica e Dettagli. I valori sono coperti.",
         },
       },
+      { kind: "heading", text: "Sviluppo" },
+      {
+        kind: "steps",
+        items: [
+          {
+            when: "Da fine settembre 2026",
+            title: "Il frontend di STAT 2.0",
+            text: "Mentre il prototipo girava ho cominciato il frontend vero, in Next.js, collegato ai dati reali. Il frontend l'ho fatto tutto io, il backend il tech lead. Il 12 ottobre è uscita la prima versione.",
+          },
+          {
+            title: "Un flusso con l'AI",
+            text: "Il flusso con l'AI guida chi lo usa nella lettura dei dati e dei grafici, e fa una ricerca incrociata tra parole chiave, categorie, marchi e prodotti, che senza AI andrebbero letti come silos separati. L'interfaccia della risposta cambia a seconda della domanda, seguendo i principi di Sentient Design.",
+          },
+        ],
+      },
+      { kind: "heading", text: "Ingegnerizzazione" },
+      {
+        kind: "steps",
+        items: [
+          {
+            title: "Ogni schermata controllata",
+            text: "Con Playwright controllo ogni schermata su computer e su telefono.",
+          },
+          {
+            title: "Un rilascio in due tempi",
+            text: "Il primo rilascio va a tester e colleghi interni. Le funzioni a pagamento arrivano con il secondo.",
+          },
+        ],
+      },
+      { kind: "heading", text: "Le sfide e come le ho affrontate" },
+      {
+        kind: "decisions",
+        items: [
+          {
+            title: "Il nuovo sembrava più complicato del vecchio",
+            text: "Nelle prove i colleghi lo trovavano più complicato del vecchio. Ho rimappato il vecchio STAT con gli utenti pilota e da lì ho cambiato direzione: una sola barra di ricerca e le novità un passo dietro.",
+          },
+          {
+            title: "Profili diversi, un solo prodotto",
+            text: "Ho disegnato i percorsi di navigazione per ogni profilo del PRD e poi li ho uniti in un unico flusso su Forest UI.",
+          },
+          {
+            title: "Progettare prima di avere il backend",
+            text: "Ho fatto un prototipo cliccabile su dati finti, senza backend. Da fine settembre, in parallelo, ho costruito il frontend vero sui dati reali: la prima versione è uscita il 12 ottobre.",
+          },
+          {
+            title: "Una ricerca che sbagliava una volta su due",
+            text: "Provare a indovinare se si cercava un marchio o una parola non funzionava. Ho deciso che Invio fa sempre la stessa cosa: apre l'elenco delle parole che contengono quel testo.",
+          },
+        ],
+      },
       { kind: "heading", text: "Il risultato" },
       {
         kind: "numbers",
         items: [
-          { value: "144", label: "commit sul prototipo, da luglio a ottobre" },
-          { value: "365", label: "commit su STAT 2.0, quasi tutti nel frontend" },
-          { value: "142", label: "pull request entrate nel prodotto" },
-          { value: "16", label: "versioni rilasciate, dalla 2.1 alla 2.13" },
+          { value: "12 ottobre", label: "la prima versione di STAT 2.0 sui dati reali" },
+          { value: "In sviluppo", label: "STAT 2.0 non è ancora rilasciato a tutti" },
         ],
       },
-      { kind: "text", text: "Il primo rilascio va a tester e colleghi interni, le funzioni a pagamento arrivano con il secondo." },
       {
         kind: "tools",
         label: "Strumenti.",
-        text: "React 19 e Vite per il prototipo; Next.js 16, React 19 e il design system di Witailer per il prodotto; Playwright per controllare ogni schermata su computer e telefono; test di navigazione registrati in video; Claude Code come compagno di sviluppo.",
+        text: "React 19 e Vite per il prototipo; Next.js 16, React 19 e Forest UI per il prodotto; Playwright per controllare ogni schermata su computer e telefono; Claude Code come compagno di sviluppo.",
       },
     ],
     next: [{ label: "Apri Studio AI", open: "studio" }, { label: "Apri Philo", open: "philo" }],
@@ -176,7 +248,7 @@ export const stat: Record<Locale, CaseCopy> = {
     owner: "A project for Witailer (Alkemy group)",
     tagline: "Rebuilding from scratch a tool everyone already knew how to use, without making them hate it. From a prototype on fake data, through feedback, all the way to STAT 2.0.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/stat-en.mp4", poster: "/assets/videos/stat-en.jpg", label: "STAT demo video" },
+      { kind: "demo", src: "/assets/videos/stat-product-en.mp4?v=2", poster: "/assets/videos/stat-product-en.jpg?v=2", label: "STAT demo video" },
       {
         kind: "facts",
         items: [

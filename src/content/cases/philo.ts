@@ -10,107 +10,69 @@ export const philo: Record<Locale, CaseCopy> = {
     hitLabel: "Cartella a pois gialla: Philo",
     blurb: "Legge i programmi del team e ti fa vedere tutto come un ufficio: zoom in sul tuo team, zoom out sugli altri.",
     owner: "Progetto per Witailer (gruppo Alkemy)",
-    tagline: "Il mio progetto più mio. Philo fa due cose: legge i programmi che usa il team e ne mette il succo nel knowledge graph, poi te lo fa vedere come un ufficio. Zoom in: tutto quello che succede nel tuo team. Zoom out: cosa succede negli altri.",
+    tagline: "Philo fa due cose: legge i programmi che usa il team e ne mette il succo nel knowledge graph, poi te lo fa vedere come un ufficio. Zoom in: tutto quello che succede nel tuo team. Zoom out: cosa succede negli altri.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/philo.mp4", poster: "/assets/videos/philo.jpg", label: "Video demo di Philo" },
+      { kind: "demo", src: "/assets/videos/philo-product.mp4?v=5", poster: "/assets/videos/philo-product.jpg?v=4", label: "Video demo di Philo" },
       {
         kind: "facts",
         items: [
-          { label: "Quando", value: "Ottobre – novembre 2026, ultime novità il 20 novembre" },
+          { label: "Quando", value: "Da ottobre 2026 a oggi" },
           {
             label: "Il mio ruolo",
-            value: "Quasi tutto mio: idea, UX e UI, identità e mascotte, scene 3D in Blender, frontend e buona parte del backend. 342 commit su 367, per dire",
+            value: "Idea e concept, nome e mascotte, UX e UI, l'ufficio in 3D in Blender e il frontend. Il motore sul knowledge graph lo costruisce il senior frontend engineer",
           },
           {
             label: "Per chi",
-            value: "Il primo è il team di prodotto di Witailer, ma deve funzionare per qualunque team, qualunque programmi usi",
+            value: "Il team di prodotto di Witailer, per primo. Poi gli altri team, qualunque programmi usino",
           },
+          { label: "Con", value: "Il senior frontend engineer, che costruisce il motore di Philo sul knowledge graph" },
         ],
       },
-      {
-        kind: "figure",
-        figure: {
-          img: {
-            src: "/assets/cases/philo/video-thread.jpg",
-            alt: "La mascotte di filo tira un filo rosso che lega ticket, documenti, dati, decisioni e chat tra le persone del team",
-          },
-          caption: "«Philo è il filo che tiene insieme tutto il lavoro.» Un fotogramma del video di presentazione.",
-        },
-      },
-      { kind: "heading", text: "Il problema" },
-      {
-        kind: "text",
-        text: "In un team il lavoro è sparso ovunque: commit, documenti, ticket, chat, call. Ognuno vede il suo pezzo, e quasi nessuno vede il resto. Così:",
-      },
-      {
-        kind: "list",
-        items: [
-          "non sai chi sta facendo cosa, né cosa è fermo e chi può sbloccarlo;",
-          "le decisioni si perdono tra una call e una chat, e dopo una settimana nessuno ricorda perché;",
-          "quello che tocca a te lo scopri quando è già tardi;",
-          "e di cosa fanno gli altri team, e di cosa cambia anche per te, non sai quasi niente.",
-        ],
-      },
-      { kind: "heading", text: "Come funziona" },
+      { kind: "heading", text: "Design thinking" },
       {
         kind: "steps",
         items: [
           {
-            title: "Philo legge, il knowledge graph ricorda",
-            text: "Philo legge i programmi del team e nel knowledge graph scrive solo il succo, senza rumore e senza sporcarlo. Non decide cosa è vero e non tiene una memoria sua: quello che è vero sta nel knowledge graph, con la sua fonte e la sua data.",
+            title: "Il bisogno",
+            text: "In un team il lavoro è sparso tra commit, documenti, ticket, chat e call. Ognuno vede il suo pezzo. Non sai chi sta facendo cosa, cosa è fermo e chi può sbloccarlo. Le decisioni si perdono tra una call e una chat. Quello che tocca a te lo scopri tardi, e degli altri team non sai quasi niente.",
           },
           {
-            title: "Philo propone, la persona decide",
-            text: "Quello che Philo scrive passa da chi ha detto sì, con il suo login. Ognuno vede solo quello che può vedere: è il knowledge graph a decidere chi vede cosa, Philo lo rispetta.",
+            title: "L'idea",
+            text: "Il bisogno l'ho intercettato io, nel nostro team, e Philo è partito da lì. Concept, nome e mascotte sono miei. Philo legge i programmi del team, mette il succo nel knowledge graph e lo fa vedere come un ufficio.",
           },
           {
-            title: "Zoom in, zoom out",
-            text: "La home è un ufficio in isometria: le persone alle scrivanie, chi fa cosa, cosa è fermo, cosa si è deciso, cosa tocca a te. Con lo zoom out l'ufficio diventa una piattaforma: un riquadro per ogni team intorno a un relax comune.",
-          },
-          {
-            title: "Risponde dove lavori",
-            text: "Nell'app, in una barra che galleggia sul Mac e dentro Claude, con un server MCP. Fai una domanda e Philo ti risponde con quello che il team sa.",
+            title: "La complessità",
+            text: "Philo legge fonti diverse e deve dire solo cose vere. Ogni fatto ha bisogno di una fonte e di una data, i fatti confermati vanno tenuti separati dalle ipotesi, e ognuno deve vedere solo quello che può vedere.",
           },
         ],
       },
-      {
-        kind: "figure",
-        figure: {
-          img: {
-            src: "/assets/cases/philo/office.jpg",
-            alt: "L'ufficio di Philo nell'app: lavagna dei progetti, stanza isometrica con scrivanie e relax, la mascotte che parla",
-          },
-          caption: "L'ufficio, la home di Philo, come è oggi. Dati di prova e nomi inventati.",
-        },
-      },
-      { kind: "heading", text: "Come l'ho costruito" },
+      { kind: "heading", text: "Processo di design" },
       {
         kind: "steps",
         items: [
           {
-            when: "5 – 8 ottobre",
-            title: "Concept, identità e mascotte",
-            text: "Un grafo fatto di file, un nodo per file con fonte e data. E una mascotte a forma di P fatta di filo, con due occhi: il filo rosso è morbido quando è una proposta, teso quando è confermato, tratteggiato quando è bloccato su un dato.",
+            title: "La prima interfaccia non funzionava",
+            text: "La prima versione l'ho disegnata su Forest UI, la UI dell'azienda: era statica, non si navigava, ed è pensata per i dati, mentre Philo non parla di dati. Dopo una fase di ricerca e sviluppo ho progettato un ufficio in 3D.",
           },
           {
-            when: "16 – 17 ottobre",
-            title: "Il grafo diventa un prodotto",
-            text: "Due giorni, oltre cento commit, poco sonno: database vero, la coda «da confermare» voce per voce, le contraddizioni, sprint e stand-up preparati da Philo, la versione per telefono, l'app per Mac e il server MCP.",
+            when: "Fine ottobre 2026",
+            title: "Una coda che nessuno leggeva",
+            text: "La coda «da confermare» aveva 1.409 voci e nessuno la leggeva.",
           },
           {
-            when: "22 – 27 ottobre",
-            title: "La mente di Philo",
-            text: "Philo impara a leggere codice, documenti e pull request, con regole chiare: chi vince quando le fonti non sono d'accordo, ogni fatto con due date, controllare prima di parlare. E un esame costruito sui suoi errori veri.",
+            when: "5 – 8 ottobre 2026",
+            title: "Concept, nome e mascotte",
+            text: "Il primo concept era un grafo fatto di file: un nodo per ogni file, con fonte e data. La mascotte è una P fatta di filo, con due occhi. Il filo rosso è morbido quando una cosa è una proposta, teso quando è confermata, tratteggiato quando è bloccata su un dato.",
           },
           {
-            when: "30 ottobre – 11 novembre",
+            when: "30 ottobre – 11 novembre 2026",
             title: "L'ufficio",
-            text: "Due tentativi buttati, poi la forma giusta: un unico ufficio in isometria. Tutta l'app passa a un solo stile, colori piatti e linea nera, e il caricamento iniziale scende da 3,6 a 1,1 MB.",
+            text: "Dopo due tentativi sono arrivata a un unico ufficio in isometria, che è diventato la home di Philo.",
           },
           {
-            when: "20 novembre",
-            title: "Philo cambia pelle",
-            text: "Il punto di svolta: Philo smette di essere il «filo del processo di prodotto» con un cervello tutto suo. D'ora in poi legge e fa vedere, e a ricordare ci pensa il knowledge graph dell'azienda. Così può crescere con più team e più dati, senza diventare un altro posto dove cercare le cose.",
+            when: "20 novembre 2026",
+            title: "Più team insieme",
+            text: "In Blender ho provato sette modi di mettere insieme più team e ho scelto il più semplice: un riquadro per ogni team intorno a un relax comune.",
           },
         ],
       },
@@ -128,86 +90,149 @@ export const philo: Record<Locale, CaseCopy> = {
         ],
       },
       {
-        kind: "highlight",
-        id: "philo-new",
-        title: "Le novità di questa settimana",
-        blocks: [
-          {
-            kind: "steps",
-            items: [
-              {
-                when: "19 – 20 novembre",
-                title: "Philo in 3D",
-                text: "Ho rifatto la mascotte in Blender: un vero filo intrecciato che cambia forma con l'umore. Undici umori, ognuno con il suo piccolo loop: quando pensa diventa un gomitolo, quando festeggia si fa fiocco.",
-              },
-              {
-                when: "20 novembre",
-                title: "Il personaggio di ognuno",
-                text: "Ognuno si disegna il suo personaggio, che lo rappresenta alla scrivania e nel relax: pelle, posa, capelli, vestiti, accessori. Sì, c'è anche il gattino sulla testa.",
-              },
-              {
-                when: "20 novembre",
-                title: "L'ufficio diventa una piattaforma",
-                text: "In Blender ho provato sette modi di mettere insieme più team e ho scelto il più semplice: un riquadro per team intorno a un relax comune. Sopra ogni riquadro solo due segnali, giallo per le novità e rosso per quello che è fermo e ti riguarda.",
-              },
-            ],
-          },
-          {
-            kind: "figure",
-            figure: {
-              img: { src: "/assets/cases/philo/mascot-3d-moods.jpg", alt: "Gli undici stati d'animo della mascotte Philo in 3D" },
-              caption: "Gli undici umori di Philo, resi in Blender.",
-            },
-          },
-          {
-            kind: "pair",
-            figures: [
-              {
-                img: {
-                  src: "/assets/cases/philo/character-editor.jpg",
-                  alt: "L'editor del personaggio: la figura in piedi e le scelte a pillola",
-                },
-                caption: "«Come ti vedono nell'ufficio»: l'editor del personaggio.",
-              },
-              {
-                img: {
-                  src: "/assets/cases/philo/platform-zoom-out.jpg",
-                  alt: "Vista dall'alto della piattaforma: gli uffici dei team attaccati attorno al relax comune",
-                },
-                caption: "Zoom out: gli uffici dei team, il tuo in giallo, il relax comune al centro. Proposta del 20 novembre.",
-              },
-            ],
-          },
-        ],
+        kind: "figure",
+        figure: {
+          img: { src: "/assets/cases/philo/shared-relax.jpg", alt: "Pianta isometrica del relax comune con divani, giochi e bancone" },
+          caption: "La pianta del relax comune, da approvare prima di costruirla.",
+        },
       },
-      { kind: "heading", text: "Le decisioni" },
+      { kind: "heading", text: "UI" },
       {
-        kind: "decisions",
+        kind: "steps",
         items: [
           {
+            title: "La home è un ufficio",
+            text: "Le persone alle scrivanie, chi fa cosa, cosa è fermo, cosa si è deciso, cosa tocca a te. Con lo zoom out l'ufficio diventa una piattaforma: un riquadro per ogni team intorno al relax comune. Sopra ogni riquadro ci sono solo due segnali, giallo per le novità e rosso per quello che è fermo e ti riguarda.",
+          },
+          {
             title: "Un'interfaccia calma",
-            text: "Philo saluta una volta e poi sta buono, e se non succede niente si addormenta. Uno strumento che usi tra una call e l'altra deve darti qualcosa, non chiederti attenzione.",
+            text: "Philo saluta una volta e poi sta in silenzio. Se non succede niente, si addormenta. Si usa tra una call e l'altra, quindi deve dare informazioni senza chiedere attenzione.",
           },
           {
-            title: "Fonte e data su ogni nodo",
-            text: "Fatti confermati e ipotesi restano separati, anche nel testo. Se non ti fidi delle risposte, il prodotto non vale niente.",
+            when: "30 ottobre – 11 novembre 2026",
+            title: "Un solo stile: BRUTALE DS",
+            text: "In Blender ho modellato l'ufficio, i personaggi e la mascotte, e ho creato un nuovo design system, BRUTALE DS: colori piatti e linea nera per tutta l'app. Il caricamento iniziale è sceso da 3,6 a 1,1 MB.",
           },
           {
-            title: "Tre livelli di conferma",
-            text: "A fine ottobre la coda «da confermare» aveva 1.409 voci che nessuno leggeva. L'ho divisa in tre livelli: il sì serve alla fiducia, una coda infinita la uccide.",
+            when: "19 – 20 novembre 2026",
+            title: "La mascotte in 3D",
+            text: "Ho rifatto la mascotte in Blender: un filo intrecciato che cambia forma con l'umore. Ha undici umori, ognuno con una breve animazione. Quando pensa diventa un gomitolo, quando festeggia un fiocco.",
           },
           {
-            title: "Regole fisse dove serve affidabilità",
-            text: "Quale codice appartiene a quale progetto lo decidono regole che si possono spiegare, non l'AI: tutte le risposte si appoggiano su quei collegamenti.",
+            when: "20 novembre 2026",
+            title: "Il personaggio di ognuno",
+            text: "Ognuno disegna il personaggio che lo rappresenta alla scrivania e nel relax: pelle, posa, capelli, vestiti, accessori.",
           },
         ],
       },
       {
         kind: "figure",
         figure: {
-          img: { src: "/assets/cases/philo/shared-relax.jpg", alt: "Pianta isometrica del relax comune con divani, giochi e bancone" },
-          caption: "La pianta del relax comune, da approvare prima di costruirla.",
+          img: {
+            src: "/assets/cases/philo/office.jpg",
+            alt: "L'ufficio di Philo nell'app: lavagna dei progetti, stanza isometrica con scrivanie e relax, la mascotte che parla",
+          },
+          caption: "L'ufficio, la home di Philo, come è oggi. Dati di prova e nomi inventati.",
         },
+      },
+      {
+        kind: "figure",
+        figure: {
+          img: { src: "/assets/cases/philo/mascot-3d-moods.jpg", alt: "Gli undici stati d'animo della mascotte Philo in 3D" },
+          caption: "Gli undici umori di Philo, resi in Blender.",
+        },
+      },
+      {
+        kind: "pair",
+        figures: [
+          {
+            img: {
+              src: "/assets/cases/philo/character-editor.jpg",
+              alt: "L'editor del personaggio: la figura in piedi e le scelte a pillola",
+            },
+            caption: "«Come ti vedono nell'ufficio»: l'editor del personaggio.",
+          },
+          {
+            img: {
+              src: "/assets/cases/philo/platform-zoom-out.jpg",
+              alt: "Vista dall'alto della piattaforma: gli uffici dei team attaccati attorno al relax comune",
+            },
+            caption: "Zoom out: gli uffici dei team, il tuo in giallo, il relax comune al centro. Proposta del 20 novembre.",
+          },
+        ],
+      },
+      { kind: "heading", text: "Sviluppo" },
+      {
+        kind: "steps",
+        items: [
+          {
+            when: "16 – 17 ottobre 2026",
+            title: "Il grafo diventa un prodotto",
+            text: "Il database, la coda «da confermare» voce per voce, le contraddizioni tra le fonti, sprint e stand-up preparati da Philo, la versione per telefono, l'app per Mac e il server MCP.",
+          },
+          {
+            title: "Risponde dove lavori",
+            text: "Philo risponde nell'app, in una barra che galleggia sul Mac e dentro Claude, attraverso il server MCP. Fai una domanda e ti risponde con quello che il team sa.",
+          },
+          {
+            when: "22 – 27 ottobre 2026",
+            title: "La mente di Philo",
+            text: "Philo impara a leggere codice, documenti e pull request, con regole chiare: quale fonte vale quando non sono d'accordo, due date per ogni fatto, una verifica prima di rispondere. I test sono costruiti sugli errori che faceva.",
+          },
+          {
+            title: "L'ufficio in 3D",
+            text: "Ho costruito l'ufficio in 3D nell'app, con i modelli fatti in Blender.",
+          },
+        ],
+      },
+      { kind: "heading", text: "Ingegnerizzazione" },
+      {
+        kind: "steps",
+        items: [
+          {
+            when: "20 novembre 2026",
+            title: "Philo legge, il knowledge graph ricorda",
+            text: "Philo non tiene più una memoria sua. Legge i programmi del team e nel knowledge graph scrive solo il succo. Non decide cosa è vero: quello che è vero sta nel knowledge graph, con la sua fonte e la sua data. Così può servire più team e più dati senza diventare un altro posto dove cercare le cose.",
+          },
+          {
+            title: "Philo propone, la persona decide",
+            text: "Quello che Philo scrive passa da chi ha detto sì, con il suo login. È il knowledge graph a decidere chi vede cosa, e Philo lo rispetta.",
+          },
+          {
+            title: "Adesso",
+            text: "Philo è in sviluppo. Il knowledge graph che gli farà da motore è in test in produzione e lo sta costruendo il senior frontend engineer; io sto ingegnerizzando Philo.",
+          },
+        ],
+      },
+      { kind: "heading", text: "Le sfide e come le ho affrontate" },
+      {
+        kind: "decisions",
+        items: [
+          {
+            title: "La prima interfaccia non funzionava",
+            text: "La prima versione l'ho disegnata su Forest UI, la UI dell'azienda: era statica, non si navigava, ed è pensata per i dati, mentre Philo non parla di dati. Dopo una fase di ricerca e sviluppo ho progettato un ufficio in 3D.",
+          },
+          {
+            title: "Una coda di 1.409 voci che nessuno leggeva",
+            text: "Ho diviso la coda «da confermare» in tre livelli, in base a quanto conta ogni conferma.",
+          },
+          {
+            title: "Risposte di cui fidarsi",
+            text: "Ogni nodo ha fonte e data, e fatti confermati e ipotesi restano separati anche nel testo. Quale codice appartiene a quale progetto lo decidono regole che si possono spiegare, non l'AI.",
+          },
+          {
+            title: "Fonti che non sono d'accordo",
+            text: "Una regola dice quale fonte vale, ogni fatto ha due date e Philo fa una verifica prima di rispondere. I test sono costruiti sugli errori che faceva.",
+          },
+          {
+            title: "Mettere insieme più team",
+            text: "In Blender ho provato sette modi e ho scelto il più semplice: un riquadro per team intorno a un relax comune, con sopra solo due segnali.",
+          },
+          {
+            title: "Non diventare un altro posto dove cercare",
+            text: "Philo non tiene più una memoria sua. Legge e fa vedere, e a ricordare ci pensa il knowledge graph.",
+          },
+        ],
       },
       {
         kind: "tools",
@@ -224,9 +249,9 @@ export const philo: Record<Locale, CaseCopy> = {
     hitLabel: "Yellow polka-dot folder: Philo",
     blurb: "It reads the team's tools and shows everything as an office: zoom in on your team, zoom out to the other teams.",
     owner: "A project for Witailer (Alkemy group)",
-    tagline: "The most mine of all my projects. Philo does two things: it reads the tools the team uses and puts the gist into the knowledge graph, then shows it to you as an office. Zoom in: everything happening in your team. Zoom out: what's going on in the others.",
+    tagline: "Philo does two things: it reads the tools the team uses and puts the gist into the knowledge graph, then shows it to you as an office. Zoom in: everything happening in your team. Zoom out: what's going on in the others.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/philo-en.mp4", poster: "/assets/videos/philo-en.jpg", label: "Philo demo video" },
+      { kind: "demo", src: "/assets/videos/philo-product-en.mp4?v=5", poster: "/assets/videos/philo-product-en.jpg?v=4", label: "Philo demo video" },
       {
         kind: "facts",
         items: [
@@ -242,10 +267,12 @@ export const philo: Record<Locale, CaseCopy> = {
         kind: "figure",
         figure: {
           img: {
-            src: "/assets/cases/philo/video-thread.jpg",
-            alt: "The thread mascot pulls a red thread that ties together tickets, docs, data, decisions and chats between the people on the team",
+            src: "/assets/cases/philo/video-thread.jpg?v=2",
+            alt: "A dotted route, like on a map, runs from the Philo mascot through a ticket, a document, a decision, data and a chat, among the people on the team",
+            width: 1600,
+            height: 900,
           },
-          caption: "“Philo is the thread that holds all the work together.” A frame from the intro video.",
+          caption: "“Philo is the thread that holds all the work together.”",
         },
       },
       { kind: "heading", text: "The problem" },

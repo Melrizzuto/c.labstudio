@@ -119,24 +119,33 @@ export interface Dictionary {
   guestbook: {
     title: string;
     intro: string;
-    readTitle: string;
+    /** how to move around the board */
+    hint: string;
     empty: string;
     offline: string;
     anon: string;
-    writeTitle: string;
-    name: string;
+    /** the toolbar: a new post-it in one of the colours, zoom */
+    newNote: string;
+    colorNames: Record<'yellow' | 'pink' | 'blue' | 'green' | 'orange' | 'purple', string>;
+    zoomIn: string;
+    zoomOut: string;
+    fit: string;
+    /** the post-it being written */
     message: string;
+    name: string;
     moodLabel: string;
     like: string;
     dislike: string;
-    send: string;
-    sending: string;
-    /** the sticker picker: its label, the "no sticker" option and each sticker's name (read aloud) */
     stickerLabel: string;
     stickerNone: string;
     stickerNames: Record<'daisy' | 'heart' | 'star' | 'bolt' | 'cali' | 'fire' | 'wow' | 'sun', string>;
+    drag: string;
+    send: string;
+    sending: string;
+    cancel: string;
+    /** after sending: the writer's own post-it stays on the board until Mel approves it */
+    pending: string;
     thanks: string;
-    another: string;
     error: string;
   };
 }

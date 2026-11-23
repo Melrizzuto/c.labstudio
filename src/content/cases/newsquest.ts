@@ -10,9 +10,17 @@ export const newsquest: Record<Locale, CaseCopy> = {
     hitLabel: "Cartella viola a stelle: NewsQuest",
     blurb: "Le notizie, di swipe in swipe: verificate e chiare, per chi ha poco tempo.",
     owner: "Concept di un project work accademico",
-    tagline: "Le notizie, di swipe in swipe. Un'app che raccoglie, verifica e rende chiare le notizie per chi ha vent'anni e pochissimo tempo.",
+    tagline: "Le notizie, di swipe in swipe. Il concept di un'app che raccoglie notizie da fonti affidabili e le rende brevi e chiare, per chi ha tra i 19 e i 29 anni e poco tempo.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/newsquest.mp4", poster: "/assets/videos/newsquest.jpg", label: "Video demo di NewsQuest" },
+      { kind: "demo", src: "/assets/videos/newsquest-product.mp4?v=2", poster: "/assets/videos/newsquest-product.jpg?v=2", label: "Video demo di NewsQuest" },
+      {
+        kind: "facts",
+        items: [
+          { label: "Il mio ruolo", value: "Junior Product Engineer" },
+          { label: "Per chi", value: "La Gen Z, tra i 19 e i 29 anni" },
+          { label: "Con", value: "Un gruppo di cinque tra graphic, UX/UI, set e web design, in un project work accademico: dal brief al prototipo cliccabile" },
+        ],
+      },
       {
         kind: "figure",
         figure: {
@@ -20,18 +28,23 @@ export const newsquest: Record<Locale, CaseCopy> = {
           caption: "Le schermate chiave: la notizia breve, gli insight, la sfida lampo, gli obiettivi del giorno.",
         },
       },
+      { kind: "heading", text: "Design thinking" },
       {
-        kind: "facts",
+        kind: "steps",
         items: [
-          { label: "Cos'è", value: "Un project work di gruppo: dal brief al prototipo cliccabile" },
-          { label: "Il mio ruolo", value: "Junior Product Engineer, in un gruppo di cinque tra graphic, UX/UI, set e web design" },
-          { label: "Per chi", value: "La Gen Z, tra i 19 e i 29 anni" },
+          {
+            title: "Il brief",
+            text: "Un'app che mette insieme fonti affidabili e indipendenti: notizie brevi e verificabili, long read interattive, percorsi per argomento, un'AI controllata e un sistema di progressi e badge.",
+          },
+          {
+            title: "Il problema",
+            text: "Il pubblico è curioso e attento e vuole farsi un'opinione solida, senza fake news. Però va sempre di corsa e ha bisogno di capire le notizie in fretta e bene.",
+          },
+          {
+            title: "L'obiettivo",
+            text: "Rendere l'informazione modulare, visiva e coinvolgente, adatta a come si legge oggi sullo smartphone.",
+          },
         ],
-      },
-      { kind: "heading", text: "Il brief" },
-      {
-        kind: "text",
-        text: "NewsQuest mette insieme fonti affidabili e indipendenti in un'unica app: notizie brevi e verificabili, long read interattive, percorsi per argomento, un'AI controllata e un sistema di progressi e badge. L'idea è trasformare l'informazione in qualcosa di modulare, visivo e coinvolgente, fatto per come leggiamo oggi.",
       },
       {
         kind: "figure",
@@ -45,10 +58,19 @@ export const newsquest: Record<Locale, CaseCopy> = {
           caption: "«Wow, sembra figo, cosa fa?» Il brief e i punti chiave.",
         },
       },
-      { kind: "heading", text: "Discovery" },
+      { kind: "heading", text: "Ricerca UX" },
       {
-        kind: "text",
-        text: "Il nostro pubblico è curioso, attento e vuole farsi un'opinione solida, niente fake news. Il problema è che va sempre di corsa: ha bisogno di capire le notizie in fretta e bene. Lo abbiamo raccontato con tre personas e poi siamo andati a guardare chi fa già bene qualcosa: Spotify, Duolingo, Arc Search, Volv e TikTok, con punti di forza e di debolezza di ognuno.",
+        kind: "steps",
+        items: [
+          {
+            title: "Tre personas",
+            text: "Abbiamo descritto il pubblico con tre personas: tre ragazze tra i 22 e i 28 anni, curiose e sempre di corsa.",
+          },
+          {
+            title: "Il benchmark",
+            text: "Abbiamo analizzato Spotify, Duolingo, Arc Search, Volv e TikTok, con i punti di forza e di debolezza di ognuno. TikTok, per esempio, parla il linguaggio della Gen Z ma lascia poco spazio per approfondire.",
+          },
+        ],
       },
       {
         kind: "pair",
@@ -68,10 +90,19 @@ export const newsquest: Record<Locale, CaseCopy> = {
           },
         ],
       },
-      { kind: "heading", text: "Prima su carta, poi su Figma" },
+      { kind: "heading", text: "Processo di design" },
       {
-        kind: "text",
-        text: "Per prima cosa lo scheletro: i wireframe, senza colori né caratteri, solo la logica, la struttura e il ritmo della navigazione. Prima a mano, per far uscire le idee senza filtri, poi su Figma, dove sono diventati una struttura precisa e pronta per l'interfaccia.",
+        kind: "steps",
+        items: [
+          {
+            title: "Wireframe a mano",
+            text: "Prima lo scheletro dell'app, senza colori né caratteri: la logica, la struttura e il ritmo della navigazione. Lo abbiamo disegnato a mano, per tirare fuori le idee senza filtri.",
+          },
+          {
+            title: "Wireframe su Figma",
+            text: "Poi abbiamo ridisegnato i wireframe su Figma, come struttura precisa da cui partire per l'interfaccia.",
+          },
+        ],
       },
       {
         kind: "pair",
@@ -86,10 +117,35 @@ export const newsquest: Record<Locale, CaseCopy> = {
           },
         ],
       },
-      { kind: "heading", text: "Il design" },
+      { kind: "heading", text: "UI" },
       {
-        kind: "text",
-        text: "Moodboard, style tile e poi un piccolo sistema tutto nostro: viola e lime, Clash Display per i titoli e Poppins per il testo, e i componenti con tutti i loro stati.",
+        kind: "steps",
+        items: [
+          {
+            title: "Moodboard e style tile",
+            text: "Abbiamo definito la direzione visiva con una moodboard e uno style tile.",
+          },
+          {
+            title: "Colori e caratteri",
+            text: "Viola e lime, Clash Display per i titoli e Poppins per il testo.",
+          },
+          {
+            title: "I componenti",
+            text: "Abbiamo costruito i componenti, come i bottoni primari, secondari e terziari, con tutti i loro stati.",
+          },
+          {
+            title: "Il tono di voce",
+            text: "Incoraggiante ed empatico, amichevole e un po' giocoso: accompagna chi legge senza farlo sentire perso.",
+          },
+          {
+            title: "Le microanimazioni",
+            text: "Le sfide lampo, gli obiettivi del giorno, le mascotte che reagiscono.",
+          },
+          {
+            title: "Il prototipo cliccabile",
+            text: "Il progetto si chiude con un prototipo cliccabile in Figma. Le schermate chiave sono la notizia breve, gli insight, la sfida lampo e gli obiettivi del giorno.",
+          },
+        ],
       },
       {
         kind: "figure",
@@ -128,11 +184,6 @@ export const newsquest: Record<Locale, CaseCopy> = {
           caption: "I componenti, stato per stato.",
         },
       },
-      { kind: "heading", text: "L'app" },
-      {
-        kind: "text",
-        text: "Il tono è incoraggiante ed empatico: accompagna senza far sentire nessuno perso, amichevole e un po' giocoso. Le microanimazioni fanno il resto: le sfide lampo, gli obiettivi del giorno, le mascotte che reagiscono.",
-      },
       {
         kind: "pair",
         figures: [
@@ -156,6 +207,28 @@ export const newsquest: Record<Locale, CaseCopy> = {
           },
         ],
       },
+      { kind: "heading", text: "Le sfide e come le abbiamo affrontate" },
+      {
+        kind: "decisions",
+        items: [
+          {
+            title: "Poco tempo, ma voglia di capire bene",
+            text: "Notizie brevi per chi ha fretta, long read interattive e percorsi per argomento per chi vuole approfondire.",
+          },
+          {
+            title: "Fidarsi di quello che si legge",
+            text: "Fonti affidabili e indipendenti in un'unica app, notizie verificabili e un'AI controllata.",
+          },
+          {
+            title: "Il linguaggio della Gen Z senza perdere l'approfondimento",
+            text: "Dal benchmark: TikTok parla il linguaggio giusto ma lascia poco spazio per approfondire. NewsQuest affianca allo swipe le long read interattive.",
+          },
+          {
+            title: "Far tornare le persone",
+            text: "Progressi e badge, sfide lampo, obiettivi del giorno e mascotte che reagiscono, con un tono che incoraggia invece di giudicare.",
+          },
+        ],
+      },
       {
         kind: "tools",
         label: "Strumenti.",
@@ -173,7 +246,7 @@ export const newsquest: Record<Locale, CaseCopy> = {
     owner: "Concept from an academy project work",
     tagline: "The news, one swipe at a time. An app that gathers, checks and makes sense of the news for people in their twenties with very little time.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/newsquest-en.mp4", poster: "/assets/videos/newsquest-en.jpg", label: "NewsQuest demo video" },
+      { kind: "demo", src: "/assets/videos/newsquest-product-en.mp4?v=2", poster: "/assets/videos/newsquest-product-en.jpg?v=2", label: "NewsQuest demo video" },
       {
         kind: "figure",
         figure: {
