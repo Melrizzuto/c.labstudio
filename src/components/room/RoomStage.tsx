@@ -98,6 +98,11 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="hit pencil" type="button" data-guestbook="" aria-label={t.hits.deskPencil} style={{ left: '20.9%', top: '66.6%', width: '3%', height: '32%' }}></button>
         <button className="toy notebook" type="button" data-guestbook="" aria-label={t.hits.deskNotebook} style={{ left: '5.841%', top: '67.237%', width: '13.430%', height: '28.289%' }}>
           <img src={sceneSrc('notebook.webp')} alt="" width={361} height={430} decoding="async" />
+          {/* a paper label on the cover, like the ones on the folders */}
+          <span className="nb-label" aria-hidden="true">
+            <small>{t.notebookLabel.kicker}</small>
+            {t.notebookLabel.title}
+          </span>
         </button>
         <button className="hit" data-cat="1" aria-label={t.hits.deskCat} style={{ left: '85%', top: '76%', width: '15%', height: '24%' }}></button>
       </div>

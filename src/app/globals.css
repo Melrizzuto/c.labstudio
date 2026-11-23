@@ -165,6 +165,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (prefers-reduced-motion:reduce){.scene .toy.duck.boing,.scene .toy.mouse.press{animation:none}}
 /* the notebook (and its pencil) opens the guestbook: on hover it grows a little and casts a shadow, never moving off its spot */
 .scene .toy.notebook{transition:transform .25s cubic-bezier(.3,1.4,.5,1),filter .25s}
+/* the notebook's label: same paper label as the folders, sized on the notebook (container units) */
+.scene .toy.notebook{container-type:inline-size}
+.scene .toy.notebook .nb-label{position:absolute;left:24%;right:9%;bottom:7.5%;rotate:-2deg;background:#FFF8EA;border:.9cqw solid #16130F;border-radius:1.6cqw;padding:2.4cqw 3cqw 2.6cqw;text-align:left;font:800 7.2cqw/1.02 var(--display);text-transform:uppercase;letter-spacing:-.01em;color:#16130F;box-shadow:.9cqw .9cqw 0 rgba(22,19,15,.35);pointer-events:none}
+.scene .toy.notebook .nb-label small{display:block;margin-bottom:1.2cqw;font:700 4cqw/1 var(--mono);letter-spacing:.04em;color:#C81D74}
 .scene .toy.notebook:hover,.scene .hit.pencil:hover+.toy.notebook,.scene .toy.notebook:focus-visible{transform:scale(1.05) rotate(-1.5deg);filter:drop-shadow(.5cqw .8cqw .2cqw rgba(10,8,6,.35))}
 .scene .hit.pencil:hover{background:none;outline:none}
 
@@ -219,37 +223,39 @@ dialog.guest[open]{animation:guestIn .35s cubic-bezier(.3,1.3,.5,1)}
   .gb-close{position:fixed;right:14px;top:14px;width:42px;height:42px}
   .gb-daisy{right:58px;top:10px;width:42px;height:42px}
 }
-/* the left page is a dark brick wall; the title and the approved notes glow on it as neon signs (after Insulti Luminosi) */
-.gb-read{--wall:#120E1C;background:
-    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 2px,transparent 2px 34px),
-    repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 2px,transparent 2px 72px) 0 0/72px 68px,
-    radial-gradient(120% 80% at 30% 20%,#221a33,var(--wall));color:#EDE6F7;border-color:var(--ink)}
-.gb-read .gb-intro{color:#BDB3CF}
+/* the left page is a dark wall; the title is one neon sign (after Insulti Luminosi) that switches on when the book opens,
+   the approved notes are warm white handwriting with a soft halo: one colour, no fireworks */
+.gb-read{background:radial-gradient(130% 90% at 25% 15%,#231B33 0%,#15111F 60%,#110D19 100%);color:#EDE6F7;border-color:var(--ink)}
+.gb-read .gb-intro{color:#B9AFCB}
 .gb-read h3{color:#FF8CC6}
-.neon{--glow:#FF4FB0;color:#FFF5FB;text-shadow:0 0 1px #fff,0 0 4px var(--glow),0 0 10px var(--glow),0 0 22px var(--glow),0 0 40px color-mix(in srgb,var(--glow) 60%,transparent)}
-.gb-read .neon-title{font:700 clamp(46px,5vw,64px)/.95 var(--hand);letter-spacing:.01em;--glow:#FF4FB0;color:#FFF5FB;
-  text-shadow:0 0 1px #fff,0 0 5px var(--glow),0 0 12px var(--glow),0 0 26px var(--glow),0 0 52px color-mix(in srgb,var(--glow) 55%,transparent);animation:neonFlicker 7s linear infinite}
-@keyframes neonFlicker{0%,18%,21%,23%,62%,64%,100%{opacity:1}19%,22%,63%{opacity:.55}}
-.gb-list li.n0{--glow:#FF4FB0}.gb-list li.n1{--glow:#4FE3FF}.gb-list li.n2{--glow:#FFD34D}.gb-list li.n3{--glow:#5DFF8F}
-.gb-list li{position:relative;padding:6px 52px 4px 0}
-.gb-list .gb-msg{font:700 29px/1.15 var(--hand);--glow:inherit}
-.gb-list li .neon{--glow:inherit}
-.gb-list li.n0 .neon{--glow:#FF4FB0}.gb-list li.n1 .neon{--glow:#4FE3FF}.gb-list li.n2 .neon{--glow:#FFD34D}.gb-list li.n3 .neon{--glow:#5DFF8F}
-.gb-read .gb-meta{color:#A79DBA}
-.gb-read .gb-empty.neon{--glow:#FFD34D;font:700 30px/1.15 var(--hand);color:#FFFBEA}
-.gb-stuck{position:absolute;right:0;top:0;width:46px;height:46px;rotate:9deg;filter:drop-shadow(0 0 0 #fff) drop-shadow(2px 2px 0 #fff) drop-shadow(-2px -2px 0 #fff) drop-shadow(2px -2px 0 #fff) drop-shadow(-2px 2px 0 #fff)}
+.gb-read .neon-title{font:700 clamp(44px,4.6vw,58px)/.95 var(--hand);letter-spacing:.01em;color:#FFE9F4;
+  text-shadow:0 0 2px rgba(255,255,255,.8),0 0 8px #FF4FB0,0 0 20px rgba(255,79,176,.55)}
+dialog.guest[open] .gb-read .neon-title{animation:neonOn 1.1s .25s steps(1) both}
+@keyframes neonOn{0%{opacity:.15;text-shadow:none}12%{opacity:1}18%{opacity:.3}26%{opacity:1}34%{opacity:.5}42%,100%{opacity:1}}
+.neon{color:#FFF4EA;text-shadow:0 0 1px rgba(255,255,255,.6),0 0 9px rgba(255,79,176,.35)}
+.gb-list{gap:22px}
+.gb-list li{position:relative;padding:2px 50px 0 0}
+.gb-list .gb-msg{font:700 27px/1.2 var(--hand)}
+.gb-read .gb-meta{color:#A096B4}
+.gb-read .gb-empty.neon{font:700 27px/1.2 var(--hand)}
+.gb-stuck{position:absolute;right:2px;top:0;width:40px;height:40px;rotate:9deg;filter:drop-shadow(1.5px 1.5px 0 #fff) drop-shadow(-1.5px -1.5px 0 #fff) drop-shadow(1.5px -1.5px 0 #fff) drop-shadow(-1.5px 1.5px 0 #fff)}
 .gb-list li:nth-child(even) .gb-stuck{rotate:-8deg}
-/* sticker picker on the paper page */
-.gb-stickers{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.gb-stickers legend{font:600 15px/1.2 var(--body);color:var(--ink);margin-bottom:8px;padding:0}
-.gb-stickers label{position:relative;width:48px;height:48px;display:grid;place-items:center;border-radius:12px;border:2px dashed rgba(22,19,15,.25);background:#fff;cursor:pointer;transition:transform .15s,border-color .15s}
-.gb-stickers label svg{width:36px;height:36px}
-.gb-stickers label:hover{transform:translateY(-2px) rotate(-4deg)}
-.gb-stickers label.on{border:2px solid var(--ink);background:var(--sun);box-shadow:3px 3px 0 var(--ink);transform:rotate(-4deg)}
-.gb-stickers label.none{width:auto;padding:0 12px;font:700 14px/1 var(--body)}
+/* the form page: plain paper, only the message field is ruled */
+.gb-write{background:#FBF4E6}
+/* sticker picker: bare stickers; the chosen one grows and sits on a sun-yellow dot */
+.gb-stickers{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center}
+.gb-stickers legend{font:600 15px/1.2 var(--body);color:var(--ink);margin-bottom:6px;padding:0}
+.gb-stickers label{position:relative;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;cursor:pointer;transition:transform .15s,background-color .15s}
+.gb-stickers label svg{width:32px;height:32px;transition:transform .15s}
+.gb-stickers label:hover svg{transform:rotate(-8deg) scale(1.08)}
+.gb-stickers label.on{background:var(--sun)}
+.gb-stickers label.on svg{transform:rotate(-6deg) scale(1.12)}
+.gb-stickers label.none{width:auto;height:32px;padding:0 12px;border-radius:999px;font:600 14px/1 var(--body);color:var(--ink-2);margin-right:4px;box-shadow:inset 0 0 0 1.5px rgba(22,19,15,.35)}
+.gb-stickers label.none.on{background:var(--ink);color:var(--paper);box-shadow:none}
 .gb-stickers input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-.gb-stickers label:has(input:focus-visible){outline:3px solid var(--cobalt);outline-offset:3px}
-@media (prefers-reduced-motion:reduce){.gb-read .neon-title{animation:none}}
+.gb-stickers label:has(input:focus-visible){outline:3px solid var(--cobalt);outline-offset:2px}
+.gb-write .btn{font-size:16px;padding:12px 20px;border-width:2.5px;box-shadow:3px 3px 0 var(--ink)}
+@media (prefers-reduced-motion:reduce){dialog.guest[open] .gb-read .neon-title{animation:none}}
 
 /* the owner's page (/owner/): read, publish, hide, delete the notes */
 .owner{min-height:100dvh;background:var(--paper);color:var(--ink);padding:clamp(24px,5vw,56px) clamp(16px,5vw,56px);max-width:980px;margin:0 auto}

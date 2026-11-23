@@ -76,6 +76,7 @@ export const it: Dictionary = {
     },
     pinCatAsleep: 'Calì dorme',
     tvTitle: "Rifatto · Ep. 1: ho rifatto l'AI di TikTok",
+    notebookLabel: { kicker: 'Le dediche', title: 'Lascia feedback' },
     terminal: [
       ['$ npm run dev', '▲ pronta su localhost:3100'],
       ['$ git commit -m \"nuova idea\"', '✓ 1 file cambiato'],

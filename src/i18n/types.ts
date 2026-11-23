@@ -77,6 +77,8 @@ export interface Dictionary {
       nightCat: string;
     };
     pinCatAsleep: string;
+    /** the paper label on the desk notebook (it opens the guestbook) */
+    notebookLabel: { kicker: string; title: string };
     /** the episode title in the YouTube-style player on the TV */
     tvTitle: string;
     /** what the keyboard types in its little terminal: a command and its answer, one pair picked at random */
