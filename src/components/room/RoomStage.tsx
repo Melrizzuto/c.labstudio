@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { Dictionary } from '@/i18n/types';
 import { getCase, caseDialogId, type CaseStudy } from '@/content/cases';
-import { DESK_FOLDERS, FOLDER_FX } from '@/content/room';
+import { DESK_FOLDERS } from '@/content/room';
 import { TimorDate } from './TimorDate';
 import { Picture, SCENE_SIZES, sceneSet, sceneSrc } from '../Picture';
 
@@ -64,29 +64,6 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
           height={335}
           style={{ left: '85.640%', top: '77.961%', width: '13.504%', height: '22.039%' }}
         />
-        {/* the folders lift and open on hover: a copy of each folder, cut along its outline, over the picture */}
-        <div className="folders-fx" aria-hidden="true">
-          {FOLDER_FX.map((f) => {
-            const src = sceneSrc(`folders/${f.key}.webp`);
-            const mask = { maskImage: `url(${src})`, WebkitMaskImage: `url(${src})` } as CSSProperties;
-            const title = folders.find((x) => x.key === f.key)?.c.title;
-            return (
-              <div key={f.key} className="ffx" data-fx={caseDialogId(f.key)} style={{ '--tilt': `${f.tilt}deg`, '--tint': f.tint } as CSSProperties}>
-                <div className="lift" style={f.box}>
-                  <div className="fshadow" style={mask}></div>
-                  <div className="finside">
-                    <div className="finner" style={mask}>
-                      <div className="fpage">
-                        <b>{title}</b>
-                      </div>
-                    </div>
-                  </div>
-                  <img className="fcover" src={src} alt="" width={1} height={1} decoding="async" style={{ transformOrigin: `${f.spine}% 55%` }} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
         {folders.map((f) => (
           <button key={f.key} className="hit folder" data-case={caseDialogId(f.key)} aria-label={f.c.hitLabel} style={f.hit}></button>
         ))}
