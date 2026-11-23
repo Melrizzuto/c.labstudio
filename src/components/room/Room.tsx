@@ -458,10 +458,16 @@ export function Room({
 
     /* hovering a folder (or its sticker) opens it: the matching sheet slides up */
     const fx = Array.from(stage.querySelectorAll<HTMLElement>('.ffx'));
+    const fxLayer = stage.querySelector<HTMLElement>('.folders-fx');
     let openFx = '';
+    let fxIdle: number | undefined;
     const setOpen = (id: string) => {
       if (id === openFx) return;
       openFx = id;
+      clearTimeout(fxIdle);
+      /* the copies show while a folder is open, and until it has closed again */
+      if (id) fxLayer?.classList.add('active');
+      else fxIdle = window.setTimeout(() => fxLayer?.classList.remove('active'), 650);
       fx.forEach((f) => f.classList.toggle('open', f.dataset.fx === id));
     };
     const onFolderOver = (e: PointerEvent | FocusEvent) => {
@@ -532,6 +538,7 @@ export function Room({
       stage.removeEventListener('pointerover', onFolderOver);
       stage.removeEventListener('focusin', onFolderOver);
       stage.removeEventListener('pointerleave', onFolderLeave);
+      clearTimeout(fxIdle);
       document.removeEventListener('click', onPawGreet);
       paw?.removeEventListener('animationend', onPawEnd);
       clearTimeout(miaoTimer);

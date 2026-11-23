@@ -16,22 +16,16 @@ export const DESK_FOLDERS: { key: CaseKey; hit: CSSProperties; pin: { x: string;
 ];
 
 /*
- * Hovering a folder opens it: a sheet slides up out of it. Each folder has a sprite cut from the desk picture
- * (everything below its top edge, scripts in the c.lab scratch notes) drawn over its own sheet, so the sheet
- * only shows above the folder's edge. Boxes are % of the picture; tilt follows the folder.
+ * Hovering a folder lifts it and opens its cover. Each folder is a sprite cut exactly along its outline from the desk
+ * picture (box = % of the picture); the groups are drawn in the picture's order, so a folder stays under the ones on top.
+ * spine = where the cover hinges (% of the box width), tilt = the folder's slant, tint = the inside of the folder.
  */
-export const FOLDER_FX: {
-  key: CaseKey;
-  sprite: CSSProperties;
-  paper: CSSProperties;
-  tilt: number;
-  color: string;
-}[] = [
-  { key: 'studio', sprite: { left: '25.298%', top: '57.171%', width: '13.653%', height: '26.908%' }, paper: { left: '29.390%', top: '60.197%', width: '5.580%', height: '11.184%' }, tilt: -16, color: '#1D3FD1' },
-  { key: 'stat', sprite: { left: '34.524%', top: '53.618%', width: '14.025%', height: '25.724%' }, paper: { left: '38.132%', top: '56.250%', width: '6.324%', height: '11.184%' }, tilt: -6, color: '#F25AA6' },
-  { key: 'philo', sprite: { left: '44.196%', top: '51.908%', width: '13.839%', height: '26.382%' }, paper: { left: '47.991%', top: '55.132%', width: '5.952%', height: '11.184%' }, tilt: -3, color: '#F26B1D' },
-  { key: 'spotify', sprite: { left: '53.757%', top: '52.829%', width: '13.951%', height: '27.895%' }, paper: { left: '56.734%', top: '56.579%', width: '5.580%', height: '11.184%' }, tilt: 4, color: '#2E9E3E' },
-  { key: 'newsquest', sprite: { left: '63.43%', top: '55.263%', width: '14.695%', height: '31.908%' }, paper: { left: '66.592%', top: '59.539%', width: '5.208%', height: '11.184%' }, tilt: 13, color: '#5B3FD9' },
+export const FOLDER_FX: { key: CaseKey; box: CSSProperties; spine: number; tilt: number; tint: string }[] = [
+  { key: 'studio', box: { left: '27.344%', top: '56.974%', width: '13.095%', height: '35.855%' }, spine: 18.2, tilt: -16, tint: '#C9D6FF' },
+  { key: 'stat', box: { left: '35.751%', top: '53.224%', width: '13.281%', height: '36.184%' }, spine: 19, tilt: -12, tint: '#F7CFE6' },
+  { key: 'philo', box: { left: '44.234%', top: '51.776%', width: '11.496%', height: '35.592%' }, spine: 8.7, tilt: 4, tint: '#FFE9A6' },
+  { key: 'spotify', box: { left: '49.405%', top: '52.566%', width: '15.96%', height: '35.724%' }, spine: 24.9, tilt: 14, tint: '#BFE8CB' },
+  { key: 'newsquest', box: { left: '54.539%', top: '55.197%', width: '21.726%', height: '39.474%' }, spine: 29.6, tilt: 24, tint: '#D7CCFF' },
 ];
 
 /** The project list in the desk chapter: Witailer first, then the academy. */
