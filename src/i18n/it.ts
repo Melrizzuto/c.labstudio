@@ -58,12 +58,13 @@ export const it: Dictionary = {
       "La mia scrivania vista dall'alto, disegnata: monitor, tastiera, portatile con gli adesivi, la papera, il calendario, una tazza di caffè, la zampa di Calì e le cartelle a fantasia",
     nightAlt:
       'La mia stanza di sera, disegnata: io sul divano verde con la coperta, la TV accesa, Calì che dorme sul bracciolo, la luna alla finestra',
-    places: { book: 'Il libro', desk: 'La scrivania', sofa: 'Il divano', tv: 'La TV' },
+    places: { book: 'Il libro', desk: 'La scrivania', sofa: 'Il divano', tv: 'La TV', cv: 'Il mio CV' },
     hits: {
       dayDesk: 'La scrivania: i progetti',
       dayBook: 'Il libro: la mia storia',
       daySofa: 'Il divano: quando chiudo il portatile',
       dayTv: 'La TV: il mio weekend',
+      dayCv: 'Il quadro: apri il mio CV',
       deskCat: 'Saluta Calì, che allunga la zampa',
       nightTv: 'La TV: il mio weekend',
       nightSofa: 'Il divano',

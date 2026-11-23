@@ -60,12 +60,13 @@ export interface Dictionary {
     deskAlt: string;
     nightAlt: string;
     /** the four corners of the room: pins, chips and labels */
-    places: { book: string; desk: string; sofa: string; tv: string };
+    places: { book: string; desk: string; sofa: string; tv: string; cv: string };
     hits: {
       dayDesk: string;
       dayBook: string;
       daySofa: string;
       dayTv: string;
+      dayCv: string;
       deskCat: string;
       nightTv: string;
       nightSofa: string;

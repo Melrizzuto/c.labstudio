@@ -10,6 +10,7 @@ import { Picture, SCENE_SIZES, sceneSet } from '../Picture';
  */
 export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictionary['locale'] }) {
   const cali = getCase(locale, 'cali');
+  const cvHref = `/cv/?lang=${locale}`;
   const folders = DESK_FOLDERS.map((f) => ({ ...f, c: getCase(locale, f.key) as CaseStudy }));
   return (
     <div className="room-stage" id="roomStage">
@@ -36,6 +37,22 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="hit" data-go="divano" aria-label={t.hits.daySofa} style={{ left: '40%', top: '69%', width: '53%', height: '30%' }}></button>
         <button className="hit" data-go="weekend" aria-label={t.hits.dayTv} style={{ left: '75%', top: '21%', width: '25%', height: '42%' }}></button>
         <button className="hit" data-case={caseDialogId('cali')} aria-label={cali.hitLabel} style={{ left: '44%', top: '4%', width: '9%', height: '11%' }}></button>
+        {/* the portrait of Mel and Calì hanging on the wall above the binders: it opens the CV */}
+        <div className="portrait-wall">
+          <a className="portrait" href={cvHref} target="_blank" rel="noopener" aria-label={t.hits.dayCv} style={{ left: '17.8%', top: '5%', width: '7%' }}>
+            <Picture
+              defer
+              data-load="day"
+              src="/assets/portrait/mel-cali.jpg"
+              avif="/assets/portrait/mel-cali.avif"
+              webp="/assets/portrait/mel-cali.webp"
+              alt=""
+              width={640}
+              height={857}
+              decoding="async"
+            />
+          </a>
+        </div>
       </div>
       <div className="scene" data-scene="desk">
         <Picture defer data-load="desk" src="/assets/scenes/desk.jpg" avif={sceneSet('desk', 'avif')} webp={sceneSet('desk', 'webp')} sizes={SCENE_SIZES} alt={t.deskAlt} width={2688} height={1520} decoding="async" />
@@ -108,6 +125,9 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
         <button className="pin" data-s="day" data-x="88" data-y="27" data-go="weekend" tabIndex={-1}>
           {t.places.tv}
         </button>
+        <a className="pin" data-s="day" data-x="21.5" data-y="24.5" href={cvHref} target="_blank" rel="noopener" tabIndex={-1}>
+          {t.places.cv}
+        </a>
         {folders.map((f) => (
           <button key={f.key} className="pin case" data-s="desk" data-x={f.pin.x} data-y={f.pin.y} data-case={caseDialogId(f.key)} tabIndex={-1}>
             <b>{f.c.tarot}</b>

@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
    * them for a week (and revalidate after); Vercel's CDN keeps them until the next deploy.
    * /_next/static is already cached for a year by Next.js (hashed file names).
    */
+  /* the CV page is a static file in public/cv: serve it at /cv/ */
+  async rewrites() {
+    return [{ source: '/cv/', destination: '/cv/index.html' }];
+  },
   async headers() {
     return [
       {

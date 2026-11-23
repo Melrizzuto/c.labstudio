@@ -58,12 +58,13 @@ export const en: Dictionary = {
       "My desk from above, hand-drawn: monitor, keyboard, laptop with stickers, the duck, the calendar, a cup of coffee, Calì's paw and the patterned folders",
     nightAlt:
       'My room in the evening, hand-drawn: me on the green sofa under a blanket, the TV on, Calì asleep on the armrest, the moon in the window',
-    places: { book: 'The book', desk: 'The desk', sofa: 'The sofa', tv: 'The TV' },
+    places: { book: 'The book', desk: 'The desk', sofa: 'The sofa', tv: 'The TV', cv: 'My CV' },
     hits: {
       dayDesk: 'The desk: my projects',
       dayBook: 'The book: my story',
       daySofa: 'The sofa: when I close the laptop',
       dayTv: 'The TV: my weekend',
+      dayCv: 'The painting: open my CV',
       deskCat: "Say hi to Calì, who's reaching out a paw",
       nightTv: 'The TV: my weekend',
       nightSofa: 'The sofa',

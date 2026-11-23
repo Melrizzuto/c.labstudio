@@ -124,6 +124,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .scene .tvclip{position:absolute;object-fit:cover;opacity:0;transition:opacity .5s}
 .scene .tvclip.on{opacity:1}
 .fx{position:absolute;pointer-events:none}
+/* the portrait on the wall above the binders (day scene): a wooden frame drawn in the scene's line, sized on the picture's width */
+.scene .portrait-wall{position:absolute;inset:0;container-type:inline-size;pointer-events:none}
+.portrait{position:absolute;display:block;padding:.4cqw;background:#FCB86A;border:.19cqw solid #16130F;box-shadow:.3cqw .3cqw 0 rgba(22,19,15,.16);pointer-events:auto;cursor:pointer;transform-origin:50% 0;transition:rotate .35s var(--ease),filter 1.2s var(--ease)}
+.scene .portrait img{height:auto;aspect-ratio:1744/2336;border:.15cqw solid #16130F}
+.portrait:hover,.portrait:focus-visible{rotate:-2deg;outline:.25cqw solid rgba(255,194,26,.9);outline-offset:.2cqw}
+:root[data-time="night"] .scene[data-scene="day"] .portrait{filter:brightness(.7) saturate(.85)}
+@media (prefers-reduced-motion:reduce){.portrait{transition:none}.portrait:hover,.portrait:focus-visible{rotate:none}}
 .case .owner{margin:10px 0 0;font:600 15px/1.4 var(--body);letter-spacing:.02em;color:var(--ink-2)}
 .legal{margin:14px 0 0;font-size:13px;line-height:1.55;color:var(--text-2);max-width:62em}
 .sw-cali{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='4' cy='4' r='3.4' fill='%23F26B1D'/%3E%3Ccircle cx='12' cy='12' r='3.4' fill='%2316130F'/%3E%3C/svg%3E") 0 0/16px 16px}
