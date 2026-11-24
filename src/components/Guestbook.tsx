@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent as RPointerEvent } from 'react';
 import type { Dictionary, Locale } from '@/i18n/types';
 import { Sticker, STICKER_KEYS, type StickerKey } from '@/content/stickers';
-import { BOARD, NOTE_COLORS, NOTE_FILL, type NoteColor } from '@/content/board';
+import { BOARD, NOTE_COLORS, NOTE_FILL, collides, freeSpot, noteBox, type Box, type NoteColor } from '@/content/board';
 
 type Mood = 'like' | 'dislike';
 type Note = {
@@ -27,22 +27,24 @@ const savePending = (list: Note[]) => { try { localStorage.setItem(PENDING_KEY, 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 const N = BOARD.note;
 
-/* notes written before the board existed have no place: put them on free spots around the middle */
-function placeAll(notes: Note[]): (Note & { px: number; py: number; pr: number })[] {
-  const taken: [number, number][] = notes.filter((n) => n.x !== null && n.y !== null).map((n) => [n.x!, n.y!]);
-  const free = (x: number, y: number) => taken.every(([a, b]) => Math.abs(a - x) > N * 0.9 || Math.abs(b - y) > N * 0.9);
-  const slots: [number, number][] = [];
-  for (let ring = 0; ring < 8; ring++) for (let i = -ring; i <= ring; i++) for (let j = -ring; j <= ring; j++) {
-    if (Math.max(Math.abs(i), Math.abs(j)) !== ring) continue;
-    const x = BOARD.w / 2 - N / 2 + i * (N + 40), y = BOARD.h / 2 - N / 2 + j * (N + 40);
-    if (x >= 20 && y >= 20 && x <= BOARD.w - N - 20 && y <= BOARD.h - N - 20) slots.push([x, y]);
+type Placed = Note & { px: number; py: number; pr: number };
+
+/*
+ * Where each post-it shows: the oldest keep their spot; a newer one that lands on an older one (or a note written
+ * before the board existed, with no spot at all) moves to the nearest free spot, so none covers another.
+ */
+function placeAll(notes: Note[], taken: Box[] = []): Placed[] {
+  const order = notes.map((n, i) => i).sort((a, b) => notes[a].created_at.localeCompare(notes[b].created_at));
+  const out: Placed[] = new Array(notes.length);
+  for (const i of order) {
+    const n = notes[i];
+    const has = n.x !== null && n.y !== null;
+    const want = noteBox(has ? n.x! : BOARD.w / 2 - N / 2, has ? n.y! : BOARD.h / 2 - N / 2, n.message);
+    const spot = freeSpot(want, taken);
+    taken.push({ ...want, ...spot });
+    out[i] = { ...n, px: spot.x, py: spot.y, pr: has ? (n.rot ?? 0) : ((i * 37) % 9) - 4 };
   }
-  return notes.map((n, i) => {
-    if (n.x !== null && n.y !== null) return { ...n, px: n.x, py: n.y, pr: n.rot ?? 0 };
-    const slot = slots.find(([x, y]) => free(x, y)) ?? [40 + (i % 8) * (N + 30), 40];
-    taken.push(slot);
-    return { ...n, px: slot[0], py: slot[1], pr: ((i * 37) % 9) - 4 };
-  });
+  return out;
 }
 
 /*
@@ -63,6 +65,7 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
   const [draft, setDraft] = useState<Draft | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [toast, setToast] = useState('');
+  const [dragging, setDragging] = useState(false);
 
   const fit = useCallback(() => {
     const vp = viewport.current;
@@ -150,7 +153,10 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
     if (pointers.current.size === 2) {
       const [a, b] = [...pointers.current.values()];
       gesture.current = { kind: 'pinch', dist: Math.hypot(a.x - b.x, a.y - b.y) };
-    } else gesture.current = { kind: onDraft ? 'draft' : 'pan' };
+    } else {
+      gesture.current = { kind: onDraft ? 'draft' : 'pan' };
+      if (onDraft) setDragging(true);
+    }
   };
   const onMove = (e: RPointerEvent<HTMLDivElement>) => {
     const prev = pointers.current.get(e.pointerId);
@@ -171,6 +177,8 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
   };
   const onUp = (e: RPointerEvent<HTMLDivElement>) => {
     pointers.current.delete(e.pointerId);
+    /* let go on another post-it: it slides to the nearest free spot */
+    if (gesture.current?.kind === 'draft') { setDragging(false); setDraft((d) => (d ? { ...d, ...freeSpot(noteBox(d.x, d.y, d.message), takenRef.current) } : d)); }
     if (pointers.current.size === 0) gesture.current = null;
     else if (gesture.current?.kind === 'pinch') gesture.current = { kind: 'pan' };
   };
@@ -180,7 +188,7 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
     if (!vp) return;
     const v = viewRef.current;
     const cx = (vp.clientWidth / 2 - v.x) / v.s, cy = (vp.clientHeight / 2 - v.y) / v.s;
-    const x = clamp(cx - N / 2, 0, BOARD.w - N), y = clamp(cy - N / 2, 0, BOARD.h - N);
+    const { x, y } = freeSpot(noteBox(cx - N / 2, cy - N / 2, ''), takenRef.current);
     setDraft((d) => ({ color, x: d?.x ?? x, y: d?.y ?? y, rot: d?.rot ?? Math.round((Math.random() * 6 - 3) * 10) / 10, message: d?.message ?? '', name: d?.name ?? '', mood: d?.mood ?? 'like', sticker: d?.sticker ?? null }));
     setStatus('idle');
     /* on small screens, come close enough to write on it */
@@ -191,6 +199,8 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
     e.preventDefault();
     if (!draft || draft.message.trim().length < 2) return;
     const form = e.currentTarget;
+    /* the text may have made it taller than the space it had */
+    const spot = freeSpot(noteBox(draft.x, draft.y, draft.message.trim()), takenRef.current);
     setStatus('sending');
     try {
       const res = await fetch('/api/guestbook/', {
@@ -198,13 +208,16 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: draft.message, name: draft.name, mood: draft.mood, sticker: draft.sticker, color: draft.color,
-          x: Math.round(draft.x), y: Math.round(draft.y), rot: draft.rot, locale,
+          x: Math.round(spot.x), y: Math.round(spot.y), rot: draft.rot, locale,
           website: form.querySelector<HTMLInputElement>('input[name=website]')?.value ?? '',
           elapsed: Date.now() - openedAt.current,
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
-      const mine: Note = { key: `p${Date.now()}`, name: draft.name.trim() || null, message: draft.message.trim(), mood: draft.mood, created_at: new Date().toISOString(), sticker: draft.sticker, color: draft.color, x: draft.x, y: draft.y, rot: draft.rot };
+      /* the server may have moved it (someone else's post-it, still waiting, was there) */
+      const saved = (await res.json().catch(() => ({}))) as { x?: unknown; y?: unknown };
+      const at = typeof saved.x === 'number' && typeof saved.y === 'number' ? { x: saved.x, y: saved.y } : spot;
+      const mine: Note = { key: `p${Date.now()}`, name: draft.name.trim() || null, message: draft.message.trim(), mood: draft.mood, created_at: new Date().toISOString(), sticker: draft.sticker, color: draft.color, x: at.x, y: at.y, rot: draft.rot };
       setPending((p) => { const next = [...p, mine]; savePending(next); return next; });
       setDraft(null);
       setStatus('idle');
@@ -217,6 +230,12 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
 
   const date = useMemo(() => new Intl.DateTimeFormat(locale === 'it' ? 'it-IT' : 'en-GB', { day: 'numeric', month: 'short' }), [locale]);
   const placed = useMemo(() => placeAll(entries ?? []), [entries]);
+  /* this browser's waiting post-its go around the published ones too */
+  const waiting = useMemo(() => placeAll(pending, placed.map((n) => noteBox(n.px, n.py, n.message))), [pending, placed]);
+  const taken = useMemo(() => [...placed, ...waiting].map((n) => noteBox(n.px, n.py, n.message)), [placed, waiting]);
+  const takenRef = useRef(taken);
+  takenRef.current = taken;
+  const blocked = !!draft && taken.some((b) => collides(noteBox(draft.x, draft.y, draft.message), b));
 
   const noteStyle = (x: number, y: number, rot: number, color: NoteColor | null): CSSProperties =>
     ({ left: x, top: y, width: N, minHeight: N, rotate: `${rot}deg`, '--pi': NOTE_FILL[color ?? 'yellow'] }) as CSSProperties;
@@ -247,12 +266,13 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
       <div className="bd-viewport" ref={viewport} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} role="region" aria-label={t.hint}>
         <div className="bd-canvas" style={{ width: BOARD.w, height: BOARD.h, transform: `translate(${view.x}px, ${view.y}px) scale(${view.s})` }}>
           {placed.map((n) => card(n))}
-          {pending.map((n) => card({ ...n, px: n.x ?? BOARD.w / 2, py: n.y ?? BOARD.h / 2, pr: n.rot ?? 0 }, true))}
+          {waiting.map((n) => card(n, true))}
           {entries !== undefined && placed.length === 0 && pending.length === 0 && !draft && (
             <p className={entries === null ? 'bd-empty bd-err' : 'bd-empty'} style={{ left: BOARD.w / 4 - 190, top: BOARD.h / 2 - 60 }}>{entries === null ? t.offline : t.empty}</p>
           )}
           {draft && (
-            <div className="bd-note draft" style={noteStyle(draft.x, draft.y, draft.rot, draft.color)} title={t.drag}>
+            <div className={`bd-note draft${blocked ? ' blocked' : ''}${dragging ? '' : ' snap'}`} style={noteStyle(draft.x, draft.y, draft.rot, draft.color)} title={t.drag}>
+              {blocked && <p className="bd-taken" role="status">{t.taken}</p>}
               <span className="bd-grip" aria-hidden="true">⠿</span>
               {draft.sticker && <Sticker k={draft.sticker} className="bd-stuck" />}
               <textarea aria-label={t.message} placeholder={t.message} maxLength={500} value={draft.message} onChange={(e) => setDraft({ ...draft, message: e.target.value })} autoFocus />

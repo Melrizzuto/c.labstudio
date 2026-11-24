@@ -140,6 +140,7 @@ export interface Dictionary {
     stickerNone: string;
     stickerNames: Record<'daisy' | 'heart' | 'star' | 'bolt' | 'cali' | 'fire' | 'wow' | 'sun', string>;
     drag: string;
+    taken: string;
     send: string;
     sending: string;
     cancel: string;
