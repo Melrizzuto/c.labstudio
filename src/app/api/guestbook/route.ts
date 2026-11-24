@@ -5,11 +5,14 @@
  * The notes live in Supabase (table `guestbook`, see supabase/guestbook.sql); a note shows on the
  * site only after `approved` is ticked in the Supabase table editor.
  * Without Supabase, GET says `{ "entries": null }` and POST answers 503.
+ * Each new note sends Mel an email (to CV_NOTIFY_EMAIL, through Resend, like the CV requests) with a button to /owner/.
  */
 import { supabase, supabaseFetch } from '@/lib/supabase';
 import { isStickerKey } from '@/content/stickers';
 import { boardX, boardY, freeSpot, isNoteColor, noteBox, tilt, type Box } from '@/content/board';
 import { SITE_URL } from '@/config';
+import { siteBase } from '@/lib/cv';
+import { button, esc, frame, sendMail } from '@/lib/mail';
 
 export const dynamic = 'force-dynamic';
 
@@ -87,6 +90,7 @@ export async function POST(req: Request) {
     if (res && !res.ok) res = await insert(sticker ? { ...row, sticker } : row);
     if (res && !res.ok && sticker) res = await insert(row);
     if (!res?.ok) return Response.json({ ok: false }, { status: 502, headers: NO_STORE });
+    await notifyOwner({ message, name: name || null, mood, locale });
     return Response.json({ ok: true, x: place.x, y: place.y }, { headers: NO_STORE });
   } catch {
     return Response.json({ ok: false }, { status: 502, headers: NO_STORE });
@@ -102,4 +106,23 @@ async function takenBoxes(): Promise<Box[]> {
     const x = boardX(r.x), y = boardY(r.y);
     return x !== null && y !== null ? [noteBox(x, y, typeof r.message === 'string' ? r.message : '')] : [];
   });
+}
+
+/* "a new feedback is waiting": the note, who signed it, and the button to approve it on /owner/ */
+async function notifyOwner(n: { message: string; name: string | null; mood: 'like' | 'dislike'; locale: 'it' | 'en' }) {
+  const to = process.env.CV_NOTIFY_EMAIL;
+  if (!to) return;
+  const owner = `${siteBase()}/owner/`;
+  const who = n.name || 'Qualcuno senza firma';
+  const mood = n.mood === 'like' ? 'Il sito gli piace' : 'Il sito non lo convince';
+  const html = frame(
+    `<p style="margin:0 0 6px;font:700 12px/1 monospace;letter-spacing:.08em;text-transform:uppercase;color:#d4387f">Cosa ne pensi? · da approvare</p>` +
+      `<h1 style="margin:0 0 16px;font:900 26px/1.1 Arial,sans-serif">Nuovo post-it da ${esc(who)}</h1>` +
+      `<div style="margin:0 0 14px;padding:18px;background:#FFE66D;border-radius:4px 4px 14px 4px;font:700 20px/1.3 Arial,sans-serif;white-space:pre-wrap">${esc(n.message)}</div>` +
+      `<p style="margin:0 0 22px;font-size:14px;color:#7a6f63">${mood} · ${n.locale === 'en' ? 'in inglese' : 'in italiano'}</p>` +
+      button(owner, 'Approvalo o eliminalo') +
+      `<p style="margin:18px 0 0;font-size:14px;color:#7a6f63">Finché non lo approvi, lo vede solo chi l'ha scritto.</p>`,
+  );
+  const text = `Nuovo post-it da ${who} (${mood.toLowerCase()}):\n\n${n.message}\n\nApprovalo o eliminalo: ${owner}\n`;
+  await sendMail({ to, subject: `Nuovo feedback da ${who}`, html, text });
 }
