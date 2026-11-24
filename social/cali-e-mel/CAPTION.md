@@ -145,3 +145,33 @@ Musica: "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
 - **Primo commento:** fissa un tuo commento con la domanda della puntata (es. "La vostra richiesta più strana? 👇") così la conversazione parte subito.
 - **Musica nell'app:** il video ha già la sua musica; se aggiungi un suono di tendenza, abbassalo quasi a zero, così la puntata conta come "con suono di tendenza" senza coprire i versi di Calì.
 - **Su TikTok** bastano 3–5 hashtag: tieni #designer #designhumor #vitadadesigner #gatti #calìemel.
+
+---
+
+# Versioni TikTok (corte)
+
+Su TikTok la caption si legge sopra il video: poche righe, una domanda, 3–5 hashtag. Le caption lunghe sopra restano per Instagram (e YouTube).
+
+**Ep. 0** — Ogni design passa da lei 🐾 Il tuo passerebbe? 👇
+Musica: "Monkeys Spinning Monkeys" Kevin MacLeod (incompetech.com), CC BY 4.0
+#designer #designhumor #gatti #vitadadesigner #calìemel
+
+**Ep. 1** — "Puoi fare il logo un po' più grande?" 😐 Tagga il cliente che lo dice sempre 👇
+Musica: "Fluffing a Duck" Kevin MacLeod (incompetech.com), CC BY 4.0
+#designer #logodesign #designhumor #clienti #calìemel
+
+**Ep. 2** — "Un nero… ma più chiaro" 🖤 Guarda fino alla fine 👀 La tua richiesta più strana? 👇
+Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
+#designer #designhumor #richiesteassurde #clienti #calìemel
+
+**Ep. 3** — "Lo fai più bianco?" 🤍 Mel ha trovato la soluzione 🤫 Confessa: l'hai mai fatto anche tu? 👇
+Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
+#designer #designhumor #richiesteassurde #freelance #calìemel
+
+**Ep. 4** — "Minimal… ma con più cose" ✨ Conta i widget 😐 La richiesta più contraddittoria? 👇
+Musica: "The Builder" Kevin MacLeod (incompetech.com), CC BY 4.0
+#webdesign #designhumor #minimal #clienti #calìemel
+
+**Ep. 5** — "Ci vuole un minuto" ⏱️ Spoiler: no. Quanto dura il tuo minuto? 👇
+Musica: "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
+#designer #designhumor #freelance #deadline #calìemel
