@@ -75,6 +75,10 @@ Se una puntata va molto bene, se ne fa il seguito entro una settimana.
 - Prompt vs risultato.
 - Il designer in vacanza: le notifiche di Slack.
 
+## Il cuore della serie (dall'ep. 8)
+
+**Calì è la capa, Mel la sua assistente.** Calì vuole sempre qualcosa (crocchette, la scatola, il posto caldo sul portatile), dà ordini con le frasi dei clienti e approva solo le cose da gatto. Mel esegue, impassibile. È un rapporto tra personaggi, non una battuta sui clienti: funziona anche con chi ha un gatto e non fa il designer. Sullo schermo: «la capa», mai parolacce (così va bene anche su LinkedIn). Il metodo per scrivere le battute è in `COMICITA.md`.
+
 ## Formati nuovi, perché la serie non stanchi
 
 Lo stesso schema (chat → schermo → Calì) dopo 6–8 puntate diventa prevedibile. Si alterna con formati che chiedono al pubblico di **partecipare**: chi deve fare qualcosa guarda fino alla fine, riguarda e commenta.

@@ -201,6 +201,52 @@ Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
+## Ep. 8 — La capa
+
+**YouTube, titolo:** La cliente più difficile? La mia gatta 🐟 | Calì & Mel ep. 8
+
+**Instagram:**
+```
+La cliente più difficile che abbia mai avuto. 🐟
+
+«Un po' più grande.»
+«Color trota. Ma più chiaro.»
+«Ci vuole un minuto.»
+
+47 versioni dopo, alle 3:12 di notte, ha approvato qualcosa.
+Non il mio progetto. 📦
+
+Anche il tuo capo è così? Taggalo 👇
+
+Calì & Mel · ep. 8
+Musica: "Pixel Peeker Polka - faster" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#gatti #catsofinstagram #designer #designhumor #packagingdesign #vitadadesigner #capo #calìemel
+```
+
+**TikTok:**
+```
+La mia cliente più difficile: la mia gatta 🐟 47 versioni, e alla fine ha approvato… la scatola 📦 Il tuo capo è così? 👇
+Musica: "Pixel Peeker Polka - faster" Kevin MacLeod (incompetech.com), CC BY 4.0
+#gatti #designer #designhumor #catsoftiktok #calìemel
+```
+
+**LinkedIn:**
+```
+La cliente più esigente che abbia mai avuto ha quattro zampe. 🐟
+
+Mi ha chiesto il packaging delle sue crocchette «per ieri», poi «un po' più grande», poi «color trota, ma più chiaro», poi «una cosa veloce, ci vuole un minuto».
+47 versioni dopo ha approvato. La scatola del portatile.
+
+Da designer rido, ma è una cosa vera: a volte il cliente non sta valutando quello che gli hai mandato, ma qualcos'altro che per lui conta di più (la comodità, la sicurezza, il «sentirsi a casa»). Capire cosa, prima di disegnare, fa risparmiare 46 versioni.
+
+Calì & Mel · ep. 8 🐾
+
+#design #packaging #clienti #ux
+```
+
+---
+
 ## Carosello — Il dizionario del cliente (8 slide)
 
 **Instagram:**
