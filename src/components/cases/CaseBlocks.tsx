@@ -2,8 +2,13 @@ import { Fragment } from 'react';
 import type { CaseBlock, CaseFigure, CaseImage } from '@/content/cases/types';
 import { RichText } from '../RichText';
 
+/* every case image carries a light diagonal watermark (.wm::after in globals.css): a screenshot keeps the studio's name */
 function Img({ img }: { img: CaseImage }) {
-  return <img src={img.src} alt={img.alt} loading="lazy" decoding="async" width={img.width} height={img.height} />;
+  return (
+    <span className="wm">
+      <img src={img.src} alt={img.alt} loading="lazy" decoding="async" width={img.width} height={img.height} />
+    </span>
+  );
 }
 
 function Figure({ figure }: { figure: CaseFigure }) {
@@ -24,7 +29,7 @@ function Block({ block }: { block: CaseBlock }) {
     case 'demo':
       return (
         <figure className="demo">
-          <video src={block.src} data-poster={block.poster} muted loop playsInline controls preload="none" aria-label={block.label}></video>
+          <video src={block.src} data-poster={block.poster} muted loop playsInline controls controlsList="nodownload noplaybackrate" disablePictureInPicture preload="none" aria-label={block.label}></video>
         </figure>
       );
     case 'figure':
