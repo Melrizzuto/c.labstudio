@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="it" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+      @font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+      @font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+      :root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Figtree", sans-serif; color: var(--ink); }
+      .clip { position: absolute; inset: 0; }
+      .dots { background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+
+      /* ---------- chat world ---------- */
+      .kick { position: absolute; left: 130px; top: 300px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--note); }
+      .who { position: absolute; left: 130px; top: 360px; display: flex; align-items: center; gap: 22px; }
+      .who .av { width: 104px; height: 104px; border-radius: 50%; border: 6px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 56px; }
+      .who b { display: block; font: 900 50px/1 "Outfit", sans-serif; letter-spacing: -0.02em; }
+      .who small { display: block; margin-top: 8px; font: 600 30px/1 "Figtree", sans-serif; color: #2e9e3e; }
+      .bub { position: absolute; left: 130px; max-width: 760px; padding: 30px 40px 34px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px;
+        box-shadow: 10px 10px 0 var(--ink); font: 700 66px/1.1 "Figtree", sans-serif; letter-spacing: -0.01em; transform-origin: 0% 100%; }
+      .bub.big { font: 900 96px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .bub em { font-style: normal; color: var(--note); }
+      .bub.old { opacity: 0.38; box-shadow: none; }
+      .typing { position: absolute; left: 130px; padding: 30px 38px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px; display: flex; gap: 14px; transform-origin: 0% 100%; }
+      .peek { position: absolute; left: 330px; top: 1330px; width: 420px; height: 1095px; }
+      .peek img { width: 100%; height: 100%; }
+      .typing i { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); display: block; }
+
+      /* ---------- screen world: the poster on the design canvas ---------- */
+      #sScr { background: #e9e4da radial-gradient(rgba(22, 19, 15, 0.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
+      .tool { position: absolute; left: 130px; top: 300px; display: flex; gap: 14px; font: 700 28px/1 "Space Mono", monospace; text-transform: uppercase; }
+      .tool span { padding: 12px 18px; border: 4px solid var(--ink); border-radius: 14px; background: #fff; }
+      .tool span.on { background: var(--ink); color: #fff; }
+      #cam { position: absolute; left: 220px; top: 380px; width: 640px; height: 860px; transform-origin: 50% 19%; }
+      #poster { position: absolute; inset: 0; background: #fff3df; border: 6px solid var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 16px 16px 0 rgba(22, 19, 15, 0.85); }
+      #logo { position: absolute; left: 245px; top: 60px; width: 150px; height: 150px; border-radius: 50%; background: var(--red); border: 6px solid var(--ink);
+        display: grid; place-items: center; color: #fff3df; font: 900 92px/1 "Outfit", sans-serif; transform-origin: 50% 0%; z-index: 2; }
+      #rest { position: absolute; left: 0; top: 240px; width: 100%; text-align: center; }
+      #rest h2 { font: 700 130px/0.9 "Caveat", cursive; color: var(--red); }
+      #rest p { margin-top: 14px; font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+      #rest .awn { margin: 40px auto 0; width: 520px; height: 250px; border: 6px solid var(--ink); border-radius: 16px; background: repeating-linear-gradient(90deg, var(--red) 0 52px, #fff3df 52px 104px); }
+      #rest .addr { margin-top: 34px; font: 700 30px/1 "Figtree", sans-serif; }
+      #sel { position: absolute; left: 239px; top: 54px; width: 162px; height: 162px; border: 4px solid var(--cobalt); transform-origin: 50% 0%; z-index: 3; }
+      #sel i { position: absolute; width: 22px; height: 22px; background: #fff; border: 4px solid var(--cobalt); }
+      #sel i:nth-child(1) { left: -13px; top: -13px; } #sel i:nth-child(2) { right: -13px; top: -13px; }
+      #sel i:nth-child(3) { left: -13px; bottom: -13px; } #sel i:nth-child(4) { right: -13px; bottom: -13px; }
+      #cursor { position: absolute; left: 0; top: 0; width: 70px; height: 70px; z-index: 5; }
+      .size { position: absolute; left: 130px; top: 1262px; padding: 12px 20px; border-radius: 12px; background: var(--cobalt); color: #fff; font: 700 32px/1 "Space Mono", monospace; }
+
+      /* ---------- reaction world: Mel and Calì, close up ---------- */
+      .react { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; overflow: hidden; }
+      .face { position: absolute; left: 40px; top: 150px; width: 1001px; height: 2610px; transform-origin: 50% 24%; }
+      .face img { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .drop { position: absolute; left: 700px; top: 520px; font-size: 110px; line-height: 1; }
+      .band { position: absolute; left: 110px; right: 190px; top: 1060px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px;
+        font: 900 78px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band em { font-style: normal; color: var(--sun); }
+
+      /* ---------- end card ---------- */
+      #sEnd { background: var(--ink); color: #fff8ea; }
+      #sEnd h2 { position: absolute; left: 120px; right: 190px; top: 330px; font: 900 112px/0.96 "Outfit", sans-serif; letter-spacing: -0.045em; }
+      #sEnd h2 em { font-style: normal; color: var(--pink); }
+      #sEnd .ep { position: absolute; left: 124px; top: 860px; font: 700 34px/1.4 "Space Mono", monospace; color: var(--sun); }
+      #endMel { position: absolute; left: 600px; top: 1010px; width: 380px; height: 991px; }
+      #endMel img { width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="21.2" data-width="1080" data-height="1920">
+      <!-- ===== the screen world runs under the chat and reaction cuts from 2.2 to 9.6 ===== -->
+      <div id="sScr" data-layout-allow-overlap class="clip" data-start="3" data-duration="7.8" style="z-index: 1">
+        <div class="tool"><span class="on">Sposta</span><span>Testo</span><span>Forme</span></div>
+        <div id="cam">
+          <div id="poster">
+            <div id="logo">G</div>
+            <div id="rest">
+              <h2>Da Gino</h2>
+              <p>pizza al taglio · dal 1987</p>
+              <div class="awn"></div>
+              <div class="addr">Via Roma 12 · Milano</div>
+            </div>
+          </div>
+          <div id="sel"><i></i><i></i><i></i><i></i></div>
+          <svg id="cursor" viewBox="0 0 24 24"><path d="M3 2l17 9-7.5 1.6L9 20z" fill="#16130f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" /></svg>
+        </div>
+        <div id="sz1" class="size">logo · 150 px</div>
+        <div id="sz2" class="size" style="opacity: 0">logo · 200 px</div>
+        <div id="sz3" class="size" style="opacity: 0">logo · 360 px</div>
+        <div id="sz4" class="size" style="opacity: 0">logo · 9.999 px</div>
+      </div>
+
+      <!-- ===== 1. chat: the request (frame 0 is the hook) ===== -->
+      <div id="sChat1" class="clip dots" data-start="0" data-duration="3" style="z-index: 2">
+        <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+        <p class="kick">Calì &amp; Mel · ep. 1</p>
+        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
+        <div id="b1" class="bub" style="top: 580px">Ciao! Puoi fare il logo <em>un po' più grande?</em> 🙏</div>
+      </div>
+
+      <!-- ===== 3. chat: again ===== -->
+      <div id="sChat2" class="clip dots" data-start="4.4" data-duration="1.4" style="z-index: 2">
+        <div id="pk2" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
+        <div class="bub old" style="top: 560px">Ciao! Puoi fare il logo un po' più grande? 🙏</div>
+        <div id="b2" class="bub" style="top: 820px">Ancora <em>un pochino</em> 🤏</div>
+      </div>
+
+      <!-- ===== 5. reaction: Mel, deadpan ===== -->
+      <div id="sReact1" class="clip react" data-start="7" data-duration="1" style="z-index: 2">
+        <div id="face1" class="face"><img src="assets/mel-felt.png" alt="" /></div>
+        <span id="drop1" class="drop" data-layout-ignore>💧</span>
+      </div>
+
+      <!-- ===== 6. chat: MORE ===== -->
+      <div id="sChat3" class="clip dots" data-start="8" data-duration="0.8" style="z-index: 2">
+        <div id="pk3" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
+        <div id="b3" class="bub big" style="top: 600px">DI PIÙ!!! 🔥</div>
+      </div>
+
+      <!-- ===== 8. chat: the twist ===== -->
+      <div id="sChat4" class="clip dots" data-start="10.8" data-duration="4.8" style="z-index: 2">
+        <div id="pk4" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>sta scrivendo…</small></div></div>
+        <div id="b4" class="bub" style="top: 520px">Perfetto!!! 😍</div>
+        <div id="t4" class="typing" style="top: 720px"><i></i><i></i><i></i></div>
+        <div id="b5" class="bub" style="top: 730px">Mmm… però ora è <em>troppo grande</em> 🤔</div>
+        <div id="b6" class="bub" style="top: 1010px">Torniamo alla <em>prima versione?</em></div>
+      </div>
+
+      <!-- ===== 9. reaction: Calì yawns ===== -->
+      <div id="sReact2" class="clip react" data-start="15.6" data-duration="2.2" style="z-index: 2">
+        <div id="face2" class="face">
+          <img id="f2awake" src="assets/mel-felt.png" alt="" />
+          <img id="f2yawn" src="assets/mel-felt-yawn.png" alt="" style="opacity: 0" />
+        </div>
+        <div id="band" class="band">Ogni. Singola. <em>Volta.</em></div>
+      </div>
+
+      <!-- ===== 10. end card ===== -->
+      <div id="sEnd" class="clip" data-start="17.8" data-duration="3.4" style="z-index: 2">
+        <h2 id="endH">Hai un cliente così?<br /><em>Taggalo</em> 👇</h2>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. 1<br />@c.labstudio.milano</p>
+        <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+
+      <!-- ===== sound ===== -->
+      <audio id="aPop1" class="clip" data-start="0.05" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="aW1" class="clip" data-start="2.9" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.7"></audio>
+      <audio id="aPop2" class="clip" data-start="4.5" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="aW2" class="clip" data-start="5.3" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.7"></audio>
+      <audio id="aPop3" class="clip" data-start="8.1" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
+      <audio id="aRise" class="clip" data-start="8.9" data-duration="1.1" src="assets/riser.wav" data-volume="0.9"></audio>
+      <audio id="aTrill" class="clip" data-start="9.95" data-duration="1.25" src="assets/cat-trill.mp3" data-volume="0.85"></audio>
+      <audio id="aPop4" class="clip" data-start="10.95" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="aTick1" class="clip" data-start="11.9" data-duration="0.03" src="assets/tick.wav" data-volume="0.6"></audio>
+      <audio id="aTick2" class="clip" data-start="12.15" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="aPop5" class="clip" data-start="12.65" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="aPop6" class="clip" data-start="13.95" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
+      <audio id="aW3" class="clip" data-start="15.55" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.6"></audio>
+      <audio id="aMeow" class="clip" data-start="18.15" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="0.85"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const bubIn = (sel, at) => tl.fromTo(sel, { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "back.out(2.4)" }, at);
+
+      /* 1 · 0–2.2 the request: already on screen at frame 0, then it pops for emphasis */
+      tl.fromTo("#b1", { scale: 0.92 }, { scale: 1, duration: 0.4, ease: "back.out(3)" }, 0.05);
+      tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.2 }, 0.6);
+
+      /* 2 · 2.2–3.6 Mel drags the handle: the logo grows a little */
+      tl.set("#cursor", { x: 390, y: 205 }, 3);
+      tl.fromTo("#cam", { scale: 1.06 }, { scale: 1, duration: 0.5, ease: "expo.out" }, 3);
+      tl.to("#cursor", { x: 440, y: 260, duration: 0.6, ease: "power2.inOut" }, 3.35);
+      tl.to("#logo", { scale: 1.35, duration: 0.6, ease: "power2.inOut" }, 3.35);
+      tl.to("#sel", { scale: 1.35, duration: 0.6, ease: "power2.inOut" }, 3.35);
+      tl.to("#rest", { y: 55, duration: 0.6, ease: "power2.inOut" }, 3.35);
+      tl.set("#sz1", { opacity: 0 }, 3.7);
+      tl.set("#sz2", { opacity: 1 }, 3.7);
+
+      /* 3 · 3.6–4.6 "a little more" */
+      bubIn("#b2", 4.45);
+
+      /* 4 · 4.6–5.8 the logo eats the headline */
+      tl.to("#cursor", { x: 560, y: 470, duration: 0.7, ease: "power2.inOut" }, 5.9);
+      tl.to("#logo", { scale: 2.4, duration: 0.7, ease: "power2.inOut" }, 5.9);
+      tl.to("#sel", { scale: 2.4, duration: 0.7, ease: "power2.inOut" }, 5.9);
+      tl.to("#rest", { y: 215, duration: 0.7, ease: "power2.inOut" }, 5.9);
+      tl.set("#sz2", { opacity: 0 }, 6.25);
+      tl.set("#sz3", { opacity: 1 }, 6.25);
+
+      /* 5 · 5.8–6.8 deadpan: a hard punch-in, the sweat drop */
+      tl.fromTo("#face1", { scale: 1 }, { scale: 1.12, duration: 0.12, ease: "power4.out" }, 7);
+      tl.fromTo("#drop1", { y: -30, opacity: 0 }, { y: 30, opacity: 1, duration: 0.5, ease: "power2.in" }, 7.25);
+
+      /* 6 · 6.8–7.6 MORE */
+      tl.fromTo("#b3", { scale: 0.4, opacity: 0, rotation: -6 }, { scale: 1, opacity: 1, rotation: -3, duration: 0.25, ease: "back.out(3)" }, 8.05);
+      tl.to("#b3", { x: 10, duration: 0.04, yoyo: true, repeat: 5 }, 8.35);
+
+      /* 7 · 7.6–9.6 the logo becomes the whole world, then we see the poster: all logo */
+      tl.set("#cursor", { opacity: 0 }, 8.8);
+      tl.set("#sel", { opacity: 0 }, 8.8);
+      tl.to("#logo", { scale: 4.4, duration: 0.6, ease: "power3.in" }, 8.8);
+      tl.to("#rest", { y: 900, duration: 0.6, ease: "power3.in" }, 8.8);
+      tl.to("#cam", { scale: 9, duration: 0.55, ease: "power3.in" }, 9.2);
+      tl.set("#sz3", { opacity: 0 }, 9.4);
+      tl.set("#sz4", { opacity: 1 }, 9.4);
+      tl.to("#cam", { scale: 1, duration: 0.6, ease: "expo.out" }, 9.95);
+      tl.fromTo("#sz4", { scale: 1.6 }, { scale: 1, duration: 0.35, ease: "back.out(3)" }, 10.05);
+
+      /* 8 · 9.6–14.4 "perfect!" … "too big" … "back to the first one?" */
+      bubIn("#b4", 10.9);
+      tl.fromTo("#t4", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.2, ease: "back.out(2)" }, 11.75);
+      [0, 1, 2].forEach((i) => tl.fromTo(`#t4 i:nth-child(${i + 1})`, { y: 0 }, { y: -12, duration: 0.18, yoyo: true, repeat: 1, ease: "sine.inOut" }, 11.85 + i * 0.12));
+      tl.to("#t4", { opacity: 0, duration: 0.08 }, 12.58);
+      bubIn("#b5", 12.6);
+      bubIn("#b6", 13.9);
+
+      /* 9 · 14.4–16.6 Calì yawns; the line lands word by word */
+      tl.fromTo("#face2", { scale: 1.05 }, { scale: 1, duration: 0.5, ease: "expo.out" }, 15.6);
+      tl.set("#f2yawn", { opacity: 1 }, 15.95);
+      tl.set("#f2awake", { opacity: 0 }, 15.95);
+      tl.fromTo("#band", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18 }, 16.1);
+      tl.set("#f2yawn", { opacity: 0 }, 17.2);
+      tl.set("#f2awake", { opacity: 1 }, 17.2);
+
+      /* 10 · 16.6–20 end card */
+      tl.fromTo("#endH", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 17.85);
+      tl.fromTo("#endMel", { y: 700 }, { y: 0, duration: 0.6, ease: "back.out(1.5)" }, 18);
+      tl.fromTo("#endEp", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 18.4);
+
+
+      /* Mel peeks up at every message */
+      [["#pk1", 0.05], ["#pk2", 4.45], ["#pk3", 8.05], ["#pk4", 10.9]].forEach(([p, at]) => {
+        tl.fromTo(p, { y: 160 }, { y: 0, duration: 0.45, ease: "back.out(1.8)" }, at);
+      });
+      tl.to("#pk3", { y: -40, duration: 0.08, yoyo: true, repeat: 3 }, 8.35);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
