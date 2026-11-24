@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import type { CaseBlock, CaseFigure, CaseImage } from '@/content/cases/types';
 import { RichText } from '../RichText';
 
+/* the "© c.lab studio" mark is inside the picture files themselves (scripts/watermark.mjs) */
 function Img({ img }: { img: CaseImage }) {
   return <img src={img.src} alt={img.alt} loading="lazy" decoding="async" width={img.width} height={img.height} />;
 }
@@ -24,7 +25,7 @@ function Block({ block }: { block: CaseBlock }) {
     case 'demo':
       return (
         <figure className="demo">
-          <video src={block.src} data-poster={block.poster} muted loop playsInline controls preload="none" aria-label={block.label}></video>
+          <video src={block.src} data-poster={block.poster} muted loop playsInline controls controlsList="nodownload noplaybackrate" disablePictureInPicture preload="none" aria-label={block.label}></video>
         </figure>
       );
     case 'figure':

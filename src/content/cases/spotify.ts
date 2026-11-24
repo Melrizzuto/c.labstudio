@@ -14,8 +14,8 @@ export const spotify: Record<Locale, CaseCopy> = {
     blocks: [
       {
         kind: "demo",
-        src: "/assets/videos/spotify-mood-product.mp4?v=2",
-        poster: "/assets/videos/spotify-mood-product.jpg?v=2",
+        src: "/assets/videos/spotify-mood-product.mp4?v=3",
+        poster: "/assets/videos/spotify-mood-product.jpg?v=3",
         label: "Video demo di Spotify Mood",
       },
       {
@@ -287,8 +287,8 @@ export const spotify: Record<Locale, CaseCopy> = {
     blocks: [
       {
         kind: "demo",
-        src: "/assets/videos/spotify-mood-product-en.mp4?v=2",
-        poster: "/assets/videos/spotify-mood-product-en.jpg?v=2",
+        src: "/assets/videos/spotify-mood-product-en.mp4?v=3",
+        poster: "/assets/videos/spotify-mood-product-en.jpg?v=3",
         label: "Spotify Mood demo video",
       },
       {

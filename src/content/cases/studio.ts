@@ -12,7 +12,7 @@ export const studio: Record<Locale, CaseCopy> = {
     owner: "Progetto per Witailer (gruppo Alkemy)",
     tagline: "Cambia il modo di leggere i dati: non parti più dai numeri, parti dagli insight. Studio AI li trova nei dati reali delle vendite su Amazon e con l'AI puoi esplorarli e approfondirli, uno per uno.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/studio-ai-product.mp4?v=2", poster: "/assets/videos/studio-ai-product.jpg?v=2", label: "Video demo di Studio AI" },
+      { kind: "demo", src: "/assets/videos/studio-ai-product.mp4?v=3", poster: "/assets/videos/studio-ai-product.jpg?v=3", label: "Video demo di Studio AI" },
       {
         kind: "facts",
         items: [
@@ -334,7 +334,7 @@ export const studio: Record<Locale, CaseCopy> = {
     owner: "A project for Witailer (Alkemy group)",
     tagline: "It flips how you read data: you no longer start from the numbers, you start from the insights. Studio AI finds them in real Amazon sales data, and with AI you can explore them and dig into each one.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/studio-ai-product-en.mp4?v=2", poster: "/assets/videos/studio-ai-product-en.jpg?v=2", label: "Studio AI demo video" },
+      { kind: "demo", src: "/assets/videos/studio-ai-product-en.mp4?v=3", poster: "/assets/videos/studio-ai-product-en.jpg?v=3", label: "Studio AI demo video" },
       {
         kind: "facts",
         items: [

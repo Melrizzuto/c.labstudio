@@ -267,7 +267,7 @@ export const philo: Record<Locale, CaseCopy> = {
         kind: "figure",
         figure: {
           img: {
-            src: "/assets/cases/philo/video-thread.jpg?v=2",
+            src: "/assets/cases/philo/video-thread.jpg?v=3",
             alt: "A dotted route, like on a map, runs from the Philo mascot through a ticket, a document, a decision, data and a chat, among the people on the team",
             width: 1600,
             height: 900,

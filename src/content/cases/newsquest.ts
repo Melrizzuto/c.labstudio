@@ -12,7 +12,7 @@ export const newsquest: Record<Locale, CaseCopy> = {
     owner: "Concept di un project work accademico",
     tagline: "Le notizie, di swipe in swipe. Il concept di un'app che raccoglie notizie da fonti affidabili e le rende brevi e chiare, per chi ha tra i 19 e i 29 anni e poco tempo.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/newsquest-product.mp4?v=2", poster: "/assets/videos/newsquest-product.jpg?v=2", label: "Video demo di NewsQuest" },
+      { kind: "demo", src: "/assets/videos/newsquest-product.mp4?v=3", poster: "/assets/videos/newsquest-product.jpg?v=3", label: "Video demo di NewsQuest" },
       {
         kind: "facts",
         items: [
@@ -246,7 +246,7 @@ export const newsquest: Record<Locale, CaseCopy> = {
     owner: "Concept from an academy project work",
     tagline: "The news, one swipe at a time. An app that gathers, checks and makes sense of the news for people in their twenties with very little time.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/newsquest-product-en.mp4?v=2", poster: "/assets/videos/newsquest-product-en.jpg?v=2", label: "NewsQuest demo video" },
+      { kind: "demo", src: "/assets/videos/newsquest-product-en.mp4?v=3", poster: "/assets/videos/newsquest-product-en.jpg?v=3", label: "NewsQuest demo video" },
       {
         kind: "figure",
         figure: {
