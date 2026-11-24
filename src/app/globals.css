@@ -371,6 +371,18 @@ main.owner h1{margin:4px 0 0;font:900 clamp(40px,6vw,64px)/.95 var(--display);le
 .owner-buttons{display:flex;gap:8px;margin-top:14px}
 main.owner .chip{border:2px solid var(--ink)}
 .owner-delete{color:var(--note)!important}
+.ob{margin-top:8px}
+.ob-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 20px;margin-bottom:12px;font:500 15px/1.4 var(--body);color:var(--ink-2)}
+.ob-bar p{margin:0;max-width:60ch}
+.ob-only{display:flex;align-items:center;gap:8px;font:600 15px/1 var(--body);color:var(--ink);cursor:pointer}
+.ob-only input{width:18px;height:18px;accent-color:var(--ink)}
+.ob-frame{overflow:auto;border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink);background:#FBF7EE radial-gradient(rgba(22,19,15,.16) 1.2px,transparent 1.4px) 0 0/22px 22px}
+.ob-size{position:relative}
+.ob-canvas{position:absolute;left:0;top:0;transform-origin:0 0}
+.ob-note{cursor:grab;touch-action:none;user-select:none;transition:left .25s ease,top .25s ease}
+.ob-note.dragging{z-index:3;cursor:grabbing;transition:none;outline:3px solid var(--cobalt);outline-offset:6px}
+.ob-note.saving{opacity:.7}
+@media (prefers-reduced-motion:reduce){.ob-note{transition:none}}
 /* the CV on request: the form on /cv/, the decision page from the email, the "CV" tab of /owner/ */
 main.cvr{max-width:none}
 .cvr-wrap{width:min(1220px,100%);display:grid;grid-template-columns:420px minmax(0,1fr);gap:28px;align-items:start}

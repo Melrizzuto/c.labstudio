@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent as RPointerEvent } from 'react';
 import type { Dictionary, Locale } from '@/i18n/types';
 import { Sticker, STICKER_KEYS, type StickerKey } from '@/content/stickers';
-import { BOARD, NOTE_COLORS, NOTE_FILL, collides, freeSpot, noteBox, type Box, type NoteColor } from '@/content/board';
+import { BOARD, NOTE_COLORS, NOTE_FILL, collides, freeSpot, noteBox, placeNotes, type Box, type NoteColor } from '@/content/board';
 
 type Mood = 'like' | 'dislike';
 type Note = {
@@ -29,23 +29,9 @@ const N = BOARD.note;
 
 type Placed = Note & { px: number; py: number; pr: number };
 
-/*
- * Where each post-it shows: the oldest keep their spot; a newer one that lands on an older one (or a note written
- * before the board existed, with no spot at all) moves to the nearest free spot, so none covers another.
- */
-function placeAll(notes: Note[], taken: Box[] = []): Placed[] {
-  const order = notes.map((n, i) => i).sort((a, b) => notes[a].created_at.localeCompare(notes[b].created_at));
-  const out: Placed[] = new Array(notes.length);
-  for (const i of order) {
-    const n = notes[i];
-    const has = n.x !== null && n.y !== null;
-    const want = noteBox(has ? n.x! : BOARD.w / 2 - N / 2, has ? n.y! : BOARD.h / 2 - N / 2, n.message);
-    const spot = freeSpot(want, taken);
-    taken.push({ ...want, ...spot });
-    out[i] = { ...n, px: spot.x, py: spot.y, pr: has ? (n.rot ?? 0) : ((i * 37) % 9) - 4 };
-  }
-  return out;
-}
+/* see placeNotes: no post-it shows on top of another; notes with no spot get a tilt of their own */
+const placeAll = (notes: Note[], taken: Box[] = []): Placed[] =>
+  placeNotes(notes, taken).map((n, i) => ({ ...n, pr: n.x !== null && n.y !== null ? (n.rot ?? 0) : ((i * 37) % 9) - 4 }));
 
 /*
  * The desk notebook opens full screen, its pages work like a FigJam board: dotted, pan by dragging the background, zoom with ctrl+wheel,

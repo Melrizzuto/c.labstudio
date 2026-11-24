@@ -51,3 +51,23 @@ export function freeSpot(box: Box, taken: Box[]): { x: number; y: number } {
   }
   return best ?? { x: x0, y: y0 };
 }
+
+type Placeable = { x: number | null; y: number | null; message: string; created_at: string };
+/**
+ * Where each post-it shows: the oldest keep their spot; a newer one that lands on an older one (or a note written
+ * before the board existed, with no spot at all) moves to the nearest free spot, so none covers another.
+ * `taken` (boxes already on the board) is filled in as the notes are placed. Same order as `notes`.
+ */
+export function placeNotes<T extends Placeable>(notes: T[], taken: Box[] = []): (T & { px: number; py: number; moved: boolean })[] {
+  const order = notes.map((_, i) => i).sort((a, b) => notes[a].created_at.localeCompare(notes[b].created_at));
+  const out = new Array<T & { px: number; py: number; moved: boolean }>(notes.length);
+  for (const i of order) {
+    const n = notes[i];
+    const has = n.x !== null && n.y !== null;
+    const want = noteBox(has ? n.x! : BOARD.w / 2 - BOARD.note / 2, has ? n.y! : BOARD.h / 2 - BOARD.note / 2, n.message);
+    const spot = freeSpot(want, taken);
+    taken.push({ ...want, ...spot });
+    out[i] = { ...n, px: spot.x, py: spot.y, moved: !has || spot.x !== n.x || spot.y !== n.y };
+  }
+  return out;
+}
