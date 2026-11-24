@@ -194,6 +194,7 @@ export const it: Dictionary = {
     stickerNone: 'Nessuno',
     stickerNames: { daisy: 'Margherita', heart: 'Cuore', star: 'Stella', bolt: 'Fulmine', cali: 'Calì', fire: 'Fuoco', wow: 'Wow', sun: 'Sole' },
     drag: 'Trascina il post-it dove vuoi',
+    taken: "Qui c'è già un post-it: lascialo e lo sposto accanto",
     send: 'Attacca',
     sending: 'Un attimo…',
     cancel: 'Butta via',

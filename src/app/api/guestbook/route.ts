@@ -8,7 +8,7 @@
  */
 import { supabase, supabaseFetch } from '@/lib/supabase';
 import { isStickerKey } from '@/content/stickers';
-import { boardX, boardY, isNoteColor, tilt } from '@/content/board';
+import { boardX, boardY, freeSpot, isNoteColor, noteBox, tilt, type Box } from '@/content/board';
 import { SITE_URL } from '@/config';
 
 export const dynamic = 'force-dynamic';
@@ -74,14 +74,32 @@ export async function POST(req: Request) {
   if (!supabase()) return Response.json({ ok: false }, { status: 503, headers: NO_STORE });
   try {
     const row = { name: name || null, message, mood, locale };
+    /* never on top of another post-it, published or still waiting: move it to the nearest free spot */
+    if (place.x !== null && place.y !== null) {
+      const taken = await takenBoxes();
+      const spot = freeSpot(noteBox(place.x, place.y, message), taken);
+      place.x = Math.round(spot.x);
+      place.y = Math.round(spot.y);
+    }
     const insert = (data: object) => supabaseFetch('guestbook', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(data) });
     /* newest columns first; if one does not exist yet, keep the note anyway with what the table has */
     let res = await insert({ ...row, sticker, ...place });
     if (res && !res.ok) res = await insert(sticker ? { ...row, sticker } : row);
     if (res && !res.ok && sticker) res = await insert(row);
     if (!res?.ok) return Response.json({ ok: false }, { status: 502, headers: NO_STORE });
-    return Response.json({ ok: true }, { headers: NO_STORE });
+    return Response.json({ ok: true, x: place.x, y: place.y }, { headers: NO_STORE });
   } catch {
     return Response.json({ ok: false }, { status: 502, headers: NO_STORE });
   }
+}
+
+/* the boxes of every post-it already on the board (approved or not); none if the table has no x / y yet */
+async function takenBoxes(): Promise<Box[]> {
+  const res = await supabaseFetch('guestbook?select=x,y,message&x=not.is.null&y=not.is.null&order=created_at.desc&limit=500', { method: 'GET' }).catch(() => null);
+  if (!res?.ok) return [];
+  const rows = (await res.json().catch(() => [])) as Record<string, unknown>[];
+  return rows.flatMap((r) => {
+    const x = boardX(r.x), y = boardY(r.y);
+    return x !== null && y !== null ? [noteBox(x, y, typeof r.message === 'string' ? r.message : '')] : [];
+  });
 }
