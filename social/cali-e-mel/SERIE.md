@@ -40,6 +40,20 @@ Le storie vengono dalle lamentele e dalle richieste più strane che i designer r
 | 11 | Lo capisco quando lo vedo | 30 versioni. Sceglie la numero 1. |
 | 12 | Come Apple, ma entro venerdì | Il sito dei sogni con il budget di una pizza. |
 
+## La sigla
+
+Ogni puntata si apre con la sigla (3,6 s, cartella `00-sigla`): schermo nero, Mel e Calì sbucano dall'angolo in basso a sinistra, la zampa di Calì entra da destra e bussa due volte sul vetro ("toc… toc!"), poi arrivano "ep. N" e il titolo.
+
+```bash
+cd social/cali-e-mel/00-sigla
+python3 make.py 3 "Il bianco più bianco"     # scrive index.html per la puntata 3
+npx hyperframes@0.9.91 render -o sigla3.mp4
+# sigla + puntata in un solo video, volume per i social:
+ffmpeg -i sigla3.mp4 -i ep03.mp4 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a];[a]loudnorm=I=-15:TP=-2:LRA=11,alimiter=limit=0.75:level=false[a2]" -map "[v]" -map "[a2]" -c:v libx264 -crf 18 -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -movflags +faststart ep03-finale.mp4
+```
+
+Copertina: il primo fotogramma è nero, quindi su Instagram, TikTok e YouTube scegli come copertina un fotogramma della chat (la richiesta del cliente).
+
 ## Rifare o modificare una puntata
 
 ```bash
