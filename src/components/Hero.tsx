@@ -1,9 +1,10 @@
 import { preload } from 'react-dom';
-import type { Dictionary } from '@/i18n/types';
+import type { Dictionary, Locale } from '@/i18n/types';
+import { pathFor } from '@/lib/routes';
 import { MelFigure } from './MelFigure';
 import { RichText } from './RichText';
 
-export function Hero({ t }: { t: Dictionary['hero'] }) {
+export function Hero({ t, locale }: { t: Dictionary['hero']; locale: Locale }) {
   /* felt Mel is the LCP: start fetching her (AVIF; browsers without it skip the hint) before anything else */
   preload('/assets/mel-felt.avif', { as: 'image', type: 'image/avif', fetchPriority: 'high' });
   return (
@@ -33,7 +34,7 @@ export function Hero({ t }: { t: Dictionary['hero'] }) {
             <a className="btn" href="#stanza">
               {t.enter}
             </a>
-            <a className="link" href="#progetti">
+            <a className="link" href={pathFor(locale, { kind: 'section', id: 'progetti' })}>
               {t.toProjects}
             </a>
           </div>

@@ -3,12 +3,15 @@
 import { useEffect } from 'react';
 import { openCase } from '@/lib/cases';
 import { startTheme } from '@/lib/theme';
+import { startAddressBar } from '@/lib/addressBar';
+import type { Locale } from '@/i18n/types';
+import type { Target } from '@/lib/routes';
 
 /*
  * The page-wide behaviour, rendered last like the original <script> at the end of <body>:
  * clicks on [data-case] / [data-close] / [data-go], the case dialogs, and the day/night theme.
  */
-export function PageScripts() {
+export function PageScripts({ locale, target }: { locale: Locale; target: Target }) {
   useEffect(() => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const go = (id: string) => {
@@ -45,11 +48,14 @@ export function PageScripts() {
     document.addEventListener('click', onClick);
 
     const stopTheme = startTheme();
+    const stopAddress = startAddressBar(locale, target);
     return () => {
       document.removeEventListener('click', onClick);
       dialogs.forEach((d) => d.removeEventListener('close', onClose));
       stopTheme();
+      stopAddress();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per page: the target is the address it was served at
   }, []);
   return null;
 }

@@ -9,6 +9,7 @@ export function openCase(id: string): void {
   if (d.showModal) d.showModal();
   else d.setAttribute('open', '');
   d.scrollTop = 0;
+  window.dispatchEvent(new CustomEvent('clab:case-opened', { detail: id }));
   const v = d.querySelector<HTMLVideoElement>('.demo video');
   /* the poster is fetched only now, not with the page */
   if (v?.dataset.poster && !v.getAttribute('poster')) v.poster = v.dataset.poster;

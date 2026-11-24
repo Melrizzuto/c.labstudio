@@ -80,7 +80,7 @@ export const it: Dictionary = {
     terminal: [
       ['$ npm run dev', '▲ pronta su localhost:3100'],
       ['$ git commit -m \"nuova idea\"', '✓ 1 file cambiato'],
-      ['$ git push', '✓ online su clabstudio.vercel.app'],
+      ['$ git push', '✓ online su clabstudiomilano.com'],
     ],
     dock: { label: 'Gira la stanza', book: 'Libro', desk: 'Scrivania', sofa: 'Divano', tv: 'TV' },
     miao: [

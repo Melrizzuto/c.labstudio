@@ -90,8 +90,7 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
   useEffect(() => {
     const d = dialog.current;
     if (!d) return;
-    const onClick = (e: MouseEvent) => {
-      if (!(e.target as Element).closest('[data-guestbook]')) return;
+    const open = () => {
       openedAt.current = Date.now();
       if (!d.open) d.showModal();
       setPending(readPending());
@@ -103,9 +102,18 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
         .then((r) => r.json() as Promise<{ entries: (Omit<Note, 'key'> & { id?: number })[] | null }>)
         .then((j) => setEntries(j.entries ? j.entries.map((n, i) => ({ ...n, key: `a${n.id ?? i}` })) : null))
         .catch(() => setEntries(null));
+      window.dispatchEvent(new Event('clab:notebook-opened'));
+    };
+    const onClick = (e: MouseEvent) => {
+      if ((e.target as Element).closest('[data-guestbook]')) open();
     };
     document.addEventListener('click', onClick);
-    return () => document.removeEventListener('click', onClick);
+    /* a shared /agenda/ link, or the browser's back/forward buttons */
+    window.addEventListener('clab:open-notebook', open);
+    return () => {
+      document.removeEventListener('click', onClick);
+      window.removeEventListener('clab:open-notebook', open);
+    };
   }, [lookAt]);
 
   /* a waiting note disappears from "pending" once it shows up approved */
@@ -227,7 +235,7 @@ export function Guestbook({ t, locale, closeLabel }: { t: Dictionary['guestbook'
   );
 
   return (
-    <dialog className="guest board" ref={dialog} aria-labelledby="guest-title">
+    <dialog className="guest board" id="notebook" ref={dialog} aria-labelledby="guest-title">
       <header className="bd-top">
         <div className="bd-title">
           <h2 id="guest-title" className="neon-title">{t.title}</h2>

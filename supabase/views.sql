@@ -1,4 +1,4 @@
--- Visit counter for clabstudio.vercel.app
+-- Visit counter for clabstudiomilano.com
 -- Run once in the Supabase SQL editor.
 
 create table if not exists public.site_counters (

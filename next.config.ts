@@ -15,7 +15,19 @@ const nextConfig: NextConfig = {
    */
   /* the CV page is a static file in public/cv: serve it at /cv/ */
   async rewrites() {
-    return [{ source: '/cv/', destination: '/cv/index.html' }];
+    /* before the pages, so the chapter addresses (/[slug]/) never catch it */
+    return { beforeFiles: [{ source: '/cv/', destination: '/cv/index.html' }], afterFiles: [], fallback: [] };
+  },
+  /* the old Vercel address sends everyone, and every shared link, to the real domain */
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'clabstudio.vercel.app' }],
+        destination: 'https://clabstudiomilano.com/:path*',
+        permanent: true,
+      },
+    ];
   },
   async headers() {
     return [

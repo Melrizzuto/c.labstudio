@@ -10,15 +10,16 @@ import { Footer } from './Footer';
 import { CaseDialog } from './cases/CaseDialog';
 import { PageScripts } from './PageScripts';
 import { Guestbook } from './Guestbook';
+import type { Target } from '@/lib/routes';
 
 /** The whole one-page site, in one language. */
-export function HomePage({ locale }: { locale: Locale }) {
+export function HomePage({ locale, target = { kind: 'home' } }: { locale: Locale; target?: Target }) {
   const t = getDictionary(locale);
   return (
     <>
-      <Header t={t.header} />
+      <Header t={t.header} locale={locale} />
       <main id="top">
-        <Hero t={t.hero} />
+        <Hero t={t.hero} locale={locale} />
         <Tape phrases={t.tape} />
         <Room
           label={t.room.label}
@@ -35,7 +36,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           }}
         >
           <RoomStage t={t.room} locale={locale} />
-          <Chapters t={t} />
+          <Chapters t={t} locale={locale} />
         </Room>
       </main>
       <Footer t={t.footer} views={t.views} social={t.social} locale={locale} />
@@ -43,7 +44,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         <CaseDialog key={c.key} c={c} closeLabel={t.caseClose} />
       ))}
       <Guestbook t={t.guestbook} locale={locale} closeLabel={t.caseClose} />
-      <PageScripts />
+      <PageScripts locale={locale} target={target} />
     </>
   );
 }

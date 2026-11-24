@@ -1,4 +1,4 @@
--- The guestbook on the desk notebook (clabstudio.vercel.app)
+-- The guestbook on the desk notebook (clabstudiomilano.com)
 -- Run once in the Supabase SQL editor.
 --
 -- New notes arrive with approved = false and stay hidden.

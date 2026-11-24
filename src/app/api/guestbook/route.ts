@@ -9,6 +9,7 @@
 import { supabase, supabaseFetch } from '@/lib/supabase';
 import { isStickerKey } from '@/content/stickers';
 import { boardX, boardY, isNoteColor, tilt } from '@/content/board';
+import { SITE_URL } from '@/config';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +22,7 @@ const MIN_ELAPSED_MS = 3000;
 export async function GET() {
   /* on your own computer, without the database keys (.env.local), show the notes already published on the site */
   if (process.env.NODE_ENV === 'development' && !supabase()) {
-    const live = await fetch('https://clabstudio.vercel.app/api/guestbook/', { cache: 'no-store' }).catch(() => null);
+    const live = await fetch(`${SITE_URL}/api/guestbook/`, { cache: 'no-store' }).catch(() => null);
     const body = live?.ok ? await live.json().catch(() => null) : null;
     return Response.json(body ?? { entries: null }, { headers: NO_STORE });
   }

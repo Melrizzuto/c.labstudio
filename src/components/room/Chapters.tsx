@@ -1,4 +1,5 @@
-import type { Dictionary } from '@/i18n/types';
+import type { Dictionary, Locale } from '@/i18n/types';
+import { pathFor } from '@/lib/routes';
 import { getCase, caseDialogId, type CaseKey } from '@/content/cases';
 import { PROJECT_GROUPS } from '@/content/room';
 import { CALENDLY_URL, EMAIL, YOUTUBE_URL } from '@/config';
@@ -9,7 +10,8 @@ import { MailCopy } from '../MailCopy';
  * The six chapter cards that scroll over the pinned stage. Each `data-cam` names the camera view
  * (see CAM in Room.tsx); `.right` puts the card on the right on wide screens.
  */
-export function Chapters({ t }: { t: Dictionary }) {
+export function Chapters({ t, locale }: { t: Dictionary; locale: Locale }) {
+  const to = (id: 'percorso' | 'progetti' | 'divano' | 'weekend') => pathFor(locale, { kind: 'section', id });
   const project = (key: CaseKey) => {
     const c = getCase(t.locale, key);
     return (
@@ -34,16 +36,16 @@ export function Chapters({ t }: { t: Dictionary }) {
             <p>{t.intro.text}</p>
             <p className="hand">{t.intro.hand}</p>
             <div className="chips">
-              <a className="chip" href="#percorso">
+              <a className="chip" href={to('percorso')}>
                 {p.book}
               </a>
-              <a className="chip" href="#progetti">
+              <a className="chip" href={to('progetti')}>
                 {p.desk}
               </a>
-              <a className="chip" href="#divano">
+              <a className="chip" href={to('divano')}>
                 {p.sofa}
               </a>
-              <a className="chip" href="#weekend">
+              <a className="chip" href={to('weekend')}>
                 {p.tv}
               </a>
             </div>

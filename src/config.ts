@@ -1,4 +1,6 @@
 /** Links and addresses that are the same in every language. */
+/** The site's own address (bought on Cloudflare, served by Vercel). It matches the @c.labstudio.milano profiles. */
+export const SITE_URL = 'https://clabstudiomilano.com';
 export const YOUTUBE_URL = 'https://www.youtube.com/@c.labstudio.milano';
 export const GITHUB_URL = 'https://github.com/Melrizzuto';
 export const EMAIL = 'melrizzuto4@gmail.com';
