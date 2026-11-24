@@ -74,3 +74,19 @@ Se una puntata va molto bene, se ne fa il seguito entro una settimana.
 - I livelli di «finale» (finale → finale_vero → … → ORA_SI).
 - Prompt vs risultato.
 - Il designer in vacanza: le notifiche di Slack.
+
+## Formati nuovi, perché la serie non stanchi
+
+Lo stesso schema (chat → schermo → Calì) dopo 6–8 puntate diventa prevedibile. Si alterna con formati che chiedono al pubblico di **partecipare**: chi deve fare qualcosa guarda fino alla fine, riguarda e commenta.
+
+| Formato | Come funziona | Perché tiene incollati |
+| --- | --- | --- |
+| **Trova l'errore UX** 🔍 | un'interfaccia con 5 errori nascosti, un timer di 10 s, poi Calì li segna uno per uno | è un gioco: si mette in pausa, si riguarda, si commenta «ne ho trovati 4» |
+| **Scegli il finale** 🎬 | la puntata si ferma all'80%: «cosa sceglie il cliente? A o B?». Il finale esce il giorno dopo | crea attesa e commenti; il secondo video spinge il primo |
+| **Calì recensisce** ⭐ | Calì dà le stelle all'UX di cose di tutti i giorni (il parcheggio a pagamento, il modulo della banca, il self check-in) | parte da un fastidio che tutti conoscono |
+| **Redesign in 30 secondi** ✨ | un modulo orribile (inventato) diventa bello davanti ai tuoi occhi, passo per passo | il «prima/dopo» è irresistibile e mostra il tuo lavoro |
+| **Il mistero del Cliente** 🕵️ | Il Cliente non ha mai una faccia: ogni tanto un indizio. Finale di stagione: la rivelazione | una domanda aperta che dura settimane fa tornare le persone |
+| **Le vostre richieste** 💬 | la richiesta più votata nei commenti diventa una puntata, con il nome di chi l'ha scritta | chi l'ha scritta la condivide; gli altri commentano per essere i prossimi |
+| **Dietro le quinte** 🛠️ | «questi video sono fatti in HTML»: lo schermo con il codice e il video che si anima | curiosità pura, perfetto per LinkedIn |
+
+Rotazione consigliata su 2 settimane: 1 puntata classica, 1 «Trova l'errore», 1 «Scegli il finale» o «Calì recensisce», 2 caroselli.
