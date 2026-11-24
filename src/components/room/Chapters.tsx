@@ -69,8 +69,8 @@ export function Chapters({ t, locale }: { t: Dictionary; locale: Locale }) {
                 </li>
               ))}
             </ol>
-            <a className="btn cv-btn" href={`/cv/?lang=${t.locale}`} target="_blank" rel="noopener">
-              {t.journey.cv} ↗
+            <a className="btn cv-btn" href={t.locale === 'en' ? '/en/cv/' : '/cv/'}>
+              {t.journey.cv}
             </a>
           </div>
         </div>

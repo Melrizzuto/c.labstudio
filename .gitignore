@@ -8,3 +8,11 @@ next-env.d.ts
 !.env.example
 .vercel
 npm-debug.log*
+
+# the CV itself lives in Supabase Storage (private bucket "cv"), never in git: only its fonts are here
+/private/cv/*.html
+/private/cv/*.pdf
+/private/cv/*.jpg
+/private/cv/*.jpeg
+/private/cv/*.webp
+/private/cv/*.png

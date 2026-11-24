@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 
 /*
  * A normal Next.js build for Vercel: both pages are prerendered as static HTML,
- * only /api/views runs on the server (the visit counter).
+ * the API routes and the CV behind a personal link (/cv/k/<key>/) run on the server.
  */
 const nextConfig: NextConfig = {
   trailingSlash: true,
@@ -13,10 +13,9 @@ const nextConfig: NextConfig = {
    * them for a week (and revalidate after); Vercel's CDN keeps them until the next deploy.
    * /_next/static is already cached for a year by Next.js (hashed file names).
    */
-  /* the CV page is a static file in public/cv: serve it at /cv/ */
-  async rewrites() {
-    /* before the pages, so the chapter addresses (/[slug]/) never catch it */
-    return { beforeFiles: [{ source: '/cv/', destination: '/cv/index.html' }], afterFiles: [], fallback: [] };
+  /* the CV's fonts live in private/cv/fonts (the CV itself is in Supabase Storage): ship them with the personal-link route */
+  outputFileTracingIncludes: {
+    '/cv/k/[key]/[[...file]]': ['./private/cv/fonts/*'],
   },
   /* the old Vercel address sends everyone, and every shared link, to the real domain */
   async redirects() {
@@ -27,6 +26,8 @@ const nextConfig: NextConfig = {
         destination: 'https://clabstudiomilano.com/:path*',
         permanent: true,
       },
+      /* the old CV address in English now asks for the CV in English */
+      { source: '/cv/', has: [{ type: 'query', key: 'lang', value: 'en' }], destination: '/en/cv/', permanent: false },
     ];
   },
   async headers() {

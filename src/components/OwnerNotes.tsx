@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { Sticker, type StickerKey } from '@/content/stickers';
 import { NOTE_FILL, isNoteColor } from '@/content/board';
+import { OwnerCv } from './OwnerCv';
 
 type Note = { id: number; created_at: string; name: string | null; message: string; mood: 'like' | 'dislike'; locale: 'it' | 'en'; approved: boolean; sticker: StickerKey | null; color?: string | null };
-type Tab = 'todo' | 'live' | 'all';
+type Tab = 'todo' | 'live' | 'all' | 'cv';
 
 const API = '/api/guestbook/owner/';
 const KEY = 'clab-owner-key';
@@ -110,7 +111,7 @@ export function OwnerNotes() {
       <header className="owner-top">
         <div>
           <p className="owner-kicker">c.lab · area riservata</p>
-          <h1>Le dediche</h1>
+          <h1>{tab === 'cv' ? 'Il CV' : 'Le dediche'}</h1>
         </div>
         <div className="owner-actions">
           <button className="chip" type="button" onClick={() => void load(key)} disabled={busy}>Aggiorna</button>
@@ -118,12 +119,14 @@ export function OwnerNotes() {
         </div>
       </header>
       <nav className="owner-tabs" aria-label="Filtra le dediche">
-        {([['todo', `Da approvare · ${todo.length}`], ['live', `Pubblicate · ${live.length}`], ['all', `Tutte · ${notes.length}`]] as [Tab, string][]).map(([t, label]) => (
+        {([['todo', `Da approvare · ${todo.length}`], ['live', `Pubblicate · ${live.length}`], ['all', `Tutte · ${notes.length}`], ['cv', 'Richieste del CV']] as [Tab, string][]).map(([t, label]) => (
           <button key={t} type="button" className={tab === t ? 'on' : ''} aria-pressed={tab === t} onClick={() => setTab(t)}>{label}</button>
         ))}
       </nav>
       <p className="owner-error" role="alert">{message}</p>
-      {shown.length === 0 ? (
+      {tab === 'cv' ? (
+        <OwnerCv ownerKey={key} />
+      ) : shown.length === 0 ? (
         <p className="owner-empty">{tab === 'todo' ? 'Niente da approvare. Calì approva.' : 'Ancora niente qui.'}</p>
       ) : (
         <ul className="owner-list">

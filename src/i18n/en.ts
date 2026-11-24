@@ -100,7 +100,7 @@ export const en: Dictionary = {
     hand: 'or tap whatever catches your eye',
   },
   journey: {
-    cv: 'Read my CV',
+    cv: 'Ask for my CV',
     title: "The book I'm reading is my life",
     text: "Shop windows, product design, 3D, then code. It wasn't a straight road, but from every stop I took something I still use.",
     timeline: [
