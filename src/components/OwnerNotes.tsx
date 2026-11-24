@@ -4,9 +4,10 @@ import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { Sticker, type StickerKey } from '@/content/stickers';
 import { NOTE_FILL, isNoteColor } from '@/content/board';
 import { OwnerCv } from './OwnerCv';
+import { OwnerBoard } from './OwnerBoard';
 
-type Note = { id: number; created_at: string; name: string | null; message: string; mood: 'like' | 'dislike'; locale: 'it' | 'en'; approved: boolean; sticker: StickerKey | null; color?: string | null };
-type Tab = 'todo' | 'live' | 'all' | 'cv';
+type Note = { id: number; created_at: string; name: string | null; message: string; mood: 'like' | 'dislike'; locale: 'it' | 'en'; approved: boolean; sticker: StickerKey | null; color?: string | null; x?: number | null; y?: number | null; rot?: number | null };
+type Tab = 'todo' | 'live' | 'all' | 'board' | 'cv';
 
 const API = '/api/guestbook/owner/';
 const KEY = 'clab-owner-key';
@@ -16,7 +17,7 @@ const date = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'short', 
 const readKey = () => { try { return sessionStorage.getItem(KEY) ?? ''; } catch { return ''; } };
 const saveKey = (k: string) => { try { if (k) sessionStorage.setItem(KEY, k); else sessionStorage.removeItem(KEY); } catch { /* private mode */ } };
 
-/** The owner's page: read every note, publish it, hide it again or delete it. */
+/** The owner's page: read every note, publish it, hide it again, move it on the agenda or delete it. */
 export function OwnerNotes() {
   const [key, setKey] = useState('');
   const [notes, setNotes] = useState<Note[] | null>(null);
@@ -76,6 +77,17 @@ export function OwnerNotes() {
     }
   };
 
+  /* a post-it moved on the agenda (OwnerBoard): save its new spot */
+  const moveNote = async (id: number, x: number, y: number) => {
+    try {
+      await call(key, { method: 'PATCH', body: JSON.stringify({ id, x, y }) });
+      setNotes((list) => (list ? list.map((n) => (n.id === id ? { ...n, x, y } : n)) : list));
+      setError('');
+    } catch (e) {
+      setError((e as Error).message);
+    }
+  };
+
   const message = error === 'wrong-password' ? 'Password sbagliata.' : error === 'not-configured' ? 'Manca la password su Vercel (variabile OWNER_PASSWORD).' : error ? 'Non riesco a parlare con il database, riprova tra poco.' : '';
 
   if (!notes) {
@@ -111,7 +123,7 @@ export function OwnerNotes() {
       <header className="owner-top">
         <div>
           <p className="owner-kicker">c.lab · area riservata</p>
-          <h1>{tab === 'cv' ? 'Il CV' : 'Le dediche'}</h1>
+          <h1>{tab === 'cv' ? 'Il CV' : tab === 'board' ? "L'agenda" : 'Le dediche'}</h1>
         </div>
         <div className="owner-actions">
           <button className="chip" type="button" onClick={() => void load(key)} disabled={busy}>Aggiorna</button>
@@ -119,13 +131,15 @@ export function OwnerNotes() {
         </div>
       </header>
       <nav className="owner-tabs" aria-label="Filtra le dediche">
-        {([['todo', `Da approvare · ${todo.length}`], ['live', `Pubblicate · ${live.length}`], ['all', `Tutte · ${notes.length}`], ['cv', 'Richieste del CV']] as [Tab, string][]).map(([t, label]) => (
+        {([['todo', `Da approvare · ${todo.length}`], ['live', `Pubblicate · ${live.length}`], ['all', `Tutte · ${notes.length}`], ['board', 'Sposta i post-it'], ['cv', 'Richieste del CV']] as [Tab, string][]).map(([t, label]) => (
           <button key={t} type="button" className={tab === t ? 'on' : ''} aria-pressed={tab === t} onClick={() => setTab(t)}>{label}</button>
         ))}
       </nav>
       <p className="owner-error" role="alert">{message}</p>
       {tab === 'cv' ? (
         <OwnerCv ownerKey={key} />
+      ) : tab === 'board' ? (
+        <OwnerBoard notes={notes} onMove={moveNote} />
       ) : shown.length === 0 ? (
         <p className="owner-empty">{tab === 'todo' ? 'Niente da approvare. Calì approva.' : 'Ancora niente qui.'}</p>
       ) : (
