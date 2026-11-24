@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="it" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+      @font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+      @font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+      :root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Figtree", sans-serif; color: var(--ink); }
+      .clip { position: absolute; inset: 0; }
+      .dots { background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+
+      /* ---------- chat world ---------- */
+      .kick { position: absolute; left: 130px; top: 300px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--note); }
+      .who { position: absolute; left: 130px; top: 360px; display: flex; align-items: center; gap: 22px; }
+      .who .av { width: 104px; height: 104px; border-radius: 50%; border: 6px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 56px; }
+      .who b { display: block; font: 900 50px/1 "Outfit", sans-serif; letter-spacing: -0.02em; }
+      .who small { display: block; margin-top: 8px; font: 600 30px/1 "Figtree", sans-serif; color: #2e9e3e; }
+      .bub { position: absolute; left: 130px; max-width: 760px; padding: 30px 40px 34px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px;
+        box-shadow: 10px 10px 0 var(--ink); font: 700 66px/1.1 "Figtree", sans-serif; letter-spacing: -0.01em; transform-origin: 0% 100%; }
+      .bub.big { font: 900 96px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .bub em { font-style: normal; color: var(--note); }
+      .bub.old { opacity: 0.38; box-shadow: none; }
+      .typing { position: absolute; left: 130px; padding: 30px 38px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px; display: flex; gap: 14px; transform-origin: 0% 100%; }
+      .peek { position: absolute; left: 330px; top: 1330px; width: 420px; height: 1095px; }
+      .peek img { width: 100%; height: 100%; }
+      .typing i { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); display: block; }
+
+      /* ---------- screen world: the poster on the design canvas ---------- */
+      #sScr { background: #e9e4da radial-gradient(rgba(22, 19, 15, 0.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
+      .tool { position: absolute; left: 130px; top: 300px; display: flex; gap: 14px; font: 700 28px/1 "Space Mono", monospace; text-transform: uppercase; }
+      .tool span { padding: 12px 18px; border: 4px solid var(--ink); border-radius: 14px; background: #fff; }
+      .tool span.on { background: var(--ink); color: #fff; }
+      #cam { position: absolute; left: 220px; top: 380px; width: 640px; height: 860px; transform-origin: 50% 19%; }
+      #poster { position: absolute; inset: 0; background: #fff3df; border: 6px solid var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 16px 16px 0 rgba(22, 19, 15, 0.85); }
+      #logo { position: absolute; left: 245px; top: 60px; width: 150px; height: 150px; border-radius: 50%; background: var(--red); border: 6px solid var(--ink);
+        display: grid; place-items: center; color: #fff3df; font: 900 92px/1 "Outfit", sans-serif; transform-origin: 50% 0%; z-index: 2; }
+      #rest { position: absolute; left: 0; top: 240px; width: 100%; text-align: center; }
+      #rest h2 { font: 700 130px/0.9 "Caveat", cursive; color: var(--red); }
+      #rest p { margin-top: 14px; font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+      #rest .awn { margin: 40px auto 0; width: 520px; height: 250px; border: 6px solid var(--ink); border-radius: 16px; background: repeating-linear-gradient(90deg, var(--red) 0 52px, #fff3df 52px 104px); }
+      #rest .addr { margin-top: 34px; font: 700 30px/1 "Figtree", sans-serif; }
+      #sel { position: absolute; left: 239px; top: 54px; width: 162px; height: 162px; border: 4px solid var(--cobalt); transform-origin: 50% 0%; z-index: 3; }
+      #sel i { position: absolute; width: 22px; height: 22px; background: #fff; border: 4px solid var(--cobalt); }
+      #sel i:nth-child(1) { left: -13px; top: -13px; } #sel i:nth-child(2) { right: -13px; top: -13px; }
+      #sel i:nth-child(3) { left: -13px; bottom: -13px; } #sel i:nth-child(4) { right: -13px; bottom: -13px; }
+      #cursor { position: absolute; left: 0; top: 0; width: 70px; height: 70px; z-index: 5; }
+      .size { position: absolute; left: 130px; top: 1262px; padding: 12px 20px; border-radius: 12px; background: var(--cobalt); color: #fff; font: 700 32px/1 "Space Mono", monospace; }
+
+      /* ---------- reaction world: Mel and Calì, close up ---------- */
+      .react { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; overflow: hidden; }
+      .face { position: absolute; left: 40px; top: 150px; width: 1001px; height: 2610px; transform-origin: 50% 24%; }
+      .face img { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .drop { position: absolute; left: 700px; top: 520px; font-size: 110px; line-height: 1; }
+      .band { position: absolute; left: 110px; right: 190px; top: 1060px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px;
+        font: 900 78px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band em { font-style: normal; color: var(--sun); }
+
+      /* ---------- end card ---------- */
+      #sEnd { background: var(--ink); color: #fff8ea; }
+      #sEnd h2 { position: absolute; left: 120px; right: 190px; top: 330px; font: 900 112px/0.96 "Outfit", sans-serif; letter-spacing: -0.045em; }
+      #sEnd h2 em { font-style: normal; color: var(--pink); }
+      #sEnd .ep { position: absolute; left: 124px; top: 860px; font: 700 34px/1.4 "Space Mono", monospace; color: var(--sun); }
+      #endMel { position: absolute; left: 600px; top: 1010px; width: 380px; height: 991px; }
+      #endMel img { width: 100%; height: 100%; }
+    </style>
+    <style>
+      .tease { position: absolute; left: 130px; top: 300px; padding: 10px 18px; border-radius: 999px; background: var(--ink); color: var(--sun); font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; }
+      .who { top: 370px; }
+      /* colour picker */
+      #picker { position: absolute; left: 150px; top: 400px; width: 780px; height: 800px; background: #fff; border: 7px solid var(--ink); border-radius: 36px; box-shadow: 14px 14px 0 var(--ink); }
+      #swatch { position: absolute; left: 46px; top: 46px; width: 674px; height: 420px; border-radius: 22px; border: 5px solid var(--ink); background: #000; }
+      #swGray { position: absolute; inset: 0; border-radius: 17px; background: #333; opacity: 0; }
+      #track { position: absolute; left: 46px; top: 520px; width: 674px; height: 46px; border-radius: 23px; border: 5px solid var(--ink); background: linear-gradient(90deg, #000, #fff); }
+      #knob { position: absolute; left: 30px; top: 506px; width: 74px; height: 74px; border-radius: 50%; background: #fff; border: 7px solid var(--ink); }
+      .hex { position: absolute; left: 46px; top: 630px; width: 674px; padding: 22px 30px; border: 5px solid var(--ink); border-radius: 18px; font: 700 58px/1 "Space Mono", monospace; background: var(--paper); }
+      .toast { position: absolute; left: 130px; top: 300px; max-width: 800px; padding: 22px 30px 26px; background: #fff; border: 6px solid var(--ink); border-radius: 36px 36px 36px 8px; box-shadow: 8px 8px 0 var(--ink);
+        font: 700 52px/1.1 "Figtree", sans-serif; transform-origin: 0% 100%; z-index: 4; display: flex; align-items: center; gap: 18px; }
+      .toast .av { width: 70px; height: 70px; flex: none; border-radius: 50%; border: 5px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 38px; }
+      #cur2 { position: absolute; left: 0; top: 0; width: 76px; height: 76px; z-index: 5; }
+      /* the 50 blacks */
+      #gridCam { position: absolute; left: 135px; top: 470px; width: 820px; height: 2200px; }
+      .sw { position: absolute; width: 150px; }
+      .sw i { display: block; width: 150px; height: 150px; border-radius: 22px; background: #000; border: 5px solid var(--ink); }
+      .sw span { display: block; margin-top: 10px; text-align: center; font: 700 28px/1 "Space Mono", monospace; }
+      #ring { position: absolute; left: 174px; top: 1526px; width: 150px; height: 150px; border-radius: 26px; outline: 10px solid var(--pink); outline-offset: 10px; opacity: 0; }
+      #gridHead { position: absolute; left: 0; top: 0; right: 0; height: 460px; padding: 300px 0 0 130px; background: linear-gradient(var(--paper) 85%, rgba(247, 239, 225, 0)); z-index: 3; }
+      #gridHead b { display: block; font: 900 64px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      #gridHead small { display: block; margin-top: 10px; font: 700 28px/1 "Space Mono", monospace; color: var(--note); }
+      .band2 { position: absolute; left: 110px; right: 190px; top: 1020px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px; font: 900 72px/1.02 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band2 em { font-style: normal; color: var(--sun); }
+      #sEnd h2 { top: 320px; font-size: 100px; }
+      #sEnd .ep { top: 900px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="35" data-width="1080" data-height="1920">
+      <!-- 1 · 0–3.6 the request, on screen from frame 0 -->
+      <div id="sChat1" class="clip dots" data-start="0" data-duration="3.6">
+        <p id="tease" class="tease">guarda fino alla fine 👀</p>
+        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
+        <div id="b1" class="bub big" style="top: 600px">Mi serve un nero… <em>ma più chiaro.</em> 🖤</div>
+        <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+
+      <!-- 2 · 3.6–6.6 Mel processes it: a slow push-in -->
+      <div id="sReact1" class="clip react" data-start="3.6" data-duration="3">
+        <div id="face1" class="face"><img src="assets/mel-felt.png" alt="" /></div>
+        <div id="band1" class="band">Un nero. <em>Più chiaro.</em></div>
+      </div>
+
+      <!-- 3 · 6.6–15.2 the colour picker -->
+      <div id="sPick" class="clip" data-start="6.6" data-duration="8.6" style="background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px">
+        <div id="picker">
+          <div id="swatch"><div id="swGray"></div></div>
+          <div id="track"></div>
+          <div id="knob"></div>
+          <div id="hx1" class="hex">#000000</div>
+          <div id="hx2" class="hex" style="opacity: 0">#333333</div>
+          <div id="hx3" class="hex" style="opacity: 0">#0A0A0A</div>
+          <svg id="cur2" viewBox="0 0 24 24"><path d="M3 2l17 9-7.5 1.6L9 20z" fill="#16130f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" /></svg>
+        </div>
+        <div id="toast1" class="toast" style="opacity: 0"><span class="av">👔</span>No, così è grigio 😑</div>
+        <div id="toast2" class="toast" style="opacity: 0"><span class="av">👔</span>Ora è uguale a prima 🤨</div>
+      </div>
+
+      <!-- 4 · 15.2–21 the wait: "is typing…" -->
+      <div id="sChat2" class="clip dots" data-start="15.2" data-duration="5.8">
+        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>sta scrivendo…</small></div></div>
+        <div class="bub old" style="top: 560px">Ora è uguale a prima 🤨</div>
+        <div id="t2" class="typing" style="top: 780px"><i></i><i></i><i></i></div>
+        <div id="b2" class="bub" style="top: 780px">Mandami <em>50 neri</em>, scelgo io 🙏</div>
+        <div id="pk2" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+
+      <!-- 5 · 21–27.4 fifty identical blacks -->
+      <div id="sGrid" class="clip dots" data-start="21" data-duration="6.4">
+        <div id="gridCam">
+          <div class="sw" id="sw1" style="left:0px;top:0px"><i></i><span>nero 1</span></div>
+          <div class="sw" id="sw2" style="left:174px;top:0px"><i></i><span>nero 2</span></div>
+          <div class="sw" id="sw3" style="left:348px;top:0px"><i></i><span>nero 3</span></div>
+          <div class="sw" id="sw4" style="left:522px;top:0px"><i></i><span>nero 4</span></div>
+          <div class="sw" id="sw5" style="left:696px;top:0px"><i></i><span>nero 5</span></div>
+          <div class="sw" id="sw6" style="left:0px;top:218px"><i></i><span>nero 6</span></div>
+          <div class="sw" id="sw7" style="left:174px;top:218px"><i></i><span>nero 7</span></div>
+          <div class="sw" id="sw8" style="left:348px;top:218px"><i></i><span>nero 8</span></div>
+          <div class="sw" id="sw9" style="left:522px;top:218px"><i></i><span>nero 9</span></div>
+          <div class="sw" id="sw10" style="left:696px;top:218px"><i></i><span>nero 10</span></div>
+          <div class="sw" id="sw11" style="left:0px;top:436px"><i></i><span>nero 11</span></div>
+          <div class="sw" id="sw12" style="left:174px;top:436px"><i></i><span>nero 12</span></div>
+          <div class="sw" id="sw13" style="left:348px;top:436px"><i></i><span>nero 13</span></div>
+          <div class="sw" id="sw14" style="left:522px;top:436px"><i></i><span>nero 14</span></div>
+          <div class="sw" id="sw15" style="left:696px;top:436px"><i></i><span>nero 15</span></div>
+          <div class="sw" id="sw16" style="left:0px;top:654px"><i></i><span>nero 16</span></div>
+          <div class="sw" id="sw17" style="left:174px;top:654px"><i></i><span>nero 17</span></div>
+          <div class="sw" id="sw18" style="left:348px;top:654px"><i></i><span>nero 18</span></div>
+          <div class="sw" id="sw19" style="left:522px;top:654px"><i></i><span>nero 19</span></div>
+          <div class="sw" id="sw20" style="left:696px;top:654px"><i></i><span>nero 20</span></div>
+          <div class="sw" id="sw21" style="left:0px;top:872px"><i></i><span>nero 21</span></div>
+          <div class="sw" id="sw22" style="left:174px;top:872px"><i></i><span>nero 22</span></div>
+          <div class="sw" id="sw23" style="left:348px;top:872px"><i></i><span>nero 23</span></div>
+          <div class="sw" id="sw24" style="left:522px;top:872px"><i></i><span>nero 24</span></div>
+          <div class="sw" id="sw25" style="left:696px;top:872px"><i></i><span>nero 25</span></div>
+          <div class="sw" id="sw26" style="left:0px;top:1090px"><i></i><span>nero 26</span></div>
+          <div class="sw" id="sw27" style="left:174px;top:1090px"><i></i><span>nero 27</span></div>
+          <div class="sw" id="sw28" style="left:348px;top:1090px"><i></i><span>nero 28</span></div>
+          <div class="sw" id="sw29" style="left:522px;top:1090px"><i></i><span>nero 29</span></div>
+          <div class="sw" id="sw30" style="left:696px;top:1090px"><i></i><span>nero 30</span></div>
+          <div class="sw" id="sw31" style="left:0px;top:1308px"><i></i><span>nero 31</span></div>
+          <div class="sw" id="sw32" style="left:174px;top:1308px"><i></i><span>nero 32</span></div>
+          <div class="sw" id="sw33" style="left:348px;top:1308px"><i></i><span>nero 33</span></div>
+          <div class="sw" id="sw34" style="left:522px;top:1308px"><i></i><span>nero 34</span></div>
+          <div class="sw" id="sw35" style="left:696px;top:1308px"><i></i><span>nero 35</span></div>
+          <div class="sw" id="sw36" style="left:0px;top:1526px"><i></i><span>nero 36</span></div>
+          <div class="sw" id="sw37" style="left:174px;top:1526px"><i></i><span>nero 37</span></div>
+          <div class="sw" id="sw38" style="left:348px;top:1526px"><i></i><span>nero 38</span></div>
+          <div class="sw" id="sw39" style="left:522px;top:1526px"><i></i><span>nero 39</span></div>
+          <div class="sw" id="sw40" style="left:696px;top:1526px"><i></i><span>nero 40</span></div>
+          <div class="sw" id="sw41" style="left:0px;top:1744px"><i></i><span>nero 41</span></div>
+          <div class="sw" id="sw42" style="left:174px;top:1744px"><i></i><span>nero 42</span></div>
+          <div class="sw" id="sw43" style="left:348px;top:1744px"><i></i><span>nero 43</span></div>
+          <div class="sw" id="sw44" style="left:522px;top:1744px"><i></i><span>nero 44</span></div>
+          <div class="sw" id="sw45" style="left:696px;top:1744px"><i></i><span>nero 45</span></div>
+          <div class="sw" id="sw46" style="left:0px;top:1962px"><i></i><span>nero 46</span></div>
+          <div class="sw" id="sw47" style="left:174px;top:1962px"><i></i><span>nero 47</span></div>
+          <div class="sw" id="sw48" style="left:348px;top:1962px"><i></i><span>nero 48</span></div>
+          <div class="sw" id="sw49" style="left:522px;top:1962px"><i></i><span>nero 49</span></div>
+          <div class="sw" id="sw50" style="left:696px;top:1962px"><i></i><span>nero 50</span></div>
+          <div id="ring"></div>
+        </div>
+        <div id="gridHead"><b>50 sfumature di nero</b><small>tutte #000000</small></div>
+        <div id="toast3" class="toast" style="opacity: 0; top: 1150px"><span class="av">👔</span>IL 37!!! 😍 Perfetto.</div>
+      </div>
+
+      <!-- 6 · 27.4–31 the reveal -->
+      <div id="sReact2" class="clip react" data-start="27.4" data-duration="3.6">
+        <div id="face2" class="face">
+          <img id="f2awake" src="assets/mel-felt.png" alt="" />
+          <img id="f2yawn" src="assets/mel-felt-yawn.png" alt="" style="opacity: 0" />
+        </div>
+        <div id="band2" class="band2">Il 37 è #000000.<br /><em>Quello di prima.</em></div>
+      </div>
+
+      <!-- 7 · 31–35 end card -->
+      <div id="sEnd" class="clip" data-start="31" data-duration="4">
+        <h2 id="endH">La richiesta più strana che hai ricevuto? <em>Scrivila</em> 👇</h2>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. 2<br />@c.labstudio.milano</p>
+        <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+
+      <!-- music: "Sneaky Snitch", Kevin MacLeod (incompetech.com), CC BY 4.0 -->
+      <audio id="aMusic" class="clip" data-start="0" data-duration="35" src="assets/music.mp3" data-volume="0.42" data-fade-out="2"></audio>
+      <!-- effects -->
+      <audio id="aPop1" class="clip" data-start="0.06" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
+      <audio id="aW1" class="clip" data-start="3.5" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.55"></audio>
+      <audio id="aW2" class="clip" data-start="6.5" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.55"></audio>
+      <audio id="aPop2" class="clip" data-start="9.05" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="aPop3" class="clip" data-start="12.35" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="aW3" class="clip" data-start="15.1" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="aTk1" class="clip" data-start="15.7" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="aTk2" class="clip" data-start="16.4" data-duration="0.03" src="assets/tick.wav" data-volume="0.45"></audio>
+      <audio id="aTk3" class="clip" data-start="17.3" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="aTk4" class="clip" data-start="17.9" data-duration="0.03" src="assets/tick.wav" data-volume="0.45"></audio>
+      <audio id="aPop4" class="clip" data-start="18.45" data-duration="0.06" src="assets/pop.wav" data-volume="0.95"></audio>
+      <audio id="aW4" class="clip" data-start="20.9" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.5"></audio>
+      <audio id="aRise" class="clip" data-start="24.6" data-duration="1.1" src="assets/riser.wav" data-volume="0.8"></audio>
+      <audio id="aPop5" class="clip" data-start="25.75" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
+      <audio id="aTrill" class="clip" data-start="25.85" data-duration="1.25" src="assets/cat-trill.mp3" data-volume="0.8"></audio>
+      <audio id="aW5" class="clip" data-start="27.3" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="aMeow" class="clip" data-start="31.4" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="0.85"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const pop = (sel, at) => tl.fromTo(sel, { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "back.out(2.4)" }, at);
+
+      /* 1 · the request is there at frame 0; Mel peeks up; the tease blinks once */
+      tl.fromTo("#pk1", { y: 160 }, { y: 0, duration: 0.6, ease: "back.out(1.6)" }, 0.3);
+      tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.2);
+      tl.fromTo("#tease", { opacity: 1 }, { opacity: 0.35, duration: 0.25, yoyo: true, repeat: 1 }, 2.2);
+
+      /* 2 · slow push-in: Mel takes it in; the line lands word by word */
+      tl.fromTo("#face1", { scale: 1 }, { scale: 1.14, duration: 3, ease: "power1.inOut" }, 3.6);
+      tl.fromTo("#band1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 4.3);
+
+      /* 3 · the picker: drag lighter = grey; back = the same black */
+      tl.fromTo("#picker", { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 6.6);
+      tl.set("#cur2", { x: 70, y: 540 }, 6.6);
+      tl.to("#cur2", { x: 380, y: 545, duration: 1.2, ease: "power2.inOut" }, 7.4);
+      tl.to("#knob", { x: 310, duration: 1.2, ease: "power2.inOut" }, 7.4);
+      tl.to("#swGray", { opacity: 1, duration: 1.2, ease: "power2.inOut" }, 7.4);
+      tl.set("#hx1", { opacity: 0 }, 8.6); tl.set("#hx2", { opacity: 1 }, 8.6);
+      pop("#toast1", 9.0);
+      tl.to("#toast1", { opacity: 0, duration: 0.15 }, 10.9);
+      tl.to("#cur2", { x: 95, y: 545, duration: 0.9, ease: "power2.inOut" }, 11.0);
+      tl.to("#knob", { x: 25, duration: 0.9, ease: "power2.inOut" }, 11.0);
+      tl.to("#swGray", { opacity: 0.04, duration: 0.9, ease: "power2.inOut" }, 11.0);
+      tl.set("#hx2", { opacity: 0 }, 11.9); tl.set("#hx3", { opacity: 1 }, 11.9);
+      pop("#toast2", 12.3);
+
+      /* 4 · the long wait: three seconds of "is typing…" */
+      tl.fromTo("#pk2", { y: 160 }, { y: 0, duration: 0.6, ease: "back.out(1.6)" }, 15.4);
+      tl.fromTo("#t2", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2)" }, 15.5);
+      [0, 1, 2].forEach((i) => tl.fromTo(`#t2 i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: 5, ease: "sine.inOut" }, 15.7 + i * 0.14));
+      tl.to("#t2", { opacity: 0, duration: 0.1 }, 18.35);
+      pop("#b2", 18.4);
+      tl.to("#pk2", { y: -30, duration: 0.1, yoyo: true, repeat: 3 }, 18.7);
+
+      /* 5 · fifty blacks: a slow pan down; the client picks 37 */
+      tl.fromTo("#gridCam", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "expo.out" }, 21);
+      tl.to("#gridCam", { y: -1080, duration: 3.8, ease: "power1.inOut" }, 21.6);
+      tl.to("#ring", { opacity: 1, duration: 0.1 }, 25.7);
+      tl.fromTo("#ring", { scale: 1.6 }, { scale: 1, duration: 0.35, ease: "back.out(3)" }, 25.7);
+      pop("#toast3", 25.75);
+
+      /* 6 · the reveal: Calì yawns */
+      tl.fromTo("#face2", { scale: 1.05 }, { scale: 1, duration: 0.6, ease: "expo.out" }, 27.4);
+      tl.fromTo("#band2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 27.8);
+      tl.set("#f2yawn", { opacity: 1 }, 28.9); tl.set("#f2awake", { opacity: 0 }, 28.9);
+      tl.set("#f2yawn", { opacity: 0 }, 30.4); tl.set("#f2awake", { opacity: 1 }, 30.4);
+
+      /* 7 · end card */
+      tl.fromTo("#endH", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 31.05);
+      tl.fromTo("#endMel", { y: 700 }, { y: 0, duration: 0.6, ease: "back.out(1.5)" }, 31.2);
+      tl.fromTo("#endEp", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 31.6);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
