@@ -47,14 +47,14 @@ def _page(duration, body, timeline, extra_css=''):
 </html>
 '''
 
-def who(status='online'):
-    return f'<div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>{status}</small></div></div>'
+def who(status='online', name='Il Cliente', avatar='👔', av_cls=''):
+    return f'<div class="who"><div class="av {av_cls}">{avatar}</div><div><b>{name}</b><small>{status}</small></div></div>'
 
-def chat(id, start, dur, inner, status='online', tease=None, peek_id=None):
+def chat(id, start, dur, inner, status='online', tease=None, peek_id=None, name='Il Cliente', avatar='👔', av_cls=''):
     t = f'<p id="{id}T" class="tease">{tease}</p>' if tease else ''
     p = f'<div id="{peek_id}" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>' if peek_id else ''
     return f'''      <div id="{id}" class="clip dots" data-start="{start}" data-duration="{dur}">
-        {t}{who(status)}
+        {t}{who(status, name, avatar, av_cls)}
         {inner}
         {p}
       </div>'''
@@ -77,10 +77,11 @@ def react(id, start, dur, band_html, night=False, yawn=False, band_cls='band2'):
         <div id="{id}B" class="{band_cls}" style="opacity: 0">{band_html}</div>
       </div>'''
 
-def end(start, dur, question_html, ep):
+def end(start, dur, question_html, ep, follow=None):
+    f = f'<br /><span style="color:#fff8ea">{follow}</span>' if follow else ''
     return f'''      <div id="sEnd" class="clip" data-start="{start}" data-duration="{dur}">
         <h2 id="endH">{question_html}</h2>
-        <p id="endEp" class="ep">Calì &amp; Mel · ep. {ep}<br />@c.labstudio.milano</p>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. {ep}<br />@c.labstudio.milano{f}</p>
         <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
       </div>'''
 
@@ -94,6 +95,7 @@ def sfx(src, at, vol=0.8, dur=None):
     _n[0] += 1
     return f'      <audio id="a{_n[0]}" class="clip" data-start="{at}" data-duration="{dur or durs[src]}" src="assets/{src}" data-volume="{vol}"></audio>'
 
-def music(dur, credit, vol=0.4):
+def music(dur, credit, vol=0.4, offset=0):
+    ms = f' data-media-start="{offset}"' if offset else ''
     return f'''      <!-- music: {credit}, Kevin MacLeod (incompetech.com), CC BY 4.0 -->
-      <audio id="aMusic" class="clip" data-start="0" data-duration="{dur}" src="assets/music.mp3" data-volume="{vol}" data-fade-out="2"></audio>'''
+      <audio id="aMusic" class="clip" data-start="0" data-duration="{dur}" src="assets/music.mp3"{ms} data-volume="{vol}" data-fade-in="0.6" data-fade-out="2"></audio>'''

@@ -1,0 +1,117 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><style>
+@font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+@font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+@font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+:root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; --leaf: #2e9e3e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #555; font-family: "Figtree", sans-serif; color: var(--ink); }
+section { position: relative; width: 1080px; height: 1350px; overflow: hidden; margin: 0 0 20px;
+  background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+section.ink { background: var(--ink); color: #fff8ea; }
+section.pink { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; }
+/* print treatment, as on the site */
+section::before { content: ""; position: absolute; inset: 0; z-index: 50; pointer-events: none; mix-blend-mode: multiply; opacity: .2; background: url("assets/paper.webp") 0 0 / 512px 512px; }
+section::after { content: ""; position: absolute; inset: 0; z-index: 51; pointer-events: none; mix-blend-mode: multiply; opacity: .13; background: url("assets/grain-day.webp") 0 0 / 256px 256px; }
+section.ink::after { mix-blend-mode: screen; opacity: .08; }
+.riso { filter: url(#riso); }
+.box { position: relative; border: 7px solid transparent; border-radius: 40px; }
+.box::before { content: ""; position: absolute; inset: -7px; border: 7px solid var(--ink); border-radius: inherit; pointer-events: none;
+  -webkit-mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; }
+.kick { position: absolute; left: 80px; top: 70px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--note); }
+.num { position: absolute; right: 80px; top: 70px; font: 700 30px/1 "Space Mono", monospace; color: #8a8178; }
+.ink .num { color: var(--sun); }
+.swipe { position: absolute; right: 80px; bottom: 70px; padding: 16px 26px; border-radius: 999px; background: var(--ink); color: var(--sun); font: 700 30px/1 "Space Mono", monospace; }
+.handle { position: absolute; left: 80px; bottom: 76px; font: 700 28px/1 "Space Mono", monospace; color: #8a8178; }
+.ink .handle { color: var(--sun); }
+.title { position: absolute; left: 80px; right: 80px; top: 170px; font: 900 132px/0.92 "Outfit", sans-serif; letter-spacing: -0.05em; }
+.title em { font-style: normal; color: var(--note); }
+.ink .title em { color: var(--pink); }
+.sub { position: absolute; left: 84px; right: 80px; font: 600 44px/1.2 "Figtree", sans-serif; color: #4a4238; }
+.sticker { position: absolute; padding: 16px 26px; border-radius: 999px; background: #3be36b; border: 6px solid var(--ink); outline: 6px solid #fff; font: 900 38px/1 "Outfit", sans-serif; text-transform: uppercase; }
+img.mel { position: absolute; }
+.label { font: 700 30px/1 "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+/* dictionary */
+.says { position: absolute; left: 80px; right: 80px; top: 230px; }
+.says .label { color: var(--note); margin-bottom: 22px; }
+.says .bubble { background: #fff; padding: 40px 46px 46px; border-radius: 46px 46px 46px 10px; box-shadow: 12px 12px 0 var(--ink); font: 800 74px/1.06 "Figtree", sans-serif; letter-spacing: -0.02em; }
+.means { position: absolute; left: 80px; right: 80px; top: 720px; }
+.means .label { color: var(--ink); margin-bottom: 22px; }
+.means .band { background: var(--ink); color: #fff8ea; padding: 38px 44px 44px; border-radius: 30px; font: 900 76px/1.02 "Outfit", sans-serif; letter-spacing: -0.035em; }
+.means .band em { font-style: normal; color: var(--sun); }
+/* flow diagrams */
+.node { position: absolute; padding: 22px 30px; background: #fff; border-radius: 26px; font: 800 40px/1 "Figtree", sans-serif; box-shadow: 8px 8px 0 var(--ink); }
+.node.ok { background: #c2f296; }
+.cap { position: absolute; left: 80px; right: 80px; bottom: 150px; font: 900 64px/1.02 "Outfit", sans-serif; letter-spacing: -0.03em; }
+.cap em { font-style: normal; color: var(--note); }
+</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="riso" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="w0" />
+    <feColorMatrix in="w0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="warp" />
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="0.8" xChannelSelector="R" yChannelSelector="G" result="rough" />
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="8" result="g0" />
+    <feColorMatrix in="g0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="grain" />
+    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5" result="b0" />
+    <feColorMatrix in="b0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="blotch" />
+    <feComposite in="grain" in2="blotch" operator="arithmetic" k1="0" k2="1" k3="0.15" k4="-0.075" result="mix" />
+    <feColorMatrix in="mix" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.4 0 0 0 -0.12" result="mask" />
+    <feComposite in="rough" in2="mask" operator="in" />
+  </filter></defs></svg>
+<section id="s1">
+  <p class="kick">Calì &amp; Mel · il dizionario</p><p class="num">01/08</p>
+  <h1 class="title">Il dizionario<br />del <em>cliente</em> 📖</h1>
+  <p class="sub" style="top: 620px">Cosa dice. E cosa intende <b>davvero</b>.</p>
+  <span class="sticker riso" style="left: 84px; top: 760px; rotate: -5deg">salvalo 🔖</span>
+  <img class="mel" src="assets/mel-felt.png" style="left: 600px; top: 640px; width: 420px" alt="" />
+  <p class="handle">@c.labstudio.milano</p><span class="swipe">scorri →</span>
+</section>
+<section>
+  <p class="kick">il dizionario del cliente</p><p class="num">02/08</p>
+  <div class="says"><p class="label">👔 Cosa dice</p><div class="bubble box">Fallo più <em style="font-style:normal;color:var(--note)">pop</em> ✨</div></div>
+  <div class="means"><p class="label">🐾 Cosa intende</p><div class="band">Non so cosa voglio.<br /><em>Ma non è questo.</em></div></div>
+  <img class="mel" src="assets/mel-head.png" style="left: 760px; top: 1070px; width: 250px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section>
+  <p class="kick">il dizionario del cliente</p><p class="num">03/08</p>
+  <div class="says"><p class="label">👔 Cosa dice</p><div class="bubble box">È una modifica <em style="font-style:normal;color:var(--note)">veloce</em> ⏱️</div></div>
+  <div class="means"><p class="label">🐾 Cosa intende</p><div class="band">Sono tre giorni.<br /><em>Più il weekend.</em></div></div>
+  <img class="mel" src="assets/mel-head-yawn.png" style="left: 760px; top: 1070px; width: 250px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section>
+  <p class="kick">il dizionario del cliente</p><p class="num">04/08</p>
+  <div class="says"><p class="label">👔 Cosa dice</p><div class="bubble box">Fai tu, <em style="font-style:normal;color:var(--note)">mi fido</em> 🙏</div></div>
+  <div class="means"><p class="label">🐾 Cosa intende</p><div class="band">Ti dirò cosa non mi piace.<br /><em>Dopo.</em></div></div>
+  <img class="mel" src="assets/mel-head.png" style="left: 760px; top: 1070px; width: 250px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section>
+  <p class="kick">il dizionario del cliente</p><p class="num">05/08</p>
+  <div class="says"><p class="label">👔 Cosa dice</p><div class="bubble box">Mandami qualche <em style="font-style:normal;color:var(--note)">altra proposta</em></div></div>
+  <div class="means"><p class="label">🐾 Cosa intende</p><div class="band">Tutte le proposte del mondo.<br /><em>Poi sceglierò la prima.</em></div></div>
+  <img class="mel" src="assets/mel-head-yawn.png" style="left: 760px; top: 1070px; width: 250px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section>
+  <p class="kick">il dizionario del cliente</p><p class="num">06/08</p>
+  <div class="says"><p class="label">👔 Cosa dice</p><div class="bubble box">Il budget è poco, ma è un'<em style="font-style:normal;color:var(--note)">ottima vetrina</em></div></div>
+  <div class="means"><p class="label">🐾 Cosa intende</p><div class="band">Non ti pago.<br /><em>Ma con entusiasmo.</em></div></div>
+  <img class="mel" src="assets/mel-head.png" style="left: 760px; top: 1070px; width: 250px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section>
+  <p class="kick">il dizionario del cliente</p><p class="num">07/08</p>
+  <div class="says"><p class="label">👔 Cosa dice</p><div class="bubble box">Lo capisco <em style="font-style:normal;color:var(--note)">quando lo vedo</em> 👀</div></div>
+  <div class="means"><p class="label">🐾 Cosa intende</p><div class="band">Non lo vedrò mai.<br /><em>Nemmeno io.</em></div></div>
+  <img class="mel" src="assets/mel-head-yawn.png" style="left: 760px; top: 1070px; width: 250px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section class="ink">
+  <p class="kick" style="color: var(--sun)">Calì &amp; Mel</p><p class="num">08/08</p>
+  <h1 class="title" style="font-size: 108px">Quale ti hanno detto <em>più volte?</em></h1>
+  <p class="sub" style="top: 600px; color: #fff8ea">Commenta con il numero 👇<br /><br />🔖 Salvalo per il prossimo cliente<br />➕ Segui per la serie <b>Calì &amp; Mel</b></p>
+  <img class="mel" src="assets/mel-felt.png" style="left: 640px; top: 760px; width: 380px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+</body></html>

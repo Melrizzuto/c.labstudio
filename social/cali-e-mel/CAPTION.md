@@ -139,6 +139,112 @@ Musica: "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
+## Ep. 6 — Hai perfettamente ragione
+
+**YouTube, titolo:** «Hai perfettamente ragione!» 🤖 | Calì & Mel ep. 6
+
+**Instagram:**
+```
+Ho chiesto un parere sincero alla mia AI. 🤖
+
+«Il bottone è troppo piccolo?» → «Hai perfettamente ragione!»
+«…troppo grande?» → «Hai perfettamente ragione!»
+«…giusto così?» → indovina. 🙃
+
+Per fortuna c'è ancora qualcuno che mi dice di no. 🐾
+
+Anche la tua AI ti dà sempre ragione? 👇
+
+Calì & Mel · ep. 6
+Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#designer #uxdesign #ai #claude #intelligenzaartificiale #designhumor #vitadadesigner #productdesign #gatti #calìemel
+```
+
+**TikTok:**
+```
+La mia AI mi dà sempre ragione 🤖 Per fortuna c'è Calì 🐾 Anche la tua? 👇
+Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
+#designer #ai #designhumor #claude #calìemel
+```
+
+---
+
+## Ep. 7 — La linea deve salire
+
+**YouTube, titolo:** «Lo fai andare in su?» 📈 | Calì & Mel ep. 7
+
+**Instagram:**
+```
+«Il grafico delle vendite… lo fai andare in su?» 📈
+
+Il grafico. Non le vendite.
+
+Opzione 1: invertire l'asse.
+Opzione 2: lo zoom sui 5 minuti buoni di martedì.
+Indovina quale è finita nella slide del board. 😐
+
+Il grafico più «creativo» che ti hanno chiesto? 👇
+
+Calì & Mel · ep. 7
+Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#dashboard #dataviz #uxdesign #uidesign #kpi #productdesign #designhumor #vitadadesigner #gatti #calìemel
+```
+
+**TikTok:**
+```
+«Lo fai andare in su?» 📈 Il grafico. Non le vendite. Il tuo grafico più creativo? 👇
+Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
+#dashboard #dataviz #designhumor #uxdesign #calìemel
+```
+
+---
+
+## Carosello — Il dizionario del cliente (8 slide)
+
+**Instagram:**
+```
+Il dizionario del cliente 📖
+Cosa dice. E cosa intende davvero.
+
+Scorri e dimmi: quale ti hanno detto più volte? Commenta con il numero 👇
+🔖 Salvalo per il prossimo cliente.
+
+#graphicdesign #designer #clienti #freelance #vitadadesigner #designhumor #uxdesign #calìemel
+```
+
+**TikTok (carosello di foto):**
+```
+Il dizionario del cliente 📖 Quale ti hanno detto più volte? 👇
+#designer #clienti #designhumor #freelance #calìemel
+```
+
+---
+
+## Carosello — Il flusso utente (7 slide)
+
+**Instagram:**
+```
+Il flusso utente: come l'abbiamo disegnato 😌 vs come lo usano davvero 🫠
+
+3 click in Figma. 47 nella realtà.
+E Calì l'ha completato in uno. 🐾
+
+Il percorso più assurdo che hai visto fare a un utente? 👇
+🔖 Salvalo per la prossima review.
+
+#uxdesign #userflow #usabilitytesting #productdesign #uidesign #designhumor #vitadadesigner #calìemel
+```
+
+**TikTok (carosello di foto):**
+```
+Il flusso: come l'abbiamo disegnato vs come lo usano davvero 🫠 Il percorso più assurdo? 👇
+#uxdesign #designhumor #userflow #designer #calìemel
+```
+
+---
+
 ## Consigli per pubblicare
 
 - **Copertina:** scegli un fotogramma della chat (la richiesta del cliente), non il primo che è nero.
