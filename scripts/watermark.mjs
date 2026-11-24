@@ -2,6 +2,7 @@
  * Puts the small "© c.lab studio" mark inside the case pictures and the case videos (bottom right corner),
  * so it travels with the file: saved, screenshotted or screen-recorded, the picture keeps the studio's name.
  *   node scripts/watermark.mjs
+ *   WATERMARK_KEY=... python3 scripts/invisible-mark.py mark     (then the invisible mark on the pictures)
  * It always starts from the clean originals kept in git at ORIGINALS (the commit before the marks), so running it
  * again never stacks two marks. After adding a NEW picture or video: commit it clean first, set ORIGINALS to that
  * commit, then run this. Needs sharp (dev dependency), ffmpeg, and the Space Mono Bold font installed for the system
