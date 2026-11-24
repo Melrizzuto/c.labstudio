@@ -77,4 +77,7 @@ html = f'''<!doctype html>
   </body>
 </html>
 '''
-open('index.html', 'w').write(html)
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+from printfx import apply
+open('index.html', 'w').write(apply(html))

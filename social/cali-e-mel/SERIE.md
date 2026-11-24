@@ -57,6 +57,10 @@ ffmpeg -i sigla3.mp4 -i ep03.mp4 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2
 
 Copertina: il primo fotogramma è nero, quindi su Instagram, TikTok e YouTube scegli come copertina un fotogramma della chat (la richiesta del cliente).
 
+## L'effetto cera (come sul sito)
+
+Ogni puntata ha il trattamento da stampa del sito (pastello a cera / risograph), con le stesse texture di `public/assets/print/`: fibre della carta e grana sopra tutto il fotogramma, bordi dei riquadri stampati con la maschera risograph, filtro `#riso` su etichette, timbri e adesivi. Testi da leggere, Mel e Calì restano nitidi, come sul sito. Lo aggiunge `printfx.py` (il kit e la sigla lo usano da soli; per una puntata vecchia: `python3 printfx.py <cartella>`).
+
 ## Il kit (dalla puntata 3)
 
 `kit.py` e `kit.css` contengono lo stile e i pezzi comuni (chat, primo piano, finale, suoni, musica). Ogni puntata dalla 3 in poi ha un `make.py` che scrive il suo `index.html` usando il kit: per una nuova puntata si copia una cartella, si cambia `make.py`, poi `python3 make.py`.

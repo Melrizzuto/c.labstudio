@@ -1,9 +1,14 @@
 """Calì & Mel episode kit: shared look, scenes and timeline helpers. Each episode script builds its index.html with it."""
-import os
+import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 CSS = open(os.path.join(HERE, 'kit.css')).read()
 
 def page(duration, body, timeline, extra_css=''):
+    sys.path.insert(0, HERE)
+    from printfx import apply
+    return apply(_page(duration, body, timeline, extra_css))
+
+def _page(duration, body, timeline, extra_css=''):
     return f'''<!doctype html>
 <html lang="it" data-resolution="portrait">
   <head>
