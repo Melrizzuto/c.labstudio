@@ -17,8 +17,11 @@ Da incollare nella descrizione di ogni post:
 - ep. 0 — "Monkeys Spinning Monkeys" Kevin MacLeod (incompetech.com), CC BY 4.0
 - ep. 1 — "Fluffing a Duck" Kevin MacLeod (incompetech.com), CC BY 4.0
 - ep. 2 — "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
+- ep. 3 — "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
+- ep. 4 — "The Builder" Kevin MacLeod (incompetech.com), CC BY 4.0
+- ep. 5 — "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
 
-Altri brani già scaricati e adatti: "Investigations", "Hidden Agenda", "The Builder", "Pixel Peeker Polka".
+Altro brano già scaricato e adatto: "Pixel Peeker Polka".
 
 ## Le puntate
 
@@ -29,9 +32,9 @@ Le storie vengono dalle lamentele e dalle richieste più strane che i designer r
 | 0 | Il mio capo è un gatto | Calì giudica tre design: zampata, sbadiglio, timbro. ✅ |
 | 1 | Il logo più grande | "Un po' più grande"… finché il poster è solo logo. "Ora è troppo grande, torniamo alla prima?" ✅ |
 | 2 | Il nero più chiaro | "Un nero, ma più chiaro." Grigio, no. Uguale, no. "Mandami 50 neri": sceglie il 37, che è #000000. ✅ |
-| 3 | Il bianco più bianco | Il gemello dell'ep. 2: alla fine Mel consegna lo stesso file, rinominato `bianco_PIU_bianco.png`. Approvato. |
-| 4 | Minimal, ma con più cose | "Pulito, essenziale… e aggiungiamo il meteo, l'oroscopo e un video." |
-| 5 | Ci vuole un minuto | "Una modifica veloce": dal giorno alla notte, 47 versioni, `FINALE_definitivo_v12_ORA_SI.pdf`. Calì dorme. |
+| 3 | Il bianco più bianco | "#FFFFFFF" non è un colore. Mel rinomina il file `sfondo_PIU_BIANCO.png`: "ORA SÌ!!! Si vede la differenza". ✅ |
+| 4 | Minimal, ma con più cose | Un sito minimal bellissimo… poi meteo, oroscopo, carosello, popup: 12 widget. "Lo fai più minimal?" ✅ |
+| 5 | Ci vuole un minuto | Dalle 10:02 alle 23:58, il cielo diventa notte, 12 versioni fino a `FINALE_definitivo_v12_ORA_SI.pdf`. "Domattina un'altra cosina veloce?" ✅ |
 | 6 | Deve diventare virale | "Mettici qualcosa che lo fa diventare virale." Mel mette Calì. Diventa virale. |
 | 7 | Il logo te lo mando su WhatsApp | Una foto storta e sfocata di un biglietto da visita. "Ingrandisci e migliora": pixel giganti. |
 | 8 | Fallo più pop | Glitter, neon, 9 font… vince la versione dove Calì ha camminato sulla tastiera. |
@@ -53,6 +56,10 @@ ffmpeg -i sigla3.mp4 -i ep03.mp4 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2
 ```
 
 Copertina: il primo fotogramma è nero, quindi su Instagram, TikTok e YouTube scegli come copertina un fotogramma della chat (la richiesta del cliente).
+
+## Il kit (dalla puntata 3)
+
+`kit.py` e `kit.css` contengono lo stile e i pezzi comuni (chat, primo piano, finale, suoni, musica). Ogni puntata dalla 3 in poi ha un `make.py` che scrive il suo `index.html` usando il kit: per una nuova puntata si copia una cartella, si cambia `make.py`, poi `python3 make.py`.
 
 ## Rifare o modificare una puntata
 

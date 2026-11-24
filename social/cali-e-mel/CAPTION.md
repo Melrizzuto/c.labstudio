@@ -71,6 +71,74 @@ Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
+## Ep. 3 — Il bianco più bianco
+
+**YouTube, titolo:** "Lo puoi fare più bianco?" 🤍 | Calì & Mel ep. 3
+
+```
+"Lo sfondo bianco… lo fai più bianco?" 🤍
+
+#FFFFFF è già il bianco più bianco che esiste.
+#FFFFFFF non è nemmeno un colore.
+Allora Mel ha avuto un'idea. 🤫
+
+Guarda fino alla fine 👀
+
+Confessa: hai mai mandato lo stesso file rinominato? 👇
+
+Calì & Mel · ep. 3
+Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#designer #uidesign #graphicdesign #richiesteassurde #clienti #freelance #vitadadesigner #designhumor #gatti #calìemel
+```
+
+---
+
+## Ep. 4 — Minimal, ma con più cose
+
+**YouTube, titolo:** "Lo voglio minimal… ma con più cose" ✨ | Calì & Mel ep. 4
+
+```
+"Voglio un sito minimal. Pulito. Essenziale." ✨
+
+Poi: il meteo.
+Poi: l'oroscopo.
+Poi: un carosello. E un popup. 🎉
+
+Indovina com'è finita. 😐
+
+La richiesta più contraddittoria che hai ricevuto? 👇
+
+Calì & Mel · ep. 4
+Musica: "The Builder" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#webdesign #uxdesign #uidesign #minimal #clienti #freelance #vitadadesigner #designhumor #gatti #calìemel
+```
+
+---
+
+## Ep. 5 — Ci vuole un minuto
+
+**YouTube, titolo:** "Ci vuole un minuto" ⏱️ (spoiler: no) | Calì & Mel ep. 5
+
+```
+"Una modifica veloce veloce. Ci vuole un minuto." ⏱️
+
+10:02 → brochure_v1.pdf
+23:58 → FINALE_definitivo_v12_ORA_SI.pdf
+
+E domattina? 👀
+
+Quanto dura il TUO "minuto"? 👇
+
+Calì & Mel · ep. 5
+Musica: "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#designer #graphicdesign #freelance #clienti #deadline #vitadadesigner #designhumor #revisioni #gatti #calìemel
+```
+
+---
+
 ## Consigli per pubblicare
 
 - **Copertina:** scegli un fotogramma della chat (la richiesta del cliente), non il primo che è nero.
