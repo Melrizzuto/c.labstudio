@@ -55,6 +55,14 @@ npx hyperframes@0.9.91 render -o sigla3.mp4
 ffmpeg -i sigla3.mp4 -i ep03.mp4 -filter_complex "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a];[a]loudnorm=I=-15:TP=-2:LRA=11,alimiter=limit=0.75:level=false[a2]" -map "[v]" -map "[a2]" -c:v libx264 -crf 18 -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -movflags +faststart ep03-finale.mp4
 ```
 
+**Apertura a freddo (dalla puntata 2):** i primi 2,6 s della puntata (la richiesta del cliente; 4,3 s per l'ep. 6, fino alla prima risposta) vanno *prima* della sigla, poi la puntata riprende da lì. Gli insight dell'ep. 1 mostrano perché: con la sigla nera all'inizio 2 persone su 3 scorrevano via nei primi secondi.
+
+```bash
+ffmpeg -i ep03.mp4 -i sigla3.mp4 -filter_complex "[0:v]trim=0:2.6,setpts=PTS-STARTPTS[v1];[0:a]atrim=0:2.6,asetpts=PTS-STARTPTS,afade=t=out:st=2.35:d=0.25[a1];[1:v]setpts=PTS-STARTPTS[v2];[1:a]asetpts=PTS-STARTPTS[a2];[0:v]trim=start=2.6,setpts=PTS-STARTPTS[v3];[0:a]atrim=start=2.6,asetpts=PTS-STARTPTS,afade=t=in:d=0.3[a3];[v1][a1][v2][a2][v3][a3]concat=n=3:v=1:a=1[v][a];[a]loudnorm=I=-15:TP=-2:LRA=11,alimiter=limit=0.75:level=false[ao]" -map "[v]" -map "[ao]" -c:v libx264 -crf 18 -pix_fmt yuv420p -r 30 -c:a aac -b:a 192k -movflags +faststart ep03-finale.mp4
+```
+
+Le copertine (un fotogramma con la richiesta del cliente) sono in `copertine/`.
+
 Copertina: il primo fotogramma è nero, quindi su Instagram, TikTok e YouTube scegli come copertina un fotogramma della chat (la richiesta del cliente).
 
 ## L'effetto cera (come sul sito)
