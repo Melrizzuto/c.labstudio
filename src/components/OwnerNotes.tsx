@@ -22,6 +22,7 @@ export function OwnerNotes() {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const [tab, setTab] = useState<Tab>('todo');
+  const [showPass, setShowPass] = useState(false);
 
   const call = useCallback(async (k: string, init: RequestInit = {}) => {
     const res = await fetch(API, { ...init, headers: { 'Content-Type': 'application/json', 'x-owner-key': k, ...(init.headers ?? {}) } });
@@ -82,10 +83,19 @@ export function OwnerNotes() {
         <form className="owner-card" onSubmit={onLogin}>
           <p className="owner-kicker">c.lab · area riservata</p>
           <h1>Le dediche</h1>
-          <label>
-            <span>Password</span>
-            <input name="password" type="password" autoComplete="current-password" required autoFocus />
-          </label>
+          <div className="owner-field">
+            <label htmlFor="owner-pass">Password</label>
+            <div className="owner-pass">
+              <input id="owner-pass" name="password" type={showPass ? 'text' : 'password'} autoComplete="current-password" required autoFocus />
+              <button type="button" aria-pressed={showPass} aria-label={showPass ? 'Nascondi la password' : 'Mostra la password'} onClick={() => setShowPass((v) => !v)}>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  {showPass && <path d="M4 4l16 16" />}
+                </svg>
+              </button>
+            </div>
+          </div>
           <button className="btn" type="submit" disabled={busy}>{busy ? 'Un attimo…' : 'Entra'}</button>
           <p className="owner-error" role="alert">{message}</p>
         </form>
