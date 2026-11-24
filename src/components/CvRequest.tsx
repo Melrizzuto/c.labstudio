@@ -7,7 +7,7 @@ const T = {
   it: {
     kicker: 'c.lab studio · curriculum',
     title: 'Il mio CV',
-    lead: 'Lo mando a chi me lo chiede. Lasciami due righe: quando approvo, ti arriva per email un link personale, valido 7 giorni.',
+    lead: 'Lo mando a chi me lo chiede. Lasciami due righe: quando approvo, ti arriva per email un link personale, valido 7 giorni. Intanto qui c’è un’anteprima delle mie esperienze.',
     name: 'Nome e cognome',
     email: 'Email',
     company: 'Azienda o progetto',
@@ -20,13 +20,14 @@ const T = {
     error: 'Qualcosa non è andato. Controlla nome ed email e riprova.',
     down: 'Il modulo non risponde adesso. Riprova tra poco, o scrivimi su LinkedIn.',
     back: '← Torna al sito',
+    previewLabel: 'Anteprima · solo esperienza',
     home: '/',
     other: { href: '/en/cv/', label: 'English' },
   },
   en: {
     kicker: 'c.lab studio · résumé',
     title: 'My CV',
-    lead: 'I send it to whoever asks. Leave me a couple of lines: once I approve, you get a personal link by email, valid for 7 days.',
+    lead: 'I send it to whoever asks. Leave me a couple of lines: once I approve, you get a personal link by email, valid for 7 days. Meanwhile, here is a preview of my experience.',
     name: 'Full name',
     email: 'Email',
     company: 'Company or project',
@@ -39,6 +40,7 @@ const T = {
     error: 'Something went wrong. Check your name and email and try again.',
     down: 'The form is not answering right now. Try again in a bit, or write to me on LinkedIn.',
     back: '← Back to the site',
+    previewLabel: 'Preview · experience only',
     home: '/en/',
     other: { href: '/cv/', label: 'Italiano' },
   },
@@ -73,6 +75,7 @@ export function CvRequest({ locale }: { locale: Locale }) {
 
   return (
     <main className="owner owner-login cvr">
+      <div className="cvr-wrap">
       <div className="owner-card cvr-card">
         <nav className="cvr-nav">
           <a href={t.home}>{t.back}</a>
@@ -109,6 +112,12 @@ export function CvRequest({ locale }: { locale: Locale }) {
             </form>
           </>
         )}
+      </div>
+      {/* the public preview: work experience only, nothing personal (built by scripts/cv-preview.mjs) */}
+      <section className="cvr-preview" aria-label={t.previewLabel}>
+        <p className="owner-kicker">{t.previewLabel}</p>
+        <iframe src={`/cv-preview/?lang=${locale}`} title={t.previewLabel} loading="lazy" />
+      </section>
       </div>
     </main>
   );

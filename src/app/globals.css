@@ -369,6 +369,11 @@ main.owner .chip{border:2px solid var(--ink)}
 .owner-delete{color:var(--note)!important}
 /* the CV on request: the form on /cv/, the decision page from the email, the "CV" tab of /owner/ */
 main.cvr{max-width:none}
+.cvr-wrap{width:min(1220px,100%);display:grid;grid-template-columns:420px minmax(0,1fr);gap:28px;align-items:start}
+.cvr-wrap .cvr-card{width:100%;position:sticky;top:24px}
+.cvr-preview{display:grid;gap:10px;min-width:0}
+.cvr-preview iframe{display:block;width:100%;height:min(1120px,calc(100dvh - 90px));border:3px solid var(--ink);border-radius:20px;box-shadow:6px 6px 0 var(--ink);background:#E6DCCB}
+@media (max-width:900px){.cvr-wrap{grid-template-columns:1fr;gap:22px}.cvr-wrap .cvr-card{position:static}.cvr-preview iframe{height:78dvh}}
 main.cvr h1{font-size:clamp(34px,6vw,52px);overflow-wrap:anywhere}
 .cvr .owner-buttons{flex-wrap:wrap}
 .cvr .owner-buttons button{white-space:nowrap}

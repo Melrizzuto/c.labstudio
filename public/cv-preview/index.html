@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV preview · c.lab studio</title>
+<style>
+@font-face{font-family:"Outfit";src:url("fonts/outfit-latin.woff2") format("woff2");font-weight:100 900}
+@font-face{font-family:"Outfit";src:url("fonts/outfit-ext.woff2") format("woff2");font-weight:100 900;unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Figtree";src:url("fonts/figtree-latin.woff2") format("woff2");font-weight:300 900}
+@font-face{font-family:"Figtree";src:url("fonts/figtree-ext.woff2") format("woff2");font-weight:300 900;unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Caveat";src:url("fonts/caveat-latin.woff2") format("woff2");font-weight:400 700}
+@font-face{font-family:"Space Mono";src:url("fonts/spacemono-400.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"Space Mono";src:url("fonts/spacemono-700.woff2") format("woff2");font-weight:700}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--paper:#F7EFE1;--paper-2:#EFE3CF;--ink:#16130F;--ink-2:#4A4238;--cobalt:#1D3FD1;--pink:#F25AA6;--sun:#FFC21A;--leaf:#2E9E3E;--orange:#F26B1D;--note:#C81D74;
+  --display:"Outfit",system-ui,sans-serif;--body:"Figtree",system-ui,sans-serif;--mono:"Space Mono",ui-monospace,monospace;--hand:"Caveat",cursive}
+html,body{background:var(--paper);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font:500 8.2pt/1.38 var(--body);color:var(--ink);width:210mm;height:297mm;padding:10mm 13mm 9mm;position:relative;overflow:hidden}
+a{color:inherit;text-decoration:none}
+b{font-weight:700}
+.page{display:none}
+html[data-lang="en"] #page-en,html[data-lang="it"] #page-it{display:block}
+
+/* header */
+.top{display:grid;grid-template-columns:1fr auto;gap:6mm;align-items:start}
+h1{font:900 33pt/.86 var(--display);letter-spacing:-.035em;text-transform:uppercase}
+h1 .dot{color:var(--note)}
+.role{font:800 11.5pt/1.2 var(--display);letter-spacing:-.01em;margin-top:3mm}
+.contact{margin-top:1.6mm;font:500 8pt/1.4 var(--body);color:var(--ink-2)}
+.links{margin-top:3.6mm;display:grid;grid-template-columns:17mm 1fr;gap:2.1mm 0;align-items:baseline}
+.links dt{font:700 6.2pt/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--note)}
+.links dd{font:700 8pt/1 var(--body);display:flex;flex-wrap:wrap;gap:1.2mm 3.6mm}
+.links dd.mail{font-weight:500;color:var(--ink-2)}
+.links a{display:inline-flex;align-items:center;gap:.6mm}
+.links .pf{box-shadow:inset 0 -.42em 0 var(--sun)}
+.soc{display:contents}
+.sticker{background:var(--sun);border:1.1pt solid var(--ink);border-radius:99px;padding:1.3mm 2.6mm 1.2mm;box-shadow:1.4pt 1.4pt 0 var(--ink);rotate:-2deg;font:800 7.6pt/1 var(--display);text-transform:uppercase;letter-spacing:.02em;margin-right:1mm}
+.ext{width:.95em;height:.95em;color:var(--note)}
+.sticker .ext{color:var(--ink)}
+.pic{position:relative;width:26mm;height:31mm;border:1pt solid var(--ink);border-radius:2.5mm;overflow:hidden;background:#fff;margin:1mm 1mm 0 0}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic .ph-art{object-position:50% 25%}
+.pic figcaption{position:absolute;left:50%;bottom:-.2mm;translate:-50% 0;font:700 12pt/1 var(--hand);color:var(--ink);background:var(--paper);padding:0 2mm .6mm;border-radius:2mm 2mm 0 0;white-space:nowrap}
+.profile{margin-top:3.2mm;font:600 9.6pt/1.4 var(--body);max-width:170mm}
+
+/* sections */
+section{margin-top:3.2mm}
+h2{font:900 10pt/1 var(--display);text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:2.4mm;margin-bottom:2.2mm}
+h2::after{content:"";flex:1;border-top:.9pt solid var(--ink)}
+.job{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;margin-top:1mm}
+.job h3{font:800 11pt/1.2 var(--display);letter-spacing:-.01em}
+.job h3 span{font:700 8.6pt/1 var(--body);color:var(--note)}
+.date{font:400 7pt/1 var(--mono);color:var(--ink-2);white-space:nowrap}
+.org{font:400 7.2pt/1.4 var(--mono);color:var(--ink-2)}
+
+/* projects: title column on the left, text on the right, a hairline between them */
+.projs{margin-top:1.6mm}
+.proj{display:grid;grid-template-columns:36mm 1fr;gap:0 5mm;padding:1.9mm 0;border-top:.5pt solid rgba(22,19,15,.28);break-inside:avoid}
+.projs .proj:first-child{border-top:0}
+.proj header{display:flex;flex-direction:column;gap:.7mm}
+.proj h4{display:flex;align-items:center;gap:1.6mm;font:800 9.8pt/1.1 var(--display);letter-spacing:-.01em}
+.proj .what{font:500 7.3pt/1.3 var(--body);color:var(--ink-2)}
+.proj .date{font:400 6.8pt/1.2 var(--mono);color:var(--ink-2)}
+.proj .award{font:700 6.8pt/1.25 var(--body);color:var(--note)}
+.sw{width:3.4mm;height:3.4mm;border:.7pt solid var(--ink);border-radius:.8mm;flex:none}
+.sw-studio{background:conic-gradient(var(--cobalt) 0 25%,#F7EFE1 0 50%,var(--cobalt) 0 75%,#F7EFE1 0) 0 0/50% 50%}
+.sw-stat{background:repeating-linear-gradient(0deg,var(--pink) 0 25%,#D8C4F2 0 50%)}
+.sw-philo{background:radial-gradient(circle,var(--orange) 0 28%,transparent 31%) 0 0/50% 50%,var(--sun)}
+.sw-witailer{background:repeating-linear-gradient(135deg,var(--leaf) 0 22%,#151515 0 44%)}
+.proj dl{display:grid;grid-template-columns:13mm 1fr;gap:.9mm 2.4mm}
+.proj dt{font:700 6.2pt/1.95 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--note)}
+.proj dd,.proj li,.proj .txt{font:500 7.9pt/1.38 var(--body)}
+.proj ul{list-style:none}
+.proj li{padding-left:3mm;position:relative}
+.proj li+li{margin-top:.8mm}
+.proj li::before{content:"";position:absolute;left:0;top:.6em;width:1.2mm;height:1.2mm;border-radius:50%;background:var(--note)}
+.projs.before{margin-top:1.4mm;border-top:.9pt solid var(--ink)}
+.projs.before .proj:first-child{border-top:0}
+.projs.before h4{font-size:9pt}
+.proj.prev{display:block;padding:1.6mm 0}
+.proj.prev header{flex-direction:row;align-items:baseline;gap:2.2mm}
+.proj.prev .date{margin-left:auto}
+.proj.prev .txt{margin-top:.4mm}
+.talk{margin-top:2mm;font:600 8pt/1.35 var(--body)}
+.talk::before{content:"→ ";color:var(--note);font-weight:800}
+.aw{color:var(--note);white-space:nowrap}
+
+/* bottom */
+.grid3{display:grid;grid-template-columns:1.25fr 1fr .9fr;gap:6mm;margin-top:3.4mm}
+.skills h5,.list b{display:block;font:800 8pt/1.2 var(--display)}
+.skills div+div{margin-top:1.1mm}
+.skills p{font:500 7.5pt/1.36 var(--body)}
+.list{list-style:none}
+.list li+li{margin-top:1.1mm}
+.list span{display:block;font:500 7.5pt/1.35 var(--body);color:var(--ink-2)}
+footer{position:absolute;left:13mm;right:13mm;bottom:8mm;display:flex;justify-content:space-between;align-items:flex-end;border-top:1.1pt solid var(--ink);padding-top:1.8mm}
+.brand{font:900 11pt/1 var(--display);letter-spacing:-.04em;display:flex;align-items:baseline;gap:1.2mm}
+.brand small{font:400 7pt/1 var(--mono);letter-spacing:0}
+.gdpr{font:400 5.6pt/1.3 var(--body);color:var(--ink-2);text-align:right;max-width:125mm}
+
+/* language switch, screen only */
+.langsw{position:fixed;top:14px;right:14px;display:flex;gap:2px;padding:3px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);font:700 12px/1 var(--body);z-index:10;box-shadow:3px 3px 0 var(--ink)}
+.langsw button{font:inherit;border:0;background:none;color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer;letter-spacing:.5px}
+.langsw button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.langsw .dl{padding:7px 12px;border-radius:999px;background:var(--sun);color:var(--ink);margin-left:4px}
+@media screen{html{background:#E6DCCB;overflow:auto}body{margin:24px auto;box-shadow:0 4px 24px rgba(0,0,0,.12);overflow:visible}.pic .ph-real{display:none}}
+@media print{.langsw{display:none}.pic .ph-art,.pic figcaption{display:none}.pic .ph-real{display:block}}
+
+/* phones and narrow windows: one readable column */
+@media screen and (max-width:860px){
+  html{background:var(--paper)}
+  body{width:auto;height:auto;overflow:visible;max-width:640px;margin:0 auto;padding:76px 18px 40px;box-shadow:none;font-size:15px}
+  .top{grid-template-columns:1fr auto;gap:0 14px}
+  .top .id{display:contents}
+  .top h1,.top .role,.top .contact{grid-column:1}
+  .top .pic{grid-column:2;grid-row:1/3}
+  .top .links{grid-column:1/-1}
+  h1{font-size:40px}
+  .pic{width:88px;height:104px;border-width:2px;box-shadow:3px 3px 0 var(--ink)}
+  .pic figcaption{font-size:18px}
+  .role{font-size:18px;margin-top:10px}
+  .links{margin-top:16px;grid-template-columns:1fr;gap:6px}
+  .links dt{font-size:10.5px}
+  .links dt+dd+dt{margin-top:8px}
+  .links dd{font-size:15px;gap:8px 16px}
+  .profile{font-size:17px;margin-top:16px}
+  section{margin-top:22px}
+  h2{font-size:17px;margin-bottom:10px}
+  .job{flex-wrap:wrap}
+  .job h3{font-size:19px}.job h3 span{display:block;font-size:14px;margin-top:2px}
+  .date{font-size:12px}.org{font-size:12.5px}
+  .proj{grid-template-columns:1fr;gap:8px;padding:14px 0}
+  .proj.prev header{flex-wrap:wrap}
+  .proj h4{font-size:18px}.proj .what{font-size:13.5px}.proj .date{font-size:12px}.proj .award{font-size:13px}
+  .sw{width:16px;height:16px}
+  .proj dl{grid-template-columns:1fr;gap:2px}
+  .proj dt{font-size:11px;margin-top:8px}
+  .proj dd,.proj li,.proj .txt{font-size:15px}
+  .talk{font-size:15px;margin-top:16px}
+  .grid3{grid-template-columns:1fr;gap:22px}
+  .skills h5,.list b{font-size:15px}.skills p{font-size:14.5px}.list span{font-size:12.5px}
+  footer{position:static;margin-top:28px;flex-direction:column;align-items:flex-start;gap:8px}
+  .brand{font-size:20px}.gdpr{font-size:11px;text-align:left}
+}
+</style>
+<style>
+html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+img{pointer-events:none;-webkit-user-drag:none}
+.more-cta{margin:5mm 0 0;padding:3mm 4mm;border:1pt dashed var(--ink);border-radius:2.5mm;font:600 10pt/1.4 var(--body)}
+.more-cta a{color:var(--ink);font-weight:800}
+body::after{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;opacity:.09;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='200'%3E%3Ctext x='10' y='120' transform='rotate(-24 170 100)' font-family='monospace' font-weight='700' font-size='22' fill='%2316130f'%3EANTEPRIMA · PREVIEW%3C/text%3E%3C/svg%3E") repeat}
+@media print{html,body{display:none!important}}
+</style>
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<div class="langsw" role="group" aria-label="Language">
+  <button type="button" data-set="en" aria-pressed="true">EN</button>
+  <button type="button" data-set="it" aria-pressed="false">IT</button>
+  
+</div>
+<div class="page" id="page-en" lang="en">
+<header class="top">
+  <div class="id">
+    <h1>Work<br>experience<span class="dot">.</span></h1>
+    <p class="role">UX/UI Designer · Junior Product Engineer</p>
+    
+  </div>
+  <figure class="pic"><img class="ph-art" src="portrait-art.webp" draggable="false" alt=""><figcaption>me &amp; Calì</figcaption></figure>
+</header>
+<p class="profile">I design and build AI products at Witailer, working closely with product, design and engineering: interface, flows and code, from first idea to release. Before that, seven years in visual merchandising for H&amp;M and Primark.</p>
+
+<section>
+  <h2>Experience</h2>
+  <div class="job"><h3>Junior Product Engineer</h3><span class="date">Sep 2025 – present</span></div>
+  <p class="org">Witailer · Alkemy group · Milan</p>
+  <div class="projs"><article class="proj"><header><h4>Studio AI</h4><p class="what">an AI analyst for Amazon sales data</p><p class="date">Jan 2026 – now</p><p class="award">★ Amazon Partner Awards semi-finalist</p></header><dl><dt>Design</dt><dd>Started as a PoC to test whether LLMs read the data correctly. On top of the senior product designer&#x27;s static design: the AX (reasoning flows, disambiguation, AI logs), then a full interface redesign.</dd><dt>Build</dt><dd>Agentic loop, harness and the canvas and chat UI, wired together. Integration of the Amazon Ads MCP built by a colleague, adapted to Studio&#x27;s filters and logic; then a re-engineered engine: codebase structure, pipeline, guardrails.</dd><dt>With</dt><dd>The head of product, with whom we set the first direction. Pilot clients, with whom we iterated on the beta.</dd></dl></article><article class="proj"><header><h4>STAT (redesign)</h4><p class="what">Amazon search trends, rebuilt from scratch</p><p class="date">Jul – Nov 2026</p></header><dl><dt>Design</dt><dd>From the old STAT, interviews and a PRD. Navigation flows for each persona, merged into a single flow on Forest UI (the company UI); with internal pilot users we remapped the old product&#x27;s flows and tuned the UX to their expectations.</dd><dt>Build</dt><dd>The whole frontend, plus an AI flow: users ask a question and the answer comes with a different interface depending on the question (Sentient Design), with insights that explain the data.</dd><dt>With</dt><dd>A team effort with the senior product designer, the customer success manager and the tech lead, who built the backend.</dd></dl></article><article class="proj"><header><h4>Philo</h4><p class="what">born from a team need: everyone&#x27;s work, seen as an office</p><p class="date">Oct 2026 – now</p></header><dl><dt>Design</dt><dd>It started from a need spotted within the team. Concept, name and mascot, first on Forest UI (the company UI); when the UI didn&#x27;t work, an R&amp;D phase turned it into a 3D office. In Blender: the office, the characters and the mascot, plus a new design system, BRUTALE DS.</dd><dt>Build</dt><dd>3D office built; Philo is now being engineered.</dd><dt>With</dt><dd>The senior frontend engineer, who joined the project and is building Philo&#x27;s engine on the knowledge graph.</dd></dl></article><article class="proj"><header><h4>Studio Witailer</h4><p class="what">the platform brands use to follow their Amazon sales</p><p class="date">Sep 2025 – now</p></header><ul><li>Platform maintenance alongside the senior frontend engineer, plus design and development of new features.</li></ul></article></div>
+  <div class="projs before"><article class="proj prev"><header><h4>Junior Frontend Developer · internship</h4><p class="what">Atoms x Digital Retex · Milan</p><p class="date">May – Sep 2025</p></header><p class="txt">Vue.js components in Agile/Scrum teams, WCAG accessibility, responsive design.</p></article><article class="proj prev"><header><h4>Visual Merchandiser · Specialist to Manager</h4><p class="what">Primark · H&amp;M · Bari, Calabria, Milan</p><p class="date">2016 – 2023</p></header><p class="txt">KPI-driven visual layouts, team lead. <b class="aw">★ H&amp;M Employee of the Year 2022</b></p></article></div>
+</section>
+
+
+
+<p class="more-cta">The full CV (skills, education, contacts and PDF) comes with a personal link. <a href="/en/cv/" target="_top">Ask for it</a>.</p><footer><span class="brand">c.lab<small>studio</small></span></footer>
+</div>
+
+<div class="page" id="page-it" lang="it">
+<header class="top">
+  <div class="id">
+    <h1>Esperienze<br>di lavoro<span class="dot">.</span></h1>
+    <p class="role">UX/UI Designer · Junior Product Engineer</p>
+    
+  </div>
+  <figure class="pic"><img class="ph-art" src="portrait-art.webp" draggable="false" alt=""><figcaption>io e Calì</figcaption></figure>
+</header>
+<p class="profile">Progetto e sviluppo prodotti con l&#x27;AI in Witailer, a stretto contatto con product, design e sviluppo: interfaccia, flussi e codice, dalla prima idea al rilascio. Prima, sette anni nel visual merchandising per H&amp;M e Primark.</p>
+
+<section>
+  <h2>Esperienza</h2>
+  <div class="job"><h3>Junior Product Engineer</h3><span class="date">set 2025 – oggi</span></div>
+  <p class="org">Witailer · gruppo Alkemy · Milano</p>
+  <div class="projs"><article class="proj"><header><h4>Studio AI</h4><p class="what">analista con l&#x27;AI per le vendite su Amazon</p><p class="date">gen 2026 – oggi</p><p class="award">★ Semifinalista Amazon Partner Awards</p></header><dl><dt>Design</dt><dd>Nato come PoC per verificare se gli LLM leggessero bene i dati. Sul progetto statico del senior product designer: l&#x27;AX (flussi di ragionamento, disambiguazione, log dell&#x27;AI), poi il redesign completo dell&#x27;interfaccia.</dd><dt>Sviluppo</dt><dd>Loop agentico, harness e UI di canvas e chat, collegati tra loro. Integrazione dell&#x27;MCP di Amazon Ads sviluppato da un collega, adattato ai filtri e alla logica di Studio; poi la reingegnerizzazione del motore: struttura del codice, pipeline, guardrail.</dd><dt>Con</dt><dd>L&#x27;head of product, con cui abbiamo impostato la direzione. I clienti pilota, con cui abbiamo iterato sulla beta.</dd></dl></article><article class="proj"><header><h4>STAT (redesign)</h4><p class="what">trend di ricerca su Amazon, rifatto da zero</p><p class="date">lug – nov 2026</p></header><dl><dt>Design</dt><dd>Dal vecchio STAT, interviste e PRD. Flussi di navigazione per ogni persona, uniti in un flusso unico su Forest UI (la UI aziendale); con gli utenti pilota interni abbiamo rimappato i flussi del vecchio prodotto e calibrato la UX sulle loro aspettative.</dd><dt>Sviluppo</dt><dd>Tutto il frontend, più un flusso AI: l&#x27;utente fa una domanda e la risposta arriva con un&#x27;interfaccia diversa a seconda della domanda (Sentient Design), con insight che spiegano i dati.</dd><dt>Con</dt><dd>Un lavoro di squadra con il senior product designer, il customer success manager e il tech lead, che ha sviluppato il backend.</dd></dl></article><article class="proj"><header><h4>Philo</h4><p class="what">nato da un bisogno del team: il lavoro di tutti, visto come un ufficio</p><p class="date">ott 2026 – oggi</p></header><dl><dt>Design</dt><dd>L&#x27;idea nasce da un bisogno intercettato nel team. Concept, nome e mascotte, prima su Forest UI (la UI aziendale); la UI non funzionava, e dopo una fase di R&amp;D è diventato un ufficio in 3D. In Blender: ufficio, personaggi e mascotte, più un nuovo design system, BRUTALE DS.</dd><dt>Sviluppo</dt><dd>Ufficio in 3D sviluppato; ora Philo è in fase di ingegnerizzazione.</dd><dt>Con</dt><dd>Il senior frontend engineer, che si è unito al progetto e costruisce il motore di Philo sul knowledge graph.</dd></dl></article><article class="proj"><header><h4>Studio Witailer</h4><p class="what">la piattaforma con cui i brand seguono le vendite su Amazon</p><p class="date">set 2025 – oggi</p></header><ul><li>Manutenzione della piattaforma insieme al senior frontend engineer, più progettazione e sviluppo di nuove funzionalità.</li></ul></article></div>
+  <div class="projs before"><article class="proj prev"><header><h4>Junior Frontend Developer · tirocinio</h4><p class="what">Atoms x Digital Retex · Milano</p><p class="date">mag – set 2025</p></header><p class="txt">Componenti Vue.js in team Agile/Scrum, accessibilità WCAG, design responsive.</p></article><article class="proj prev"><header><h4>Visual Merchandiser · da Specialist a Manager</h4><p class="what">Primark · H&amp;M · Bari, Calabria, Milano</p><p class="date">2016 – 2023</p></header><p class="txt">Layout guidati dai KPI, guida del team. <b class="aw">★ Dipendente dell&#x27;anno 2022 H&amp;M</b></p></article></div>
+</section>
+
+
+
+<p class="more-cta">Il CV completo (competenze, formazione, contatti e PDF) arriva con un link personale. <a href="/cv/" target="_top">Chiedilo qui</a>.</p><footer><span class="brand">c.lab<small>studio</small></span></footer>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  function set(l){
+    root.setAttribute('data-lang',l);root.lang=l;
+    document.querySelectorAll('.langsw button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===l));});
+    
+    try{localStorage.setItem('cv-lang',l)}catch(e){}
+  }
+  var q=new URLSearchParams(location.search).get('lang'),saved=null;
+  try{saved=localStorage.getItem('cv-lang')}catch(e){}
+  set(q==='it'||q==='en'?q:(saved==='it'?'it':'en'));
+  document.querySelectorAll('.langsw button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set)});});
+})();
+</script>
+<script>
+(function(){
+  var stop=function(e){e.preventDefault()};
+  ['contextmenu','copy','cut','dragstart','selectstart'].forEach(function(t){document.addEventListener(t,stop)});
+  document.addEventListener('keydown',function(e){
+    var k=(e.key||'').toLowerCase();
+    if((e.metaKey||e.ctrlKey)&&['s','p','c','a','u'].indexOf(k)>-1)e.preventDefault();
+  });
+})();
+</script>
+</body>
+</html>

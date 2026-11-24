@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/cv/k/[key]/[[...file]]': ['./private/cv/fonts/*'],
   },
+  /* the public CV preview is a static page in public/cv-preview (scripts/cv-preview.mjs): serve it at /cv-preview/ */
+  async rewrites() {
+    return { beforeFiles: [{ source: '/cv-preview/', destination: '/cv-preview/index.html' }], afterFiles: [], fallback: [] };
+  },
   /* the old Vercel address sends everyone, and every shared link, to the real domain */
   async redirects() {
     return [
