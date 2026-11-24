@@ -578,8 +578,6 @@ dialog.case[open]{animation:slide .45s var(--ease)}
 .case ol.steps .when{display:block;font-size:16px;color:var(--ink-2);font-weight:600}
 .case figure{margin:30px 0 0}
 .case figure img{width:100%;height:auto;border-radius:12px;background:var(--paper-2)}
-.case .wm{position:relative;display:block}
-.case .wm::after{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;opacity:.28;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='220'%3E%3Ctext x='180' y='118' text-anchor='middle' transform='rotate(-24 180 110)' font-family='monospace' font-weight='700' font-size='17' letter-spacing='2' fill='%23fff' stroke='%2316130f' stroke-width='.6' paint-order='stroke'%3E%C2%A9 C.LAB STUDIO%3C/text%3E%3C/svg%3E") repeat}
 .case figcaption{margin-top:10px;font-size:16px;color:var(--ink-2);max-width:44em}
 .case .demo{margin:28px 0 0;border:3px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:8px 8px 0 var(--ink);background:var(--ink);aspect-ratio:16/9} /* taste-skill-ignore: c.lab card */
 .case .demo video{width:100%;height:100%;display:block;object-fit:cover}

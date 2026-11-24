@@ -12,7 +12,7 @@ export const stat: Record<Locale, CaseCopy> = {
     owner: "Progetto per Witailer (gruppo Alkemy)",
     tagline: "Il rifacimento di STAT, lo strumento interno che racconta come le persone cercano su Amazon. Il vecchio lo sapevano usare tutti: il nuovo doveva fare di più restando semplice come prima.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/stat-product.mp4?v=2", poster: "/assets/videos/stat-product.jpg?v=2", label: "Video demo di STAT" },
+      { kind: "demo", src: "/assets/videos/stat-product.mp4?v=3", poster: "/assets/videos/stat-product.jpg?v=3", label: "Video demo di STAT" },
       {
         kind: "facts",
         items: [
@@ -248,7 +248,7 @@ export const stat: Record<Locale, CaseCopy> = {
     owner: "A project for Witailer (Alkemy group)",
     tagline: "Rebuilding from scratch a tool everyone already knew how to use, without making them hate it. From a prototype on fake data, through feedback, all the way to STAT 2.0.",
     blocks: [
-      { kind: "demo", src: "/assets/videos/stat-product-en.mp4?v=2", poster: "/assets/videos/stat-product-en.jpg?v=2", label: "STAT demo video" },
+      { kind: "demo", src: "/assets/videos/stat-product-en.mp4?v=3", poster: "/assets/videos/stat-product-en.jpg?v=3", label: "STAT demo video" },
       {
         kind: "facts",
         items: [

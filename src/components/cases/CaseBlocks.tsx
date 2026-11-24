@@ -2,13 +2,9 @@ import { Fragment } from 'react';
 import type { CaseBlock, CaseFigure, CaseImage } from '@/content/cases/types';
 import { RichText } from '../RichText';
 
-/* every case image carries a light diagonal watermark (.wm::after in globals.css): a screenshot keeps the studio's name */
+/* the "© c.lab studio" mark is inside the picture files themselves (scripts/watermark.mjs) */
 function Img({ img }: { img: CaseImage }) {
-  return (
-    <span className="wm">
-      <img src={img.src} alt={img.alt} loading="lazy" decoding="async" width={img.width} height={img.height} />
-    </span>
-  );
+  return <img src={img.src} alt={img.alt} loading="lazy" decoding="async" width={img.width} height={img.height} />;
 }
 
 function Figure({ figure }: { figure: CaseFigure }) {
