@@ -12,6 +12,7 @@
 import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 import { SITE_URL } from '@/config';
 import { supabase, supabaseFetch } from './supabase';
+import { button, esc, frame, sendMail, type Mail } from './mail';
 
 export const CV_DAYS = 7;
 const DAY_MS = 86_400_000;
@@ -147,36 +148,10 @@ export async function cvFile(name: string): Promise<Buffer | null> {
   return bytes;
 }
 
-/* ---------- emails (Resend) ---------- */
+/* ---------- emails (Resend, see mail.ts) ---------- */
 
-type Mail = { to: string; subject: string; html: string; text: string; replyTo?: string };
-
-const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-const oneLine = (s: string) => s.replace(/[\r\n\t]+/g, ' ').trim();
 const dateOf = (iso: string, locale: CvLocale) =>
   new Intl.DateTimeFormat(locale === 'en' ? 'en-GB' : 'it-IT', { day: 'numeric', month: 'long', timeZone: 'Europe/Rome' }).format(new Date(iso));
-
-const button = (href: string, label: string) =>
-  `<a href="${esc(href)}" style="display:inline-block;background:#16130f;color:#f7efe1;text-decoration:none;font:700 16px/1 Arial,sans-serif;padding:14px 22px;border-radius:999px">${esc(label)}</a>`;
-const frame = (body: string) =>
-  `<div style="background:#f7efe1;padding:28px 16px"><div style="max-width:520px;margin:0 auto;background:#fff;border:3px solid #16130f;border-radius:18px;padding:26px;font:16px/1.5 Arial,sans-serif;color:#16130f">${body}<p style="margin:26px 0 0;font:12px/1.4 monospace;color:#7a6f63">c.lab studio · clabstudiomilano.com</p></div></div>`;
-
-async function sendMail(m: Mail): Promise<boolean> {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return false;
-  const from = process.env.CV_FROM_EMAIL || 'c.lab studio <cv@clabstudiomilano.com>';
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from, to: [m.to], subject: oneLine(m.subject), html: m.html, text: m.text, ...(m.replyTo ? { reply_to: m.replyTo } : {}) }),
-      signal: AbortSignal.timeout(6000),
-    });
-    return res.ok;
-  } catch {
-    return false;
-  }
-}
 
 /** Tells Mel a request arrived, with the button to decide. False if there is nobody to tell. */
 export async function notifyOwner(r: CvRequest): Promise<boolean> {

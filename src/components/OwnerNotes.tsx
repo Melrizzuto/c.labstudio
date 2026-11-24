@@ -63,7 +63,7 @@ export function OwnerNotes() {
   };
 
   const act = async (n: Note, what: 'publish' | 'hide' | 'delete') => {
-    if (what === 'delete' && !window.confirm('Eliminare questa dedica? Non si può tornare indietro.')) return;
+    if (what === 'delete' && !window.confirm('Eliminare questo feedback? Non si può tornare indietro.')) return;
     setBusy(true);
     try {
       if (what === 'delete') await call(key, { method: 'DELETE', body: JSON.stringify({ id: n.id }) });
@@ -95,7 +95,7 @@ export function OwnerNotes() {
       <main className="owner owner-login">
         <form className="owner-card" onSubmit={onLogin}>
           <p className="owner-kicker">c.lab · area riservata</p>
-          <h1>Le dediche</h1>
+          <h1>I feedback</h1>
           <div className="owner-field">
             <label htmlFor="owner-pass">Password</label>
             <div className="owner-pass">
@@ -123,14 +123,14 @@ export function OwnerNotes() {
       <header className="owner-top">
         <div>
           <p className="owner-kicker">c.lab · area riservata</p>
-          <h1>{tab === 'cv' ? 'Il CV' : tab === 'board' ? "L'agenda" : 'Le dediche'}</h1>
+          <h1>{tab === 'cv' ? 'Il CV' : tab === 'board' ? "L'agenda" : 'I feedback'}</h1>
         </div>
         <div className="owner-actions">
           <button className="chip" type="button" onClick={() => void load(key)} disabled={busy}>Aggiorna</button>
           <button className="chip" type="button" onClick={() => { saveKey(''); setNotes(null); setKey(''); }}>Esci</button>
         </div>
       </header>
-      <nav className="owner-tabs" aria-label="Filtra le dediche">
+      <nav className="owner-tabs" aria-label="Filtra i feedback">
         {([['todo', `Da approvare · ${todo.length}`], ['live', `Pubblicate · ${live.length}`], ['all', `Tutte · ${notes.length}`], ['board', 'Sposta i post-it'], ['cv', 'Richieste del CV']] as [Tab, string][]).map(([t, label]) => (
           <button key={t} type="button" className={tab === t ? 'on' : ''} aria-pressed={tab === t} onClick={() => setTab(t)}>{label}</button>
         ))}
