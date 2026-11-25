@@ -26,9 +26,11 @@ css = '''
       #strike { position: absolute; left: 150px; top: 0; height: 8px; width: 0; background: #d6281c; border-radius: 4px; }
       #pawS { position: absolute; left: 560px; top: 760px; width: 380px; height: 350px; z-index: 5; opacity: 0; transform-origin: 90% 95%; }
       /* midnight */
-      #sCount { background: #10152e radial-gradient(rgba(255,255,255,.14) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
-      .num { position: absolute; left: 0; right: 0; top: 560px; text-align: center; font: 900 380px/1 "Outfit", sans-serif; color: #fff8ea; opacity: 0; }
-      #y2027 { font-size: 240px; color: #ffe27a; top: 620px; text-shadow: 0 0 30px rgba(255, 194, 26, .9), 0 0 80px rgba(255, 140, 0, .6); }
+      #sCount { background: #10152e url("assets/scena-capodanno.jpg") center / cover; }
+      #sCount::before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(10,14,40,.55), rgba(10,14,40,.1) 55%); }
+      .num { text-shadow: 0 6px 30px rgba(0,0,0,.6); }
+      .num { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font: 900 380px/1 "Outfit", sans-serif; color: #fff8ea; opacity: 0; }
+      #y2027 { font-size: 220px; color: #ffe27a; top: 440px; text-shadow: 0 0 30px rgba(255, 194, 26, .9), 0 0 80px rgba(255, 140, 0, .6); }
       .burst { position: absolute; width: 0; height: 0; opacity: 0; }
       .burst { mix-blend-mode: screen; }
       .burst b { position: absolute; left: -5px; top: -5px; width: 10px; height: 60px; border-radius: 6px; background: linear-gradient(#fff, var(--c) 40%, transparent); box-shadow: 0 0 18px 4px var(--c); transform: rotate(var(--a)) translateY(-80px); transform-origin: 5px 5px; }
