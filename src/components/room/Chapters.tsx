@@ -5,6 +5,7 @@ import { PROJECT_GROUPS } from '@/content/room';
 import { CALENDLY_URL, EMAIL, YOUTUBE_URL } from '@/config';
 import { RichText } from '../RichText';
 import { MailCopy } from '../MailCopy';
+import { TvRemote } from './TvRemote';
 
 /*
  * The six chapter cards that scroll over the pinned stage. Each `data-cam` names the camera view
@@ -119,6 +120,7 @@ export function Chapters({ t, locale }: { t: Dictionary; locale: Locale }) {
                 <img key={c.src} src={c.src} alt={c.alt} loading="lazy" width={1280} height={720} />
               ))}
             </div>
+            <TvRemote t={t.weekend.remote} locale={locale} />
             <div className="chips">
               <a className="chip" id="ytLink" href={YOUTUBE_URL} target="_blank" rel="noopener">
                 {t.weekend.channel}

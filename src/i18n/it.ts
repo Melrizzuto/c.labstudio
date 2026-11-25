@@ -139,12 +139,14 @@ export const it: Dictionary = {
         ' è la mia serie su YouTube: prendo un prodotto famoso e lo riprogetto in una sera, insieme a Claude. Unica regola: il miglioramento si deve capire in cinque secondi.',
       ],
       "Primo episodio: l'assistente AI di TikTok, che rispondeva con un muro di 162 parole. Dopo, il succo si capisce al volo.",
+      [{ b: 'Calì & Mel' }, " è la sitcom dello studio: io faccio la designer, Calì fa la Boss. Le richieste più assurde dei clienti, a puntate. Cambia canale col telecomando."],
     ],
     covers: [
       { src: '/assets/tv/rifatto-cover-a.jpg', alt: "Copertina: ho rifatto l'AI di TikTok" },
       { src: '/assets/tv/rifatto-cover-b.jpg', alt: 'Prima 162 parole, dopo 5 secondi per il succo' },
     ],
     channel: 'Guarda il canale su YouTube',
+    remote: { label: 'Telecomando della TV', channels: 'Canali', prev: 'Puntata precedente', next: 'Puntata successiva', soundOff: '🔇 Audio', soundOn: '🔊 Audio', big: '⤢ Guarda grande', close: 'Chiudi', note: '' },
   },
   contact: {
     title: 'Ci facciamo una chiacchierata?',

@@ -1,0 +1,117 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><style>
+@font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+@font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+@font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+:root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; --leaf: #2e9e3e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #555; font-family: "Figtree", sans-serif; color: var(--ink); }
+section { position: relative; width: 1080px; height: 1350px; overflow: hidden; margin: 0 0 20px;
+  background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+section.ink { background: var(--ink); color: #fff8ea; }
+section.pink { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; }
+/* print treatment, as on the site */
+section::before { content: ""; position: absolute; inset: 0; z-index: 50; pointer-events: none; mix-blend-mode: multiply; opacity: .2; background: url("assets/paper.webp") 0 0 / 512px 512px; }
+section::after { content: ""; position: absolute; inset: 0; z-index: 51; pointer-events: none; mix-blend-mode: multiply; opacity: .13; background: url("assets/grain-day.webp") 0 0 / 256px 256px; }
+section.ink::after { mix-blend-mode: screen; opacity: .08; }
+.riso { filter: url(#riso); }
+.box { position: relative; border: 7px solid transparent; border-radius: 40px; }
+.box::before { content: ""; position: absolute; inset: -7px; border: 7px solid var(--ink); border-radius: inherit; pointer-events: none;
+  -webkit-mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; }
+.kick { position: absolute; left: 80px; top: 70px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--note); }
+.num { position: absolute; right: 80px; top: 70px; font: 700 30px/1 "Space Mono", monospace; color: #8a8178; }
+.ink .num { color: var(--sun); }
+.swipe { position: absolute; right: 80px; bottom: 70px; padding: 16px 26px; border-radius: 999px; background: var(--ink); color: var(--sun); font: 700 30px/1 "Space Mono", monospace; }
+.handle { position: absolute; left: 80px; bottom: 76px; font: 700 28px/1 "Space Mono", monospace; color: #8a8178; }
+.ink .handle { color: var(--sun); }
+.title { position: absolute; left: 80px; right: 80px; top: 170px; font: 900 132px/0.92 "Outfit", sans-serif; letter-spacing: -0.05em; }
+.title em { font-style: normal; color: var(--note); }
+.ink .title em { color: var(--pink); }
+.sub { position: absolute; left: 84px; right: 80px; font: 600 44px/1.2 "Figtree", sans-serif; color: #4a4238; }
+.sticker { position: absolute; padding: 16px 26px; border-radius: 999px; background: #3be36b; border: 6px solid var(--ink); outline: 6px solid #fff; font: 900 38px/1 "Outfit", sans-serif; text-transform: uppercase; }
+img.mel { position: absolute; }
+.label { font: 700 30px/1 "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+/* dictionary */
+.says { position: absolute; left: 80px; right: 80px; top: 230px; }
+.says .label { color: var(--note); margin-bottom: 22px; }
+.says .bubble { background: #fff; padding: 40px 46px 46px; border-radius: 46px 46px 46px 10px; box-shadow: 12px 12px 0 var(--ink); font: 800 74px/1.06 "Figtree", sans-serif; letter-spacing: -0.02em; }
+.means { position: absolute; left: 80px; right: 80px; top: 720px; }
+.means .label { color: var(--ink); margin-bottom: 22px; }
+.means .band { background: var(--ink); color: #fff8ea; padding: 38px 44px 44px; border-radius: 30px; font: 900 76px/1.02 "Outfit", sans-serif; letter-spacing: -0.035em; }
+.means .band em { font-style: normal; color: var(--sun); }
+/* flow diagrams */
+.node { position: absolute; padding: 22px 30px; background: #fff; border-radius: 26px; font: 800 40px/1 "Figtree", sans-serif; box-shadow: 8px 8px 0 var(--ink); }
+.node.ok { background: #c2f296; }
+.cap { position: absolute; left: 80px; right: 80px; bottom: 150px; font: 900 64px/1.02 "Outfit", sans-serif; letter-spacing: -0.03em; }
+.cap em { font-style: normal; color: var(--note); }
+</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="riso" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="w0" />
+    <feColorMatrix in="w0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="warp" />
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="0.8" xChannelSelector="R" yChannelSelector="G" result="rough" />
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="8" result="g0" />
+    <feColorMatrix in="g0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="grain" />
+    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5" result="b0" />
+    <feColorMatrix in="b0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="blotch" />
+    <feComposite in="grain" in2="blotch" operator="arithmetic" k1="0" k2="1" k3="0.15" k4="-0.075" result="mix" />
+    <feColorMatrix in="mix" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.4 0 0 0 -0.12" result="mask" />
+    <feComposite in="rough" in2="mask" operator="in" />
+  </filter></defs></svg>
+<section>
+  <p class="kick">Calì &amp; Mel · ux</p><p class="num">01/07</p>
+  <h1 class="title">Il flusso utente.</h1>
+  <p class="sub" style="top: 330px; font-size: 56px; line-height: 1.25">Come l'abbiamo disegnato 😌<br />vs come lo usano <b style="color: var(--note)">davvero</b> 🫠</p>
+  <svg class="riso" style="position:absolute; left: 80px; top: 640px" width="560" height="420" viewBox="0 0 560 420">
+    <path d="M20 380 L540 40" stroke="#2e9e3e" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <path d="M20 380 C 120 20, 200 420, 260 200 S 420 400, 330 120 S 600 260, 540 40" stroke="#d6281c" stroke-width="16" stroke-linecap="round" fill="none"/>
+  </svg>
+  <img class="mel" src="assets/mel-felt.png" style="left: 660px; top: 640px; width: 380px" alt="" />
+  <p class="handle">@c.labstudio.milano</p><span class="swipe">scorri →</span>
+</section>
+<section>
+  <p class="kick">come l'abbiamo disegnato 😌</p><p class="num">02/07</p>
+  <svg style="position:absolute; left: 0; top: 0" width="1080" height="1350"><g stroke="#16130f" stroke-width="8" fill="none" stroke-linecap="round">
+    <path d="M250 390 L250 500"/><path d="M230 480 L250 505 L270 480"/><path d="M250 610 L250 720"/><path d="M230 700 L250 725 L270 700"/><path d="M250 830 L250 940"/><path d="M230 920 L250 945 L270 920"/></g></svg>
+  <div class="node box" style="left:140px;top:300px">Home</div><div class="node box" style="left:140px;top:520px">Prodotto</div><div class="node box" style="left:140px;top:740px">Carrello</div><div class="node box ok" style="left:140px;top:960px">Pagato ✓</div>
+  <p class="sticker riso" style="left: 600px; top: 520px; rotate: 6deg; background: var(--sun)">3 click ✨</p>
+  <p class="cap">Elegante. Lineare.<br /><em>Testato in Figma.</em></p>
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section>
+  <p class="kick">come lo usano davvero 🫠</p><p class="num">03/07</p>
+  <svg class="riso" style="position:absolute; left: 0; top: 0" width="1080" height="1350"><path d="M230 300 C 600 120, 900 250, 760 340 S 400 330, 800 580 S 200 420, 200 560 S 820 650, 700 820 S 120 820, 260 900 S 900 860, 760 1000 S 300 1060, 420 1080" stroke="#d6281c" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="2 22"/></svg>
+  <div class="node box" style="left:120px;top:240px;font-size:36px">Home</div><div class="node box" style="left:640px;top:300px;font-size:36px">logo ×14</div><div class="node box" style="left:700px;top:560px;font-size:36px">FAQ</div><div class="node box" style="left:90px;top:520px;font-size:36px">Contattaci</div><div class="node box" style="left:520px;top:800px;font-size:36px">chiude la tab</div><div class="node box" style="left:80px;top:880px;font-size:36px">Google: «sito login»</div><div class="node box" style="left:560px;top:960px;font-size:36px">Home (di nuovo)</div>
+  <p class="sticker riso" style="left: 600px; top: 160px; rotate: -6deg; background: var(--pink); color: #fff">47 click 😵</p>
+  <p class="cap" style="bottom: 120px; font-size: 54px">Alla fine ha chiamato<br /><em>il numero verde.</em></p>
+</section>
+<section style="background: #c2f296 radial-gradient(rgba(22,19,15,.08) 2.4px, transparent 2.8px) 0 0 / 44px 44px">
+  <p class="kick">il sentiero del desiderio</p><p class="num">04/07</p>
+  <svg style="position:absolute; left: 0; top: 0" width="1080" height="1350">
+    <path d="M120 1080 L120 360 L960 360" stroke="#e9e4da" stroke-width="90" fill="none"/>
+    <path d="M120 1080 L120 360 L960 360" stroke="#16130f" stroke-width="6" fill="none" stroke-dasharray="1 0" opacity=".25"/>
+    <path class="riso" d="M140 1060 C 380 820, 620 620, 940 380" stroke="#8a5a2b" stroke-width="54" fill="none" stroke-linecap="round" opacity=".9"/>
+  </svg>
+  <span class="node box" style="left: 180px; top: 230px; font-size: 34px">il percorso che abbiamo progettato</span>
+  <span class="node box" style="left: 470px; top: 760px; font-size: 34px; background: var(--sun)">il percorso degli utenti</span>
+  <p class="cap" style="bottom: 100px">Gli utenti trovano<br /><em>sempre</em> la scorciatoia.</p>
+</section>
+<section>
+  <p class="kick">il test con gli utenti</p><p class="num">05/07</p>
+  <div class="says" style="top: 200px"><p class="label">🧑‍💻 utente n. 4</p><div class="bubble box">«Super intuitivo! ⭐⭐⭐⭐⭐»</div></div>
+  <div class="means" style="top: 640px"><p class="label">📋 note del test</p><div class="band">Non ha trovato<br />il bottone <em>«Compra».</em><br />Era rosso. Gigante.</div></div>
+  <img class="mel" src="assets/mel-head.png" style="left: 760px; top: 1080px; width: 250px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+<section class="pink">
+  <p class="kick" style="color: var(--ink)">e Calì?</p><p class="num" style="color: var(--ink)">06/07</p>
+  <img class="mel" src="assets/mel-head-yawn.png" style="left: 150px; top: 150px; width: 780px" alt="" />
+  <div class="means" style="top: 900px"><div class="band">Flusso completato in <em>1 click.</em><br />Si è seduta sulla tastiera:<br /><em>40 kg di crocchette.</em> 🐾</div></div>
+</section>
+<section class="ink">
+  <p class="kick" style="color: var(--sun)">Calì &amp; Mel</p><p class="num">07/07</p>
+  <h1 class="title" style="font-size: 100px">Il percorso più <em>assurdo</em> che hai visto fare a un utente?</h1>
+  <p class="sub" style="top: 720px; color: #fff8ea">Raccontalo nei commenti 👇<br /><br />🔖 Salva · ➕ Segui per la serie</p>
+  <img class="mel" src="assets/mel-felt.png" style="left: 660px; top: 820px; width: 360px" alt="" />
+  <p class="handle">@c.labstudio.milano</p>
+</section>
+</body></html>

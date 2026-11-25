@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="it" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+      @font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+      @font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+      :root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Figtree", sans-serif; color: var(--ink); }
+      .clip { position: absolute; inset: 0; }
+      .dots { background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+
+      /* ---------- chat world ---------- */
+      .kick { position: absolute; left: 130px; top: 300px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--note); }
+      .who { position: absolute; left: 130px; top: 360px; display: flex; align-items: center; gap: 22px; }
+      .who .av { width: 104px; height: 104px; border-radius: 50%; border: 6px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 56px; }
+      .who b { display: block; font: 900 50px/1 "Outfit", sans-serif; letter-spacing: -0.02em; }
+      .who small { display: block; margin-top: 8px; font: 600 30px/1 "Figtree", sans-serif; color: #2e9e3e; }
+      .bub { position: absolute; left: 130px; max-width: 760px; padding: 30px 40px 34px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px;
+        box-shadow: 10px 10px 0 var(--ink); font: 700 66px/1.1 "Figtree", sans-serif; letter-spacing: -0.01em; transform-origin: 0% 100%; }
+      .bub.big { font: 900 96px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .bub em { font-style: normal; color: var(--note); }
+      .bub.old { opacity: 0.38; box-shadow: none; }
+      .typing { position: absolute; left: 130px; padding: 30px 38px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px; display: flex; gap: 14px; transform-origin: 0% 100%; }
+      .peek { position: absolute; left: 330px; top: 1330px; width: 420px; height: 1095px; }
+      .peek img { width: 100%; height: 100%; }
+      .typing i { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); display: block; }
+
+      /* ---------- screen world: the poster on the design canvas ---------- */
+      #sScr { background: #e9e4da radial-gradient(rgba(22, 19, 15, 0.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
+      .tool { position: absolute; left: 130px; top: 300px; display: flex; gap: 14px; font: 700 28px/1 "Space Mono", monospace; text-transform: uppercase; }
+      .tool span { padding: 12px 18px; border: 4px solid var(--ink); border-radius: 14px; background: #fff; }
+      .tool span.on { background: var(--ink); color: #fff; }
+      #cam { position: absolute; left: 220px; top: 380px; width: 640px; height: 860px; transform-origin: 50% 19%; }
+      #poster { position: absolute; inset: 0; background: #fff3df; border: 6px solid var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 16px 16px 0 rgba(22, 19, 15, 0.85); }
+      #logo { position: absolute; left: 245px; top: 60px; width: 150px; height: 150px; border-radius: 50%; background: var(--red); border: 6px solid var(--ink);
+        display: grid; place-items: center; color: #fff3df; font: 900 92px/1 "Outfit", sans-serif; transform-origin: 50% 0%; z-index: 2; }
+      #rest { position: absolute; left: 0; top: 240px; width: 100%; text-align: center; }
+      #rest h2 { font: 700 130px/0.9 "Caveat", cursive; color: var(--red); }
+      #rest p { margin-top: 14px; font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+      #rest .awn { margin: 40px auto 0; width: 520px; height: 250px; border: 6px solid var(--ink); border-radius: 16px; background: repeating-linear-gradient(90deg, var(--red) 0 52px, #fff3df 52px 104px); }
+      #rest .addr { margin-top: 34px; font: 700 30px/1 "Figtree", sans-serif; }
+      #sel { position: absolute; left: 239px; top: 54px; width: 162px; height: 162px; border: 4px solid var(--cobalt); transform-origin: 50% 0%; z-index: 3; }
+      #sel i { position: absolute; width: 22px; height: 22px; background: #fff; border: 4px solid var(--cobalt); }
+      #sel i:nth-child(1) { left: -13px; top: -13px; } #sel i:nth-child(2) { right: -13px; top: -13px; }
+      #sel i:nth-child(3) { left: -13px; bottom: -13px; } #sel i:nth-child(4) { right: -13px; bottom: -13px; }
+      #cursor { position: absolute; left: 0; top: 0; width: 70px; height: 70px; z-index: 5; }
+      .size { position: absolute; left: 130px; top: 1262px; padding: 12px 20px; border-radius: 12px; background: var(--cobalt); color: #fff; font: 700 32px/1 "Space Mono", monospace; }
+
+      /* ---------- reaction world: Mel and Calì, close up ---------- */
+      .react { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; overflow: hidden; }
+      .face { position: absolute; left: 40px; top: 150px; width: 1001px; height: 2610px; transform-origin: 50% 24%; }
+      .face img { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .drop { position: absolute; left: 700px; top: 520px; font-size: 110px; line-height: 1; }
+      .band { position: absolute; left: 110px; right: 190px; top: 1060px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px;
+        font: 900 78px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band em { font-style: normal; color: var(--sun); }
+
+      /* ---------- end card ---------- */
+      #sEnd { background: var(--ink); color: #fff8ea; }
+      #sEnd h2 { position: absolute; left: 120px; right: 190px; top: 330px; font: 900 112px/0.96 "Outfit", sans-serif; letter-spacing: -0.045em; }
+      #sEnd h2 em { font-style: normal; color: var(--pink); }
+      #sEnd .ep { position: absolute; left: 124px; top: 860px; font: 700 34px/1.4 "Space Mono", monospace; color: var(--sun); }
+      #endMel { position: absolute; left: 600px; top: 1010px; width: 380px; height: 991px; }
+      #endMel img { width: 100%; height: 100%; }
+    
+
+      .tease { position: absolute; left: 130px; top: 300px; padding: 10px 18px; border-radius: 999px; background: var(--ink); color: var(--sun); font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; }
+      .who { top: 370px; }
+      .toast { position: absolute; left: 130px; top: 300px; max-width: 800px; padding: 22px 30px 26px; background: #fff; border: 6px solid var(--ink); border-radius: 36px 36px 36px 8px; box-shadow: 8px 8px 0 var(--ink);
+        font: 700 52px/1.1 "Figtree", sans-serif; transform-origin: 0% 100%; z-index: 4; display: flex; align-items: center; gap: 18px; }
+      .toast .av { width: 70px; height: 70px; flex: none; border-radius: 50%; border: 5px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 38px; }
+      .band2 { position: absolute; left: 110px; right: 190px; top: 1020px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px; font: 900 72px/1.02 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band2 em { font-style: normal; color: var(--sun); }
+      #sEnd h2 { top: 320px; font-size: 100px; }
+      #sEnd .ep { top: 900px; }
+    
+      .night { background: #1b2140 radial-gradient(rgba(255, 255, 255, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+      .night .face { filter: brightness(0.82) saturate(0.9); }
+      .win { position: absolute; left: 130px; top: 380px; width: 820px; background: #fff; border: 7px solid var(--ink); border-radius: 30px; box-shadow: 14px 14px 0 var(--ink); overflow: hidden; }
+      .win .bar { height: 70px; border-bottom: 6px solid var(--ink); background: var(--paper); display: flex; align-items: center; gap: 14px; padding: 0 24px; }
+      .win .bar i { width: 22px; height: 22px; border-radius: 50%; border: 4px solid var(--ink); display: block; }
+      .win .bar b { margin-left: 12px; font: 700 28px/1 "Space Mono", monospace; }
+
+      /* Mel's own messages: on the right, pink */
+      .bub.me { left: auto; right: 192px; max-width: 640px; background: #ffd3e8; border-radius: 46px 46px 10px 46px; transform-origin: 100% 100%; }
+      .bub.me.old { opacity: 0.38; }
+      /* the AI's avatar: a plain ink badge with a star, no brand logo */
+      .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
+
+
+      #dash { top: 370px; }
+      #dash .body { position: relative; height: 720px; padding: 34px; }
+      #dash h3 { font: 900 44px/1 "Outfit", sans-serif; letter-spacing: -0.02em; }
+      #dash h3 small { display: block; margin-top: 8px; font: 700 26px/1 "Space Mono", monospace; color: #8a8178; letter-spacing: 0.02em; }
+      .kpis { display: flex; gap: 18px; margin-top: 26px; }
+      .kpi { flex: 1; border: 5px solid var(--ink); border-radius: 18px; padding: 16px 18px; background: var(--paper); }
+      .kpi b { display: block; font: 900 46px/1 "Outfit", sans-serif; }
+      .kpi span { font: 700 26px/1 "Figtree", sans-serif; color: #6f675e; }
+      .kpi.dn b { color: #c0211a; } .kpi.up b { color: #1f7a2c; }
+      #chartBox { position: absolute; left: 34px; top: 330px; width: 738px; height: 350px; border: 5px solid var(--ink); border-radius: 18px; overflow: hidden; background: #fff;
+        background-image: linear-gradient(#efe9df 2px, transparent 2px); background-size: 100% 84px; }
+      #chartIn { position: absolute; left: 14px; top: 0px; width: 700px; height: 340px; transform-origin: 60% 50.5%; }
+      #chartIn svg { width: 700px; height: 360px; overflow: visible; }
+      #zero { position: absolute; left: 10px; bottom: 6px; font: 700 26px/1 "Space Mono", monospace; color: #8a8178; }
+      #menu { position: absolute; right: 34px; top: 34px; padding: 12px 18px; border: 5px solid var(--ink); border-radius: 14px; background: #fff; font: 700 26px/1 "Space Mono", monospace; }
+      #menu.on { background: var(--cobalt); color: #fff; }
+      #selBox { position: absolute; left: 385px; top: 150px; width: 70px; height: 70px; border: 4px dashed var(--cobalt); background: rgba(29, 63, 209, .12); opacity: 0; }
+      #cur4 { position: absolute; left: 0; top: 0; width: 76px; height: 76px; z-index: 6; }
+      .lbl { position: absolute; left: 130px; top: 296px; padding: 12px 20px; border-radius: 12px; background: var(--ink); color: var(--sun); font: 700 30px/1 "Space Mono", monospace; opacity: 0; }
+      #boom { position: absolute; right: 200px; top: 700px; padding: 18px 26px; border-radius: 999px; background: #3be36b; border: 6px solid var(--ink); font: 900 56px/1 "Outfit", sans-serif; opacity: 0; z-index: 7; }
+      .toast { top: 1170px; }
+
+    
+        /* ===== print treatment, as on the site: paper fibres, grain, risograph ink on the decorative pieces ===== */
+        #printPaper { z-index: 88; pointer-events: none; mix-blend-mode: multiply; opacity: .2; background: url("assets/paper.webp") 0 0 / 512px 512px; }
+        #printGrain { z-index: 89; pointer-events: none; mix-blend-mode: multiply; opacity: .13; background: url("assets/grain-day.webp") 0 0 / 256px 256px; }
+        #printGrainN { z-index: 90; pointer-events: none; mix-blend-mode: screen; opacity: .07; background: url("assets/grain-night.webp") 0 0 / 256px 256px; }
+        .stamp, .tag, .tease, .who .av, .toast .av, #sun, .awn, .heart, .chk, #sent, .size, .sticker-ink, #wSaldi, #wNew, #wMarq, #clkLbl, .typing i, #series { filter: url(#riso); }
+        /* the printed borders: as on the site's cards, the outline is a second plate of ink with the risograph mask */
+        .bub, .typing, .toast, .win, #picker, #poster, .card { --bw: 7px; border-color: transparent !important; }
+        .toast, #poster { --bw: 6px; }
+        .bub::before, .typing::before, .toast::before, .win::before, #picker::before, #poster::before, .card::before {
+          content: ""; position: absolute; inset: calc(-1 * var(--bw)); border: var(--bw) solid var(--ink); border-radius: inherit; pointer-events: none; z-index: 5;
+          -webkit-mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; }
+      </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34" data-width="1080" data-height="1920">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+          <filter id="riso" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="w0" />
+            <feColorMatrix in="w0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="warp" />
+            <feDisplacementMap in="SourceGraphic" in2="warp" scale="0.8" xChannelSelector="R" yChannelSelector="G" result="rough" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="8" result="g0" />
+            <feColorMatrix in="g0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="grain" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5" result="b0" />
+            <feColorMatrix in="b0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="blotch" />
+            <feComposite in="grain" in2="blotch" operator="arithmetic" k1="0" k2="1" k3="0.15" k4="-0.075" result="mix" />
+            <feColorMatrix in="mix" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.4 0 0 0 -0.12" result="mask" />
+            <feComposite in="rough" in2="mask" operator="in" />
+          </filter></defs></svg>
+        <div id="sChat1" class="clip dots" data-start="0" data-duration="4.2">
+        <p id="sChat1T" class="tease">guarda fino alla fine 👀</p><div class="who"><div class="av ">💼</div><div><b>Il Capo</b><small>online</small></div></div>
+        <div id="b1" class="bub big" style="top: 600px">Il grafico delle vendite… <em>lo fai andare in su?</em> 📈</div>
+        <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+      <div id="sR1" class="clip react" data-start="4.2" data-duration="2.6">
+        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /></div>
+        <div id="sR1B" class="band2" style="opacity: 0">Il grafico.<br /><em>Non le vendite.</em></div>
+      </div>
+      <div id="sDash" class="clip" data-start="6.8" data-duration="12.8" data-layout-allow-overlap style="background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px">
+        <div id="dash" class="win"><div class="bar"><i></i><i></i><i></i><b>dashboard vendite · Q3</b></div>
+          <div class="body">
+            <h3>Andamento vendite<small>luglio → settembre</small></h3>
+            <span id="menu">asse Y ▾</span>
+            <div class="kpis"><div class="kpi dn"><b>−12%</b><span>fatturato</span></div><div class="kpi dn"><b>−8%</b><span>ordini</span></div><div class="kpi up"><b>+2%</b><span>visite</span></div></div>
+            <div id="chartBox"><div id="chartIn"><svg viewBox="0 0 700 360"><polyline points="0,60 70,92 140,80 210,128 280,150 350,196 395,205 445,160 490,232 560,262 630,300 700,322" fill="none" stroke="#d6281c" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" /></svg><div id="selBox"></div></div><span id="zero">0</span></div>
+          </div></div>
+        <svg id="cur4" viewBox="0 0 24 24"><path d="M3 2l17 9-7.5 1.6L9 20z" fill="#16130f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" /></svg>
+        <p id="l1" class="lbl">asse Y: invertito</p>
+        <p id="l2" class="lbl">zoom: martedì, 14:00 → 14:05</p>
+        <div id="boom">+400% 🚀</div>
+        <div id="q1" class="toast" style="opacity: 0"><span class="av">💼</span>SÌ!!! 😍 Lo mando al board.</div>
+        <div id="q2" class="toast" style="opacity: 0"><span class="av">💼</span>…perché lo zero è in alto? 🤨</div>
+        <div id="q3" class="toast" style="opacity: 0"><span class="av">💼</span>PERFETTO. Questo è il trend.</div>
+      </div>
+      <div id="sChat2" class="clip dots" data-start="19.6" data-duration="6.8">
+        <div class="who"><div class="av ">💼</div><div><b>Il Capo</b><small>sta scrivendo…</small></div></div>
+        <div id="t2" class="typing" style="top: 600px; opacity: 0"><i></i><i></i><i></i></div><div id="b2" class="bub" style="top: 600px; opacity: 0">Ah, e mettiamo 12 KPI sopra la piega. <em>Ma pulito.</em> ✨</div>
+        <div id="pk2" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+      <div id="sR2" class="clip react" data-start="26.4" data-duration="3.6">
+        <div id="sR2F" class="face"><img id="sR2A" src="assets/mel-felt.png" alt="" /><img id="sR2Y" src="assets/mel-felt-yawn.png" alt="" style="opacity: 0" /></div>
+        <div id="sR2B" class="band2" style="opacity: 0">I dati non mentono.<br /><em>Gli assi sì.</em></div>
+      </div>
+      <div id="sEnd" class="clip" data-start="30" data-duration="4">
+        <h2 id="endH">Il grafico più <em>creativo</em> che ti hanno chiesto? 📈👇</h2>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. 7<br />@c.labstudio.milano<br /><span style="color:#fff8ea">segui per l’ep. 8</span></p>
+        <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+      <!-- music: "Investigations", Kevin MacLeod (incompetech.com), CC BY 4.0 -->
+      <audio id="aMusic" class="clip" data-start="0" data-duration="34" src="assets/music.mp3" data-media-start="30" data-volume="0.4" data-fade-in="0.6" data-fade-out="2"></audio>
+      <audio id="a1" class="clip" data-start="0.06" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
+      <audio id="a2" class="clip" data-start="4.1" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.55"></audio>
+      <audio id="a3" class="clip" data-start="6.7" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.55"></audio>
+      <audio id="a4" class="clip" data-start="8.95" data-duration="0.03" src="assets/tick.wav" data-volume="0.6"></audio>
+      <audio id="a5" class="clip" data-start="9.3" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.45"></audio>
+      <audio id="a6" class="clip" data-start="9.85" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="a7" class="clip" data-start="11.45" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="a8" class="clip" data-start="13.45" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="a9" class="clip" data-start="14.05" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="a10" class="clip" data-start="14.0" data-duration="1.1" src="assets/riser.wav" data-volume="0.7"></audio>
+      <audio id="a11" class="clip" data-start="15.0" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="a12" class="clip" data-start="15.85" data-duration="0.06" src="assets/pop.wav" data-volume="0.95"></audio>
+      <audio id="a13" class="clip" data-start="17.0" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
+      <audio id="a14" class="clip" data-start="17.1" data-duration="1.25" src="assets/cat-trill.mp3" data-volume="0.75"></audio>
+      <audio id="a15" class="clip" data-start="19.5" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.5"></audio>
+      <audio id="a16" class="clip" data-start="20.4" data-duration="0.03" src="assets/tick.wav" data-volume="0.45"></audio>
+      <audio id="a17" class="clip" data-start="21.2" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="a18" class="clip" data-start="22.0" data-duration="0.03" src="assets/tick.wav" data-volume="0.45"></audio>
+      <audio id="a19" class="clip" data-start="22.75" data-duration="0.06" src="assets/pop.wav" data-volume="0.95"></audio>
+      <audio id="a20" class="clip" data-start="26.3" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="a21" class="clip" data-start="30.4" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="0.85"></audio>
+    <div id="printPaper" class="clip" data-start="0" data-duration="34" data-layout-ignore></div>
+        <div id="printGrain" class="clip" data-start="0" data-duration="34" data-layout-ignore></div>
+        <div id="printGrainN" class="clip" data-start="0" data-duration="34" data-layout-ignore></div>
+      </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const pop = (sel, at) => tl.fromTo(sel, { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "back.out(2.4)" }, at);
+      const peek = (sel, at) => tl.fromTo(sel, { y: 160 }, { y: 0, duration: 0.6, ease: "back.out(1.6)" }, at);
+      const blurIn = (sel, at) => tl.fromTo(sel, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, at);
+      const typing = (sel, at, len) => {
+        tl.fromTo(sel, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2)" }, at);
+        const n = Math.max(1, Math.round((len - 0.5) / 0.44));
+        [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
+        tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
+      };
+      const yawn = (scene, from, to) => {
+        tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);
+        tl.set(`#${scene}Y`, { opacity: 0 }, to); tl.set(`#${scene}A`, { opacity: 1 }, to);
+      };
+
+      /* 1 · the ask */
+      peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.2);
+      tl.fromTo("#sChat1T", { opacity: 1 }, { opacity: 0.35, duration: 0.25, yoyo: true, repeat: 1 }, 2.6);
+      /* 2 */
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.13, duration: 2.6, ease: "power1.inOut" }, 4.2); blurIn("#sR1B", 4.7);
+      /* 3 · the dashboard, down; flip the axis */
+      tl.fromTo("#dash", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 6.8);
+      tl.set("#cur4", { x: 600, y: 1180 }, 6.8);
+      tl.to("#cur4", { x: 870, y: 440, duration: 0.8, ease: "power2.inOut" }, 8.1);
+      tl.set("#menu", { className: "on" }, 8.95);
+      tl.to("#chartIn", { scaleY: -1, duration: 0.5, ease: "power3.inOut" }, 9.3);
+      tl.fromTo("#l1", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 9.4);
+      pop("#q1", 9.8); tl.to("#q1", { opacity: 0, duration: 0.12 }, 11.35); pop("#q2", 11.4);
+      /* 4 · flip back; zoom into the one good five minutes */
+      tl.to("#q2", { opacity: 0, duration: 0.12 }, 13.3); tl.to("#l1", { opacity: 0, duration: 0.12 }, 13.3);
+      tl.set("#menu", { className: "" }, 13.4);
+      tl.to("#chartIn", { scaleY: 1, duration: 0.4, ease: "power3.inOut" }, 13.4);
+      tl.to("#cur4", { x: 560, y: 880, duration: 0.5, ease: "power2.inOut" }, 13.5);
+      tl.to("#selBox", { opacity: 1, duration: 0.1 }, 14.05);
+      tl.fromTo("#selBox", { scale: 0.2 }, { scale: 1, duration: 0.6, ease: "power2.out" }, 14.05);
+      tl.to("#cur4", { x: 640, y: 960, duration: 0.6, ease: "power2.out" }, 14.05);
+      tl.to("#selBox", { opacity: 0, duration: 0.1 }, 14.95);
+      tl.to("#chartIn", { scale: 12, duration: 0.8, ease: "power3.inOut" }, 15.0);
+      tl.to("#cur4", { opacity: 0, duration: 0.1 }, 15.0);
+      tl.fromTo("#l2", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 15.6);
+      pop("#q3", 15.8);
+      tl.fromTo("#boom", { opacity: 0, scale: 0.3, rotation: -20 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.35, ease: "back.out(3)" }, 17.0);
+      /* 5 · and one more thing */
+      peek("#pk2", 19.8); typing("#t2", 20.0, 2.7); pop("#b2", 22.7);
+      /* 6 · punchline */
+      tl.fromTo("#sR2F", { scale: 1.05 }, { scale: 1, duration: 0.6, ease: "expo.out" }, 26.4); blurIn("#sR2B", 26.8); yawn("sR2", 27.9, 29.4);
+      blurIn("#endH", 30.05); tl.fromTo("#endMel", { y: 700 }, { y: 0, duration: 0.6, ease: "back.out(1.5)" }, 30.2); tl.fromTo("#endEp", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 30.6);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

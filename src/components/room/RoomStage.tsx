@@ -118,7 +118,7 @@ export function RoomStage({ t, locale }: { t: Dictionary['room']; locale: Dictio
             <div className="yt-top">
               <span className="yt-avatar">c.lab</span>
               <span className="yt-title">
-                {t.tvTitle}
+                <span id="ytTitleText">{t.tvTitle}</span>
                 <small>c.lab studio</small>
               </span>
             </div>

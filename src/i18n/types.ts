@@ -99,6 +99,8 @@ export interface Dictionary {
     paragraphs: Rich[];
     covers: { src: string; alt: string }[];
     channel: string;
+    /** the TV remote (TvRemote.tsx) */
+    remote: { label: string; channels: string; prev: string; next: string; soundOff: string; soundOn: string; big: string; close: string; note: string };
   };
   contact: {
     title: string;

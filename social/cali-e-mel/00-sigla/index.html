@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="it" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+      @font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      .clip { position: absolute; inset: 0; }
+      #stage { position: absolute; inset: 0; }
+      /* Mel with Calì on her head, leaning in from the bottom-left corner */
+      #mel { position: absolute; left: -150px; top: 1240px; width: 520px; height: 1356px; transform-origin: 50% 100%; }
+      #mel img { width: 100%; height: 100%; }
+      /* Calì's paw, from the right edge, knocking on the glass */
+      #paw { position: absolute; left: 700px; top: 520px; width: 470px; height: 433px; transform-origin: 100% 100%; }
+      .toc { position: absolute; font: 700 120px/1 "Caveat", cursive; color: #ffc21a; opacity: 0; }
+      #toc1 { left: 380px; top: 420px; }
+      #toc2 { left: 440px; top: 560px; }
+      #series { position: absolute; left: 130px; top: 760px; font: 700 34px/1 "Space Mono", monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #ffc21a; }
+      #ep { position: absolute; left: 124px; top: 810px; font: 900 260px/0.9 "Outfit", sans-serif; letter-spacing: -0.05em; color: #fff8ea; }
+      #ttl { position: absolute; left: 130px; right: 190px; top: 1060px; font: 900 92px/0.98 "Outfit", sans-serif; letter-spacing: -0.04em; color: #f25aa6; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="3.6" data-width="1080" data-height="1920">
+      <div id="intro" class="clip" data-start="0" data-duration="3.6" data-layout-allow-overlap>
+        <div id="stage">
+          <div id="mel" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+          <img id="paw" data-layout-ignore src="assets/desk-paw.png" alt="" />
+          <span id="toc1" class="toc">toc</span>
+          <span id="toc2" class="toc">toc!</span>
+          <p id="series">Calì &amp; Mel</p>
+          <h1 id="ep">ep. 5</h1>
+          <h2 id="ttl">Ci vuole un minuto</h2>
+        </div>
+      </div>
+      <audio id="aK1" class="clip" data-start="1.2" data-duration="0.11" src="assets/knock1.wav" data-volume="0.75"></audio>
+      <audio id="aK2" class="clip" data-start="1.55" data-duration="0.11" src="assets/knock2.wav" data-volume="0.8"></audio>
+      <audio id="aPop" class="clip" data-start="2.0" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      
+      /* 0.3 Mel and Calì lean in from the corner: anticipation, overshoot, settle */
+      tl.fromTo("#mel", { x: -260, y: 520, rotation: 34 }, { x: 0, y: 0, rotation: 22, duration: 0.6, ease: "back.out(1.7)" }, 0.3);
+      tl.to("#mel", { rotation: 18, duration: 0.35, ease: "sine.inOut" }, 0.95);
+      /* 0.85 the paw slides in from the right edge */
+      tl.fromTo("#paw", { x: 520, rotation: -8 }, { x: 0, rotation: -8, duration: 0.35, ease: "power3.out" }, 0.85);
+      /* knock, knock: the paw taps the glass, the whole picture jolts */
+      [[1.2, "#toc1"], [1.55, "#toc2"]].forEach(([t, w]) => {
+        tl.to("#paw", { x: -46, y: -20, duration: 0.07, ease: "power2.in" }, t - 0.07);
+        tl.to("#paw", { x: 0, y: 0, duration: 0.14, ease: "power2.out" }, t);
+        tl.fromTo("#stage", { scale: 1.012 }, { scale: 1, duration: 0.16, ease: "power2.out" }, t);
+        tl.set(w, { opacity: 1 }, t);
+        tl.fromTo(w, { scale: 0.6 }, { scale: 1, duration: 0.2, ease: "back.out(3)", immediateRender: false }, t);
+      });
+      tl.to("#toc1, #toc2", { opacity: 0, duration: 0.15 }, 1.95);
+      tl.to("#paw", { x: 560, duration: 0.3, ease: "power3.in" }, 1.9);
+      /* 2.0 the episode lands */
+      tl.fromTo("#series", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 2.0);
+      tl.fromTo("#ep", { opacity: 0, scale: 1.4, transformOrigin: "0% 50%" }, { opacity: 1, scale: 1, duration: 0.3, ease: "expo.out" }, 2.0);
+      tl.fromTo("#ttl", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, 2.25);
+      tl.to("#mel", { y: -24, duration: 0.12, yoyo: true, repeat: 1, ease: "power1.out" }, 2.05);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
