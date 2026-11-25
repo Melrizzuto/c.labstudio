@@ -30,7 +30,7 @@ css = '''
 '''
 body = '\n'.join([
   chat('sChat1', 0, 4.2, bub('b1', 600, 'Il grafico delle vendite… <em>lo fai andare in su?</em> 📈', 'bub big', hidden=False), tease='guarda fino alla fine 👀', peek_id='pk1', **BOSS),
-  react('sR1', 4.2, 2.6, 'Il grafico.<br /><em>Non le vendite.</em>'),
+  react('sR1', 4.2, 2.6, 'Il grafico.<br /><em>Non le vendite.</em>', sweat=True),
   f'''      <div id="sDash" class="clip" data-start="6.8" data-duration="12.8" data-layout-allow-overlap style="background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px">
         <div id="dash" class="win"><div class="bar"><i></i><i></i><i></i><b>dashboard vendite · Q3</b></div>
           <div class="body">
@@ -63,7 +63,7 @@ timeline = '''
       peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.2);
       tl.fromTo("#sChat1T", { opacity: 1 }, { opacity: 0.35, duration: 0.25, yoyo: true, repeat: 1 }, 2.6);
       /* 2 */
-      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.13, duration: 2.6, ease: "power1.inOut" }, 4.2); blurIn("#sR1B", 4.7);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.13, duration: 2.6, ease: "power1.inOut" }, 4.2); blurIn("#sR1B", 4.7); sweat("sR1", 5.0);
       /* 3 · the dashboard, down; flip the axis */
       tl.fromTo("#dash", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 6.8);
       tl.set("#cur4", { x: 600, y: 1180 }, 6.8);

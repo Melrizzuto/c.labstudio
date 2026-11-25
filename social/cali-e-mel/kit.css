@@ -87,3 +87,5 @@
       .bub.me.old { opacity: 0.38; }
       /* the AI's avatar: a plain ink badge with a star, no brand logo */
       .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
+
+      .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }

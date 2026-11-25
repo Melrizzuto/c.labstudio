@@ -1,5 +1,5 @@
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))  # kit.py
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from kit import *
 
 FILES = [  # (name, at)
@@ -30,7 +30,7 @@ clocks = '\n'.join(f'<div id="k{i}" class="clk">{t}</div>' for i, (t, _) in enum
 toasts = '\n'.join(f'<div id="{i}" class="toast tst" style="opacity: 0"><span class="av">👔</span>{txt}</div>' for i, txt, _ in TOASTS)
 body = '\n'.join([
   chat('sChat1', 0, 3.6, bub('b1', 600, 'Una modifica veloce veloce. <em>Ci vuole un minuto</em> ⏱️', 'bub big', hidden=False), tease='guarda fino alla fine 👀', peek_id='pk1'),
-  react('sR1', 3.6, 2.8, 'Un.<br /><em>Minuto.</em>'),
+  react('sR1', 3.6, 2.8, 'Un.<br /><em>Minuto.</em>', sweat=True),
   f'''      <div id="sDay" class="clip" data-start="6.4" data-duration="15.6" data-layout-allow-overlap>
         <div id="sky"></div><div id="sun" data-layout-ignore></div><span id="moon" data-layout-ignore>🌙</span>
         {clocks}
@@ -68,7 +68,7 @@ timeline = '''
       peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.2);
       tl.fromTo("#sChat1T", { opacity: 1 }, { opacity: 0.35, duration: 0.25, yoyo: true, repeat: 1 }, 2.2);
       /* 2 · "one. minute." */
-      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.14, duration: 2.8, ease: "power1.inOut" }, 3.6); blurIn("#sR1B", 4.2);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.14, duration: 2.8, ease: "power1.inOut" }, 3.6); blurIn("#sR1B", 4.2); sweat("sR1", 4.6);
       /* 3 · the day goes by: the sky turns from morning to sunset to night, the sun goes down */
       tl.fromTo("#files", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 6.4);
       tl.to("#sky", { backgroundColor: "#ffc08a", duration: 7, ease: "none" }, 8.0);

@@ -94,6 +94,8 @@
       /* the AI's avatar: a plain ink badge with a star, no brand logo */
       .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
 
+      .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+
 
       #dash { top: 370px; }
       #dash .body { position: relative; height: 720px; padding: 34px; }
@@ -152,7 +154,8 @@
         <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
       </div>
       <div id="sR1" class="clip react" data-start="4.2" data-duration="2.6">
-        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /></div>
+        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /><svg id="sR1S" class="sweat" viewBox="0 0 60 84" data-layout-ignore><defs><radialGradient id="sR1Sg" cx="38%" cy="62%" r="70%"><stop offset="0" stop-color="#e6f6ff"/><stop offset=".55" stop-color="#8fd3f5"/><stop offset="1" stop-color="#3f9bd1"/></radialGradient></defs>
+  <path d="M30 2 C 22 22, 4 40, 4 56 A 26 26 0 0 0 56 56 C 56 40, 38 22, 30 2 Z" fill="url(#sR1Sg)" stroke="#2c7fb3" stroke-width="2.5"/><ellipse cx="20" cy="54" rx="6" ry="10" fill="#fff" opacity=".85"/></svg></div>
         <div id="sR1B" class="band2" style="opacity: 0">Il grafico.<br /><em>Non le vendite.</em></div>
       </div>
       <div id="sDash" class="clip" data-start="6.8" data-duration="12.8" data-layout-allow-overlap style="background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px">
@@ -224,6 +227,11 @@
         [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
         tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
       };
+      /* Mel's sweat drop: it appears on her temple and slides down a little */
+      const sweat = (scene, at) => {
+        tl.fromTo(`#${scene}S`, { opacity: 0, scale: 0.4, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.5)" }, at);
+        tl.to(`#${scene}S`, { y: 70, duration: 1.6, ease: "power1.in" }, at + 0.4);
+      };
       const yawn = (scene, from, to) => {
         tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);
         tl.set(`#${scene}Y`, { opacity: 0 }, to); tl.set(`#${scene}A`, { opacity: 1 }, to);
@@ -233,7 +241,7 @@
       peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.2);
       tl.fromTo("#sChat1T", { opacity: 1 }, { opacity: 0.35, duration: 0.25, yoyo: true, repeat: 1 }, 2.6);
       /* 2 */
-      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.13, duration: 2.6, ease: "power1.inOut" }, 4.2); blurIn("#sR1B", 4.7);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.13, duration: 2.6, ease: "power1.inOut" }, 4.2); blurIn("#sR1B", 4.7); sweat("sR1", 5.0);
       /* 3 · the dashboard, down; flip the axis */
       tl.fromTo("#dash", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 6.8);
       tl.set("#cur4", { x: 600, y: 1180 }, 6.8);

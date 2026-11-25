@@ -94,6 +94,8 @@
       /* the AI's avatar: a plain ink badge with a star, no brand logo */
       .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
 
+      .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+
 
       .av.ai { font-size: 40px; letter-spacing: -0.02em; }
       #lid { position: absolute; inset: 0; transform-origin: 50% 100%; }
@@ -151,7 +153,8 @@
         
       </div>
       <div id="sR2" class="clip react" data-start="19.4" data-duration="3.2">
-        <div id="sR2F" class="face"><img id="sR2A" src="assets/mel-felt.png" alt="" /></div>
+        <div id="sR2F" class="face"><img id="sR2A" src="assets/mel-felt.png" alt="" /><svg id="sR2S" class="sweat" viewBox="0 0 60 84" data-layout-ignore><defs><radialGradient id="sR2Sg" cx="38%" cy="62%" r="70%"><stop offset="0" stop-color="#e6f6ff"/><stop offset=".55" stop-color="#8fd3f5"/><stop offset="1" stop-color="#3f9bd1"/></radialGradient></defs>
+  <path d="M30 2 C 22 22, 4 40, 4 56 A 26 26 0 0 0 56 56 C 56 40, 38 22, 30 2 Z" fill="url(#sR2Sg)" stroke="#2c7fb3" stroke-width="2.5"/><ellipse cx="20" cy="54" rx="6" ry="10" fill="#fff" opacity=".85"/></svg></div>
         <div id="sR2B" class="band2" style="opacity: 0">Ha ragione. Sempre.<br /><em>Su tutto.</em></div>
       </div>
       <div id="sChat4" class="clip" data-start="22.6" data-duration="4.8">
@@ -213,6 +216,11 @@
         [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
         tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
       };
+      /* Mel's sweat drop: it appears on her temple and slides down a little */
+      const sweat = (scene, at) => {
+        tl.fromTo(`#${scene}S`, { opacity: 0, scale: 0.4, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.5)" }, at);
+        tl.to(`#${scene}S`, { y: 70, duration: 1.6, ease: "power1.in" }, at + 0.4);
+      };
       const yawn = (scene, from, to) => {
         tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);
         tl.set(`#${scene}Y`, { opacity: 0 }, to); tl.set(`#${scene}A`, { opacity: 1 }, to);
@@ -230,7 +238,7 @@
       pop("#m3", 13.1); typing("#t3", 14.2, 2.2); pop("#a3", 16.4);
       tl.to("#a3", { x: 8, duration: 0.05, yoyo: true, repeat: 3 }, 16.75);
       /* 5 · slow push-in, the realisation */
-      tl.fromTo("#sR2F", { scale: 1 }, { scale: 1.14, duration: 3.2, ease: "power1.inOut" }, 19.4); blurIn("#sR2B", 19.9);
+      tl.fromTo("#sR2F", { scale: 1 }, { scale: 1.14, duration: 3.2, ease: "power1.inOut" }, 19.4); blurIn("#sR2B", 19.9); sweat("sR2", 20.3);
       /* 6 · ask the real boss: the paw shuts the laptop */
       pop("#m5", 22.7);
       tl.fromTo("#pawX", { x: 560, y: 260, rotation: 0 }, { x: 0, y: 0, duration: 0.4, ease: "power2.out" }, 23.95);
