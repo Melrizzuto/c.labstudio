@@ -18,7 +18,8 @@ export function TvRemote({ t, locale }: { t: Dictionary['weekend']['remote']; lo
   const first = useRef(true);
   const channel = TV_CHANNELS[ch];
   const episode = channel.episodes[ep];
-  const label = (c: number, e: number) => `${TV_CHANNELS[c].name} · ep. ${TV_CHANNELS[c].episodes[e].n}: ${TV_CHANNELS[c].episodes[e].title[locale]}`;
+  const epLabel = (x: (typeof channel.episodes)[number]) => x.label?.[locale] ?? `ep. ${x.n}`;
+  const label = (c: number, e: number) => `${TV_CHANNELS[c].name} · ${epLabel(TV_CHANNELS[c].episodes[e])}: ${TV_CHANNELS[c].episodes[e].title[locale]}`;
 
   const next = useCallback(() => setEp((e) => (e + 1) % TV_CHANNELS[ch].episodes.length), [ch]);
   const prev = () => setEp((e) => (e - 1 + channel.episodes.length) % channel.episodes.length);
@@ -76,7 +77,7 @@ export function TvRemote({ t, locale }: { t: Dictionary['weekend']['remote']; lo
       <div className="tv-now">
         <button type="button" className="tv-step" onClick={prev} aria-label={t.prev} disabled={channel.episodes.length < 2}>◀</button>
         <p aria-live="polite">
-          <small>ep. {episode.n}</small>
+          <small>{epLabel(episode)}</small>
           {episode.title[locale]}
         </p>
         <button type="button" className="tv-step" onClick={next} aria-label={t.next} disabled={channel.episodes.length < 2}>▶</button>

@@ -36,9 +36,9 @@
   <!-- the garland of warm lights -->
   <path d="M170 240 Q 280 300 390 230 M120 470 Q 280 560 445 460 M75 700 Q 280 820 490 690" fill="none" stroke="#3a2a10" stroke-width="3" opacity=".55" />
   <g id="lights">
-    <circle cx="200" cy="258" r="30" fill="url(#glow)" /><circle cx="280" cy="275" r="30" fill="url(#glow)" /><circle cx="360" cy="250" r="30" fill="url(#glow)" />
-    <circle cx="160" cy="500" r="32" fill="url(#glow)" /><circle cx="240" cy="525" r="32" fill="url(#glow)" /><circle cx="320" cy="525" r="32" fill="url(#glow)" /><circle cx="400" cy="495" r="32" fill="url(#glow)" />
-    <circle cx="120" cy="728" r="34" fill="url(#glow)" /><circle cx="210" cy="765" r="34" fill="url(#glow)" /><circle cx="300" cy="772" r="34" fill="url(#glow)" /><circle cx="390" cy="752" r="34" fill="url(#glow)" /><circle cx="460" cy="715" r="34" fill="url(#glow)" />
+    <g class="bulb"><circle cx="200" cy="258" r="60" fill="url(#glow)" class="halo" /><circle cx="200" cy="258" r="7" fill="#fffbe0" /></g><g class="bulb"><circle cx="280" cy="275" r="60" fill="url(#glow)" class="halo" /><circle cx="280" cy="275" r="7" fill="#fffbe0" /></g><g class="bulb"><circle cx="360" cy="250" r="60" fill="url(#glow)" class="halo" /><circle cx="360" cy="250" r="7" fill="#fffbe0" /></g>
+    <g class="bulb"><circle cx="160" cy="500" r="64" fill="url(#glow)" class="halo" /><circle cx="160" cy="500" r="8" fill="#fffbe0" /></g><g class="bulb"><circle cx="240" cy="525" r="64" fill="url(#glow)" class="halo" /><circle cx="240" cy="525" r="8" fill="#fffbe0" /></g><g class="bulb"><circle cx="320" cy="525" r="64" fill="url(#glow)" class="halo" /><circle cx="320" cy="525" r="8" fill="#fffbe0" /></g><g class="bulb"><circle cx="400" cy="495" r="64" fill="url(#glow)" class="halo" /><circle cx="400" cy="495" r="8" fill="#fffbe0" /></g>
+    <g class="bulb"><circle cx="120" cy="728" r="68" fill="url(#glow)" class="halo" /><circle cx="120" cy="728" r="8" fill="#fffbe0" /></g><g class="bulb"><circle cx="210" cy="765" r="68" fill="url(#glow)" class="halo" /><circle cx="210" cy="765" r="8" fill="#fffbe0" /></g><g class="bulb"><circle cx="300" cy="772" r="68" fill="url(#glow)" class="halo" /><circle cx="300" cy="772" r="8" fill="#fffbe0" /></g><g class="bulb"><circle cx="390" cy="752" r="68" fill="url(#glow)" class="halo" /><circle cx="390" cy="752" r="8" fill="#fffbe0" /></g><g class="bulb"><circle cx="460" cy="715" r="68" fill="url(#glow)" class="halo" /><circle cx="460" cy="715" r="8" fill="#fffbe0" /></g>
   </g>
   <!-- glossy baubles on little strings -->
   <g>

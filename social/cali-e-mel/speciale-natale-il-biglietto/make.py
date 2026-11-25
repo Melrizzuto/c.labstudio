@@ -28,6 +28,7 @@ css = '''
       #bow { position: absolute; left: 640px; top: 700px; width: 220px; height: 147px; z-index: 5; transform-origin: 50% 80%; }
       #catBow { position: absolute; left: 520px; top: 800px; width: 400px; height: 163px; z-index: 4; }
       #catBow img { width: 100%; height: 100%; }
+      #lights .bulb { mix-blend-mode: screen; transform-box: fill-box; transform-origin: center; }
       #okX { position: absolute; left: 130px; top: 1010px; padding: 16px 30px 20px; border: 10px solid #3be36b; border-radius: 22px; color: #3be36b; background: rgba(15,30,20,.85);
         font: 900 76px/1 "Outfit", sans-serif; text-transform: uppercase; z-index: 6; opacity: 0; }
       #okX small { display: block; font: 700 40px/1 "Caveat", cursive; text-transform: none; color: #fff3df; margin-top: 6px; }
@@ -76,6 +77,11 @@ timeline = '''
       tl.to("#card", { y: -900, rotation: -8, duration: 0.5, ease: "power3.in" }, 15.0);
       peek("#pk3", 15.8); typing("#t3", 16.0, 2.4);
       tl.to("#left", { opacity: 1, duration: 0.3 }, 18.6);
+      /* the lights twinkle, each at its own pace */
+      document.querySelectorAll("#lights .bulb").forEach((b, i) => {
+        const d = 0.35 + (i % 4) * 0.12;
+        tl.fromTo(b, { opacity: 0.35, scale: 0.85 }, { opacity: 1, scale: 1.15, duration: d, yoyo: true, repeat: Math.floor(6 / d) - 1, ease: "sine.inOut" }, 20 + (i % 5) * 0.11);
+      });
       /* the Christmas corner: Calì in the bow, a bauble on the floor */
       tl.fromTo("#catBow", { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 20.4);
       tl.to("#bow", { rotation: -10, duration: 0.15, yoyo: true, repeat: 5, ease: "sine.inOut" }, 20.9);
