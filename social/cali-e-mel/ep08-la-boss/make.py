@@ -31,11 +31,12 @@ css = '''
       #boxFront p { position: absolute; left: 40px; top: 120px; font: 700 34px/1.3 "Space Mono", monospace; color: #5a3410; opacity: .8; }
       #flapL, #flapR { position: absolute; top: 770px; width: 320px; height: 80px; z-index: 1; border-radius: 10px; filter: url(#felt); background: linear-gradient(#b9783c, #8f5a28); box-shadow: 0 10px 18px rgba(0,0,0,.25); }
       #flapL { left: 150px; transform: skewX(-30deg); } #flapR { left: 610px; transform: skewX(30deg); }
-      #inBox { position: absolute; left: 330px; top: 640px; width: 430px; height: 175px; z-index: 3; }
-      #inBox img { width: 100%; height: 100%; }
-      #ok { position: absolute; left: 300px; top: 1030px; padding: 16px 30px 20px; border: 10px solid #2e9e3e; border-radius: 22px; color: #2e9e3e; background: rgba(255,248,234,.92);
+      #inBox { position: absolute; left: 140px; top: 520px; width: 800px; height: 784px; z-index: 3; }
+      #inBox img { width: 100%; height: 100%; filter: drop-shadow(0 30px 30px rgba(0,0,0,.3)); }
+
+      #ok { position: absolute; left: 330px; top: 1240px; padding: 16px 30px 20px; border: 10px solid #2e9e3e; border-radius: 22px; color: #2e9e3e; background: rgba(255,248,234,.92);
         font: 900 96px/1 "Outfit", sans-serif; text-transform: uppercase; z-index: 4; opacity: 0; }
-      #what { position: absolute; left: 130px; top: 1240px; font: 700 30px/1 "Space Mono", monospace; color: var(--ink); opacity: 0; z-index: 4; }
+      #what { position: absolute; left: 130px; top: 1420px; font: 700 30px/1 "Space Mono", monospace; color: var(--ink); opacity: 0; z-index: 4; }
 '''
 body = '\n'.join([
   chat('sChat1', 0, 3.4, bub('b1', 600, 'Mi serve il packaging delle crocchette. <em>Per ieri.</em> 🐟', 'bub big', hidden=False), status='Boss · online', tease='guarda fino alla fine 👀', peek_id='pk1', **CALI),
@@ -52,10 +53,7 @@ body = '\n'.join([
   chat('sChat3', 14.6, 3, bub('b3', 560, 'La voglio <em>color trota.</em>') + bub('b4', 780, 'Ma più chiaro.'), status='Boss · online', peek_id='pk3', **CALI),
   chat('sChat4', 19.8, 3.6, typing_dots('t4', 600) + bub('b5', 600, 'Ultima cosa veloce. <em>Ci vuole un minuto.</em> ⏱️'), status='sta scrivendo…', peek_id='pk4', **CALI),
   f'''      <div id="sBox" class="clip" data-start="25.6" data-duration="4">
-        <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="felt" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="4" result="fib" /><feDisplacementMap in="SourceGraphic" in2="fib" scale="5" xChannelSelector="R" yChannelSelector="G" result="fuzzy" /><feColorMatrix in="fib" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.55 0.42" result="speck" /><feComposite in="speck" in2="fuzzy" operator="in" result="speckIn" /><feMerge><feMergeNode in="fuzzy" /><feMergeNode in="speckIn" /></feMerge></filter></defs></svg>
-        <div id="flapL"></div><div id="flapR"></div>
-        <div id="inBox" data-layout-ignore><img src="assets/cali-peek.png" alt="" /></div>
-        <div id="boxFront"><p>PORTATILE 15"<br />↑ ALTO ↑<br />FRAGILE</p></div>
+        <div id="inBox" data-layout-ignore><img src="assets/cali-scatola.png" alt="" /></div>
         <p id="ok">Approvato</p>
         <p id="what">(la scatola del portatile)</p>
       </div>''',
@@ -102,7 +100,7 @@ timeline = '''
       tl.fromTo("#sendBtn", { scale: 1 }, { scale: 0.92, duration: 0.1, yoyo: true, repeat: 1 }, 24.6);
       tl.to("#pack", { y: -900, rotation: -8, duration: 0.5, ease: "power3.in" }, 24.95);
       /* 8 · the verdict: Calì approves the laptop's box */
-      tl.fromTo("#inBox", { y: 170 }, { y: 0, duration: 0.7, ease: "back.out(1.6)" }, 25.9);
+      tl.fromTo("#inBox", { y: 260, scale: 0.9, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.7, ease: "back.out(1.6)" }, 25.7);
       tl.fromTo("#ok", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.22, ease: "power4.in" }, 26.65);
       tl.to("#sBox", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 26.88);
       tl.to("#what", { opacity: 1, duration: 0.3 }, 27.6);
