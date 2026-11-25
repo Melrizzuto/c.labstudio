@@ -247,6 +247,93 @@ Calì & Mel · ep. 8 🐾
 
 ---
 
+## 🎄 Speciale Natale — Il biglietto (martedì 22 dicembre)
+
+**YouTube, titolo:** Il biglietto di Natale per la Boss 🎄 | Calì & Mel speciale
+
+**Instagram:**
+```
+La Boss voleva il biglietto di Natale dello studio. 🎄
+
+«Natalizio, ma non troppo.»
+«Con la neve, ma che non sembri freddo.»
+«E mettici me. Più grande.»
+
+Nove versioni dopo… ha approvato il fiocco. 🎀
+
+Buon Natale da c.lab studio (e dalla Boss).
+Anche il tuo gatto preferisce il fiocco al regalo? 👇
+
+Calì & Mel · speciale Natale
+Musica: "Deck the Halls B" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#natale #gatti #catsofinstagram #designer #designhumor #buonnatale #vitadadesigner #calìemel
+```
+
+**TikTok:**
+```
+Il biglietto di Natale per la Boss 🎄 9 versioni… e ha approvato il fiocco 🎀 Il tuo gatto è così? 👇
+Musica: "Deck the Halls B" Kevin MacLeod (incompetech.com), CC BY 4.0
+#natale #gatti #designhumor #catsoftiktok #calìemel
+```
+
+**LinkedIn:**
+```
+Il nostro biglietto di Natale ha avuto nove revisioni. 🎄
+La cliente: la mia gatta. Il verdetto: ha approvato il fiocco.
+
+Grazie a chi quest'anno ci ha affidato un progetto, una revisione o anche solo un «ci vuole un minuto».
+Buone feste da c.lab studio (e dalla Boss). 🐾
+
+#design #buonefeste #freelance #clienti
+```
+
+---
+
+## 🥂 Speciale Capodanno — I buoni propositi (martedì 29 dicembre)
+
+**YouTube, titolo:** I buoni propositi 2027 (e il cliente alle 00:00:01) 🥂 | Calì & Mel speciale
+
+**Instagram:**
+```
+I buoni propositi per il 2027. 🥂
+
+Mel: meno revisioni, dire di no, dormire.
+La Boss: più crocchette, il logo più grande, Mel dorme meno.
+
+3… 2… 1… 🎆
+E alle 00:00:01 arriva un messaggio. 👀
+
+Il tuo buon proposito per il 2027? 👇
+
+Calì & Mel · speciale Capodanno
+Musica: "Fluffing a Duck" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#capodanno #buonipropositi #designer #freelance #designhumor #gatti #vitadadesigner #calìemel
+```
+
+**TikTok:**
+```
+Buoni propositi 2027 🥂 poi alle 00:00:01 arriva il cliente 👀 Il tuo proposito? 👇
+Musica: "Fluffing a Duck" Kevin MacLeod (incompetech.com), CC BY 4.0
+#capodanno #freelance #designhumor #gatti #calìemel
+```
+
+**LinkedIn:**
+```
+Il mio buon proposito per il 2027: meno revisioni.
+Quello della mia gatta: più crocchette.
+Quello di un cliente, alle 00:00:01: «piccola modifica veloce per il 2 gennaio?» 🥂
+
+Scherzi a parte: il miglior proposito per chi lavora con i clienti è mettere per iscritto, all'inizio, quante revisioni sono incluse. Fa bene al progetto, al cliente e al sonno.
+
+Buon anno da c.lab studio. 🐾
+
+#freelance #design #clienti #buonipropositi
+```
+
+---
+
 ## Carosello — Il dizionario del cliente (8 slide)
 
 **Instagram:**

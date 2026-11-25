@@ -39,7 +39,7 @@ html = f'''<!doctype html>
           <span id="toc1" class="toc">toc</span>
           <span id="toc2" class="toc">toc!</span>
           <p id="series">Calì &amp; Mel</p>
-          <h1 id="ep">ep. {num}</h1>
+          <h1 id="ep"{' style="font-size:170px"' if not num.isdigit() else ''}>{("ep. " + num) if num.isdigit() else num}</h1>
           <h2 id="ttl">{title}</h2>
         </div>
       </div>

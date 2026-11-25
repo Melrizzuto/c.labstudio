@@ -94,3 +94,18 @@ Lo stesso schema (chat → schermo → Calì) dopo 6–8 puntate diventa prevedi
 | **Dietro le quinte** 🛠️ | «questi video sono fatti in HTML»: lo schermo con il codice e il video che si anima | curiosità pura, perfetto per LinkedIn |
 
 Rotazione consigliata su 2 settimane: 1 puntata classica, 1 «Trova l'errore», 1 «Scegli il finale» o «Calì recensisce», 2 caroselli.
+
+
+## Calendario dicembre – gennaio (una puntata a settimana, il martedì alle 18:30)
+
+| Martedì | Puntata | Giovedì 13:00 |
+| --- | --- | --- |
+| 1 dic | ep. 2 Il nero più chiaro | carosello: Il dizionario del cliente |
+| 8 dic | ep. 3 Il bianco più bianco | carosello: Il flusso utente |
+| 15 dic | ep. 4 Minimal, ma con più cose | carosello da fare |
+| 22 dic | 🎄 Speciale Natale: il biglietto | pausa |
+| 29 dic | 🥂 Speciale Capodanno: i buoni propositi | pausa |
+| 5 gen | ep. 5 Ci vuole un minuto | carosello da fare |
+| 12 gen | ep. 6 Hai perfettamente ragione | carosello da fare |
+| 19 gen | ep. 7 La linea deve salire | carosello da fare |
+| 26 gen | ep. 8 La Boss | carosello da fare |

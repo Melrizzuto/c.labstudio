@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="it" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+      @font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+      @font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+      :root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Figtree", sans-serif; color: var(--ink); }
+      .clip { position: absolute; inset: 0; }
+      .dots { background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+
+      /* ---------- chat world ---------- */
+      .kick { position: absolute; left: 130px; top: 300px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--note); }
+      .who { position: absolute; left: 130px; top: 360px; display: flex; align-items: center; gap: 22px; }
+      .who .av { width: 104px; height: 104px; border-radius: 50%; border: 6px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 56px; }
+      .who b { display: block; font: 900 50px/1 "Outfit", sans-serif; letter-spacing: -0.02em; }
+      .who small { display: block; margin-top: 8px; font: 600 30px/1 "Figtree", sans-serif; color: #2e9e3e; }
+      .bub { position: absolute; left: 130px; max-width: 760px; padding: 30px 40px 34px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px;
+        box-shadow: 10px 10px 0 var(--ink); font: 700 66px/1.1 "Figtree", sans-serif; letter-spacing: -0.01em; transform-origin: 0% 100%; }
+      .bub.big { font: 900 96px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .bub em { font-style: normal; color: var(--note); }
+      .bub.old { opacity: 0.38; box-shadow: none; }
+      .typing { position: absolute; left: 130px; padding: 30px 38px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px; display: flex; gap: 14px; transform-origin: 0% 100%; }
+      .peek { position: absolute; left: 330px; top: 1330px; width: 420px; height: 1095px; }
+      .peek img { width: 100%; height: 100%; }
+      .typing i { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); display: block; }
+
+      /* ---------- screen world: the poster on the design canvas ---------- */
+      #sScr { background: #e9e4da radial-gradient(rgba(22, 19, 15, 0.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
+      .tool { position: absolute; left: 130px; top: 300px; display: flex; gap: 14px; font: 700 28px/1 "Space Mono", monospace; text-transform: uppercase; }
+      .tool span { padding: 12px 18px; border: 4px solid var(--ink); border-radius: 14px; background: #fff; }
+      .tool span.on { background: var(--ink); color: #fff; }
+      #cam { position: absolute; left: 220px; top: 380px; width: 640px; height: 860px; transform-origin: 50% 19%; }
+      #poster { position: absolute; inset: 0; background: #fff3df; border: 6px solid var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 16px 16px 0 rgba(22, 19, 15, 0.85); }
+      #logo { position: absolute; left: 245px; top: 60px; width: 150px; height: 150px; border-radius: 50%; background: var(--red); border: 6px solid var(--ink);
+        display: grid; place-items: center; color: #fff3df; font: 900 92px/1 "Outfit", sans-serif; transform-origin: 50% 0%; z-index: 2; }
+      #rest { position: absolute; left: 0; top: 240px; width: 100%; text-align: center; }
+      #rest h2 { font: 700 130px/0.9 "Caveat", cursive; color: var(--red); }
+      #rest p { margin-top: 14px; font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+      #rest .awn { margin: 40px auto 0; width: 520px; height: 250px; border: 6px solid var(--ink); border-radius: 16px; background: repeating-linear-gradient(90deg, var(--red) 0 52px, #fff3df 52px 104px); }
+      #rest .addr { margin-top: 34px; font: 700 30px/1 "Figtree", sans-serif; }
+      #sel { position: absolute; left: 239px; top: 54px; width: 162px; height: 162px; border: 4px solid var(--cobalt); transform-origin: 50% 0%; z-index: 3; }
+      #sel i { position: absolute; width: 22px; height: 22px; background: #fff; border: 4px solid var(--cobalt); }
+      #sel i:nth-child(1) { left: -13px; top: -13px; } #sel i:nth-child(2) { right: -13px; top: -13px; }
+      #sel i:nth-child(3) { left: -13px; bottom: -13px; } #sel i:nth-child(4) { right: -13px; bottom: -13px; }
+      #cursor { position: absolute; left: 0; top: 0; width: 70px; height: 70px; z-index: 5; }
+      .size { position: absolute; left: 130px; top: 1262px; padding: 12px 20px; border-radius: 12px; background: var(--cobalt); color: #fff; font: 700 32px/1 "Space Mono", monospace; }
+
+      /* ---------- reaction world: Mel and Calì, close up ---------- */
+      .react { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; overflow: hidden; }
+      .face { position: absolute; left: 40px; top: 150px; width: 1001px; height: 2610px; transform-origin: 50% 24%; }
+      .face img { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .drop { position: absolute; left: 700px; top: 520px; font-size: 110px; line-height: 1; }
+      .band { position: absolute; left: 110px; right: 190px; top: 1060px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px;
+        font: 900 78px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band em { font-style: normal; color: var(--sun); }
+
+      /* ---------- end card ---------- */
+      #sEnd { background: var(--ink); color: #fff8ea; }
+      #sEnd h2 { position: absolute; left: 120px; right: 190px; top: 330px; font: 900 112px/0.96 "Outfit", sans-serif; letter-spacing: -0.045em; }
+      #sEnd h2 em { font-style: normal; color: var(--pink); }
+      #sEnd .ep { position: absolute; left: 124px; top: 860px; font: 700 34px/1.4 "Space Mono", monospace; color: var(--sun); }
+      #endMel { position: absolute; left: 600px; top: 1010px; width: 380px; height: 991px; }
+      #endMel img { width: 100%; height: 100%; }
+    
+
+      .tease { position: absolute; left: 130px; top: 300px; padding: 10px 18px; border-radius: 999px; background: var(--ink); color: var(--sun); font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; }
+      .who { top: 370px; }
+      .toast { position: absolute; left: 130px; top: 300px; max-width: 800px; padding: 22px 30px 26px; background: #fff; border: 6px solid var(--ink); border-radius: 36px 36px 36px 8px; box-shadow: 8px 8px 0 var(--ink);
+        font: 700 52px/1.1 "Figtree", sans-serif; transform-origin: 0% 100%; z-index: 4; display: flex; align-items: center; gap: 18px; }
+      .toast .av { width: 70px; height: 70px; flex: none; border-radius: 50%; border: 5px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 38px; }
+      .band2 { position: absolute; left: 110px; right: 190px; top: 1020px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px; font: 900 72px/1.02 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band2 em { font-style: normal; color: var(--sun); }
+      #sEnd h2 { top: 320px; font-size: 100px; }
+      #sEnd .ep { top: 900px; }
+    
+      .night { background: #1b2140 radial-gradient(rgba(255, 255, 255, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+      .night .face { filter: brightness(0.82) saturate(0.9); }
+      .win { position: absolute; left: 130px; top: 380px; width: 820px; background: #fff; border: 7px solid var(--ink); border-radius: 30px; box-shadow: 14px 14px 0 var(--ink); overflow: hidden; }
+      .win .bar { height: 70px; border-bottom: 6px solid var(--ink); background: var(--paper); display: flex; align-items: center; gap: 14px; padding: 0 24px; }
+      .win .bar i { width: 22px; height: 22px; border-radius: 50%; border: 4px solid var(--ink); display: block; }
+      .win .bar b { margin-left: 12px; font: 700 28px/1 "Space Mono", monospace; }
+
+      /* Mel's own messages: on the right, pink */
+      .bub.me { left: auto; right: 192px; max-width: 640px; background: #ffd3e8; border-radius: 46px 46px 10px 46px; transform-origin: 100% 100%; }
+      .bub.me.old { opacity: 0.38; }
+      /* the AI's avatar: a plain ink badge with a star, no brand logo */
+      .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
+
+
+      #sChat2, #sChat3, #sXmas, #sEnd { z-index: 2; }
+      #endMel { top: 1100px; }
+      .av.cat { padding: 0; overflow: hidden; background: #fff8ea; } .av.cat img { width: 100%; height: 100%; display: block; }
+      #sCard { background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
+      #card { position: absolute; left: 260px; top: 380px; width: 560px; height: 790px; border-radius: 18px; background: #b3261e; overflow: hidden; }
+      #card h3 { position: absolute; left: 44px; right: 40px; top: 60px; font: 700 104px/0.9 "Caveat", cursive; color: #fff3df; }
+      #card p { position: absolute; left: 48px; top: 300px; font: 700 28px/1.3 "Space Mono", monospace; color: #ffc21a; }
+      #card .me { position: absolute; left: 60px; bottom: 40px; width: 440px; transform-origin: 50% 100%; }
+      #snow { position: absolute; inset: 0; }
+      #snow i { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #fff3df; opacity: .9; }
+      #cver { position: absolute; left: 130px; top: 300px; padding: 10px 18px; border-radius: 12px; background: var(--ink); color: var(--sun); font: 700 30px/1 "Space Mono", monospace; }
+      #send { position: absolute; left: 330px; top: 1195px; padding: 22px 40px; border-radius: 999px; background: var(--ink); color: #fff8ea; font: 800 40px/1 "Outfit", sans-serif; opacity: 0; }
+      /* the Christmas corner */
+      #sXmas { background: #1f3b2c radial-gradient(rgba(255,255,255,.1) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+      #tree { position: absolute; left: 90px; top: 330px; width: 520px; height: 900px; }
+      #ball { position: absolute; left: 380px; top: 640px; z-index: 5; width: 70px; height: 70px; border-radius: 50%; background: #ffc21a; border: 6px solid var(--ink); }
+      #gift { position: absolute; left: 470px; top: 930px; width: 470px; height: 300px; background: #d6281c; border: 8px solid var(--ink); border-radius: 12px; }
+      #gift::before { content: ""; position: absolute; left: 50%; top: -8px; bottom: -8px; width: 60px; margin-left: -30px; background: #ffc21a; border-left: 6px solid var(--ink); border-right: 6px solid var(--ink); }
+      #bow { position: absolute; left: 640px; top: 700px; width: 220px; height: 147px; z-index: 5; transform-origin: 50% 80%; }
+      #catBow { position: absolute; left: 520px; top: 800px; width: 400px; height: 163px; z-index: 4; }
+      #catBow img { width: 100%; height: 100%; }
+      #okX { position: absolute; left: 130px; top: 1010px; padding: 16px 30px 20px; border: 10px solid #3be36b; border-radius: 22px; color: #3be36b; background: rgba(15,30,20,.85);
+        font: 900 76px/1 "Outfit", sans-serif; text-transform: uppercase; z-index: 6; opacity: 0; }
+      #okX small { display: block; font: 700 40px/1 "Caveat", cursive; text-transform: none; color: #fff3df; margin-top: 6px; }
+      #note { position: absolute; left: 130px; top: 1215px; font: 700 28px/1 "Space Mono", monospace; color: #fff3df; opacity: 0; z-index: 6; }
+
+    
+        /* ===== print treatment, as on the site: paper fibres, grain, risograph ink on the decorative pieces ===== */
+        #printPaper { z-index: 88; pointer-events: none; mix-blend-mode: multiply; opacity: .2; background: url("assets/paper.webp") 0 0 / 512px 512px; }
+        #printGrain { z-index: 89; pointer-events: none; mix-blend-mode: multiply; opacity: .13; background: url("assets/grain-day.webp") 0 0 / 256px 256px; }
+        #printGrainN { z-index: 90; pointer-events: none; mix-blend-mode: screen; opacity: .07; background: url("assets/grain-night.webp") 0 0 / 256px 256px; }
+        .stamp, .tag, .tease, .who .av, .toast .av, #sun, .awn, .heart, .chk, #sent, .size, .sticker-ink, #wSaldi, #wNew, #wMarq, #clkLbl, .typing i, #series { filter: url(#riso); }
+        /* the printed borders: as on the site's cards, the outline is a second plate of ink with the risograph mask */
+        .bub, .typing, .toast, .win, #picker, #poster, .card { --bw: 7px; border-color: transparent !important; }
+        .toast, #poster { --bw: 6px; }
+        .bub::before, .typing::before, .toast::before, .win::before, #picker::before, #poster::before, .card::before {
+          content: ""; position: absolute; inset: calc(-1 * var(--bw)); border: var(--bw) solid var(--ink); border-radius: inherit; pointer-events: none; z-index: 5;
+          -webkit-mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; }
+      </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+          <filter id="riso" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="w0" />
+            <feColorMatrix in="w0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="warp" />
+            <feDisplacementMap in="SourceGraphic" in2="warp" scale="0.8" xChannelSelector="R" yChannelSelector="G" result="rough" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="8" result="g0" />
+            <feColorMatrix in="g0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="grain" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5" result="b0" />
+            <feColorMatrix in="b0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="blotch" />
+            <feComposite in="grain" in2="blotch" operator="arithmetic" k1="0" k2="1" k3="0.15" k4="-0.075" result="mix" />
+            <feColorMatrix in="mix" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.4 0 0 0 -0.12" result="mask" />
+            <feComposite in="rough" in2="mask" operator="in" />
+          </filter></defs></svg>
+        <div id="sChat1" class="clip dots" data-start="0" data-duration="3.4">
+        <p id="sChat1T" class="tease">guarda fino alla fine 👀</p><div class="who"><div class="av cat"><img src="assets/cali-av.png" alt="" /></div><div><b>Calì</b><small>Boss · online</small></div></div>
+        <div id="b1" class="bub big" style="top: 600px">Mi serve il <em>biglietto di Natale</em> dello studio. 🎄</div>
+        <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+      <div id="sR1" class="clip react" data-start="3.4" data-duration="2.4">
+        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /></div>
+        <div id="sR1B" class="band2" style="opacity: 0">Tre giorni.<br /><em>E una Boss.</em></div>
+      </div>
+      <div id="sChat2" class="clip dots" data-start="5.8" data-duration="4.8">
+        <div class="who"><div class="av cat"><img src="assets/cali-av.png" alt="" /></div><div><b>Calì</b><small>Boss · online</small></div></div>
+        <div id="b2" class="bub" style="top: 480px; opacity: 0">Natalizio, <em>ma non troppo.</em></div><div id="b3" class="bub" style="top: 720px; opacity: 0">Con la neve, <em>ma che non sembri freddo.</em> ❄️</div><div id="b4" class="bub" style="top: 990px; opacity: 0">E mettici me. <em>Più grande.</em></div>
+        
+      </div>
+      <div id="sCard" class="clip" data-start="10.6" data-duration="5" data-layout-allow-overlap>
+        <p id="cver" class="stamp">v1</p>
+        <div id="card" class="box"><div id="snow"><i style="left:10px; top:0px; animation-delay:0s"></i><i style="left:147px; top:89px; animation-delay:0s"></i><i style="left:284px; top:178px; animation-delay:0s"></i><i style="left:421px; top:267px; animation-delay:0s"></i><i style="left:38px; top:356px; animation-delay:0s"></i><i style="left:175px; top:445px; animation-delay:0s"></i><i style="left:312px; top:534px; animation-delay:0s"></i><i style="left:449px; top:623px; animation-delay:0s"></i><i style="left:66px; top:12px; animation-delay:0s"></i><i style="left:203px; top:101px; animation-delay:0s"></i><i style="left:340px; top:190px; animation-delay:0s"></i><i style="left:477px; top:279px; animation-delay:0s"></i><i style="left:94px; top:368px; animation-delay:0s"></i><i style="left:231px; top:457px; animation-delay:0s"></i><i style="left:368px; top:546px; animation-delay:0s"></i><i style="left:505px; top:635px; animation-delay:0s"></i><i style="left:122px; top:24px; animation-delay:0s"></i><i style="left:259px; top:113px; animation-delay:0s"></i><i style="left:396px; top:202px; animation-delay:0s"></i><i style="left:13px; top:291px; animation-delay:0s"></i><i style="left:150px; top:380px; animation-delay:0s"></i><i style="left:287px; top:469px; animation-delay:0s"></i><i style="left:424px; top:558px; animation-delay:0s"></i><i style="left:41px; top:647px; animation-delay:0s"></i><i style="left:178px; top:36px; animation-delay:0s"></i><i style="left:315px; top:125px; animation-delay:0s"></i></div><h3>Buone Feste</h3><p>da c.lab studio 🎄</p><img class="me" src="assets/cali-peek.png" alt="" /></div>
+        <div id="send">Invia alla Boss ✉️</div>
+      </div>
+      <div id="sChat3" class="clip dots" data-start="15.6" data-duration="4.4">
+        <div class="who"><div class="av cat"><img src="assets/cali-av.png" alt="" /></div><div><b>Calì</b><small>sta scrivendo…</small></div></div>
+        <div id="t3" class="typing" style="top: 560px; opacity: 0"><i></i><i></i><i></i></div><p id="left" style="position:absolute;left:130px;top:560px;font:700 34px/1.3 'Space Mono',monospace;color:#8a8178;opacity:0">🐾 la Boss ha lasciato la chat</p>
+        <div id="pk3" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+      <div id="sXmas" class="clip" data-start="20" data-duration="6">
+        <svg id="tree" viewBox="0 0 520 900" data-layout-ignore><g stroke="#16130f" stroke-width="8" stroke-linejoin="round">
+  <polygon points="260,40 400,300 120,300" fill="#2e9e3e"/><polygon points="260,200 450,520 70,520" fill="#2e9e3e"/><polygon points="260,400 500,780 20,780" fill="#2e9e3e"/>
+  <rect x="220" y="780" width="80" height="100" fill="#8a5a2b"/></g>
+  <text x="260" y="60" text-anchor="middle" font-size="90">⭐</text>
+  <circle cx="200" cy="270" r="22" fill="#d6281c" stroke="#16130f" stroke-width="6"/><circle cx="330" cy="460" r="22" fill="#f25aa6" stroke="#16130f" stroke-width="6"/>
+  <circle cx="160" cy="700" r="24" fill="#1d3fd1" stroke="#16130f" stroke-width="6"/><circle cx="380" cy="720" r="24" fill="#d6281c" stroke="#16130f" stroke-width="6"/></svg><div id="ball"></div><div id="gift"></div><svg id="bow" viewBox="0 0 300 200" data-layout-ignore><g stroke="#16130f" stroke-width="8" stroke-linejoin="round" fill="#ffc21a">
+  <path d="M150 120 C 60 20, 0 60, 30 130 C 60 180, 120 150, 150 120 Z"/><path d="M150 120 C 240 20, 300 60, 270 130 C 240 180, 180 150, 150 120 Z"/>
+  <path d="M140 120 L 100 200 L 130 190 Z"/><path d="M160 120 L 200 200 L 170 190 Z"/><circle cx="150" cy="120" r="26"/></g></svg>
+        <div id="catBow" data-layout-ignore><img src="assets/cali-peek.png" alt="" /></div>
+        <p id="okX">Approvato<small>il fiocco.</small></p>
+        <p id="note">(il biglietto non l'ha aperto)</p>
+      </div>
+      <div id="sEnd" class="clip" data-start="26" data-duration="4">
+        <h2 id="endH">Buon Natale da c.lab studio 🎄<br />e dalla <em>Boss.</em></h2>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. speciale<br />@c.labstudio.milano<br /><span style="color:#fff8ea">anche il tuo gatto preferisce il fiocco? 👇</span></p>
+        <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+      <!-- music: "Deck the Halls B", Kevin MacLeod (incompetech.com), CC BY 4.0 -->
+      <audio id="aMusic" class="clip" data-start="0" data-duration="30" src="assets/music.mp3" data-volume="0.36" data-fade-in="0.6" data-fade-out="2"></audio>
+      <audio id="a1" class="clip" data-start="0.06" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
+      <audio id="a2" class="clip" data-start="3.3" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.55"></audio>
+      <audio id="a3" class="clip" data-start="5.7" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.55"></audio>
+      <audio id="a4" class="clip" data-start="6.05" data-duration="0.06" src="assets/pop.wav" data-volume="0.85"></audio>
+      <audio id="a5" class="clip" data-start="7.35" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="a6" class="clip" data-start="8.85" data-duration="0.06" src="assets/pop.wav" data-volume="0.95"></audio>
+      <audio id="a7" class="clip" data-start="10.5" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="a8" class="clip" data-start="11.3" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
+      <audio id="a9" class="clip" data-start="12.4" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="a10" class="clip" data-start="13.6" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="a11" class="clip" data-start="14.6" data-duration="0.03" src="assets/tick.wav" data-volume="0.6"></audio>
+      <audio id="a12" class="clip" data-start="15.0" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.55"></audio>
+      <audio id="a13" class="clip" data-start="16.3" data-duration="0.03" src="assets/tick.wav" data-volume="0.45"></audio>
+      <audio id="a14" class="clip" data-start="17.1" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
+      <audio id="a15" class="clip" data-start="17.9" data-duration="0.03" src="assets/tick.wav" data-volume="0.45"></audio>
+      <audio id="a16" class="clip" data-start="19.9" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="a17" class="clip" data-start="20.6" data-duration="1.25" src="assets/cat-trill.mp3" data-volume="0.85"></audio>
+      <audio id="a18" class="clip" data-start="21.95" data-duration="0.11" src="assets/knock1.wav" data-volume="0.9"></audio>
+      <audio id="a19" class="clip" data-start="22.25" data-duration="0.11" src="assets/knock2.wav" data-volume="0.7"></audio>
+      <audio id="a20" class="clip" data-start="23.05" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
+      <audio id="a21" class="clip" data-start="23.3" data-duration="2.54" src="assets/cat-purr.mp3" data-volume="0.9"></audio>
+      <audio id="a22" class="clip" data-start="26.4" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="0.85"></audio>
+    <div id="printPaper" class="clip" data-start="0" data-duration="30" data-layout-ignore></div>
+        <div id="printGrain" class="clip" data-start="0" data-duration="30" data-layout-ignore></div>
+        <div id="printGrainN" class="clip" data-start="0" data-duration="30" data-layout-ignore></div>
+      </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const pop = (sel, at) => tl.fromTo(sel, { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "back.out(2.4)" }, at);
+      const peek = (sel, at) => tl.fromTo(sel, { y: 160 }, { y: 0, duration: 0.6, ease: "back.out(1.6)" }, at);
+      const blurIn = (sel, at) => tl.fromTo(sel, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, at);
+      const typing = (sel, at, len) => {
+        tl.fromTo(sel, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2)" }, at);
+        const n = Math.max(1, Math.round((len - 0.5) / 0.44));
+        [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
+        tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
+      };
+      const yawn = (scene, from, to) => {
+        tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);
+        tl.set(`#${scene}Y`, { opacity: 0 }, to); tl.set(`#${scene}A`, { opacity: 1 }, to);
+      };
+
+      peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.0);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.12, duration: 2.4, ease: "power1.inOut" }, 3.4); blurIn("#sR1B", 3.8);
+      pop("#b2", 6.0); pop("#b3", 7.3); pop("#b4", 8.8);
+      tl.fromTo("#card", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 10.6);
+      tl.fromTo("#snow i:nth-child(1)", { y: -60 }, { y: 820, duration: 3.2, ease: "none" }, 10.6);
+      tl.fromTo("#snow i:nth-child(2)", { y: -60 }, { y: 820, duration: 3.6, ease: "none" }, 10.8);
+      tl.fromTo("#snow i:nth-child(3)", { y: -60 }, { y: 820, duration: 4.0, ease: "none" }, 11.0);
+      tl.fromTo("#snow i:nth-child(4)", { y: -60 }, { y: 820, duration: 4.4, ease: "none" }, 11.2);
+      tl.fromTo("#snow i:nth-child(5)", { y: -60 }, { y: 820, duration: 4.800000000000001, ease: "none" }, 11.4);
+      tl.fromTo("#snow i:nth-child(6)", { y: -60 }, { y: 820, duration: 3.2, ease: "none" }, 11.6);
+      tl.fromTo("#snow i:nth-child(7)", { y: -60 }, { y: 820, duration: 3.6, ease: "none" }, 11.8);
+      tl.fromTo("#snow i:nth-child(8)", { y: -60 }, { y: 820, duration: 4.0, ease: "none" }, 10.6);
+      tl.fromTo("#snow i:nth-child(9)", { y: -60 }, { y: 820, duration: 4.4, ease: "none" }, 10.8);
+      tl.fromTo("#snow i:nth-child(10)", { y: -60 }, { y: 820, duration: 4.800000000000001, ease: "none" }, 11.0);
+      tl.fromTo("#snow i:nth-child(11)", { y: -60 }, { y: 820, duration: 3.2, ease: "none" }, 11.2);
+      tl.fromTo("#snow i:nth-child(12)", { y: -60 }, { y: 820, duration: 3.6, ease: "none" }, 11.4);
+      tl.fromTo("#snow i:nth-child(13)", { y: -60 }, { y: 820, duration: 4.0, ease: "none" }, 11.6);
+      tl.fromTo("#snow i:nth-child(14)", { y: -60 }, { y: 820, duration: 4.4, ease: "none" }, 11.8);
+      tl.fromTo("#snow i:nth-child(15)", { y: -60 }, { y: 820, duration: 4.800000000000001, ease: "none" }, 10.6);
+      tl.fromTo("#snow i:nth-child(16)", { y: -60 }, { y: 820, duration: 3.2, ease: "none" }, 10.8);
+      tl.fromTo("#snow i:nth-child(17)", { y: -60 }, { y: 820, duration: 3.6, ease: "none" }, 11.0);
+      tl.fromTo("#snow i:nth-child(18)", { y: -60 }, { y: 820, duration: 4.0, ease: "none" }, 11.2);
+      tl.fromTo("#snow i:nth-child(19)", { y: -60 }, { y: 820, duration: 4.4, ease: "none" }, 11.4);
+      tl.fromTo("#snow i:nth-child(20)", { y: -60 }, { y: 820, duration: 4.800000000000001, ease: "none" }, 11.6);
+      tl.fromTo("#snow i:nth-child(21)", { y: -60 }, { y: 820, duration: 3.2, ease: "none" }, 11.8);
+      tl.fromTo("#snow i:nth-child(22)", { y: -60 }, { y: 820, duration: 3.6, ease: "none" }, 10.6);
+      tl.fromTo("#snow i:nth-child(23)", { y: -60 }, { y: 820, duration: 4.0, ease: "none" }, 10.8);
+      tl.fromTo("#snow i:nth-child(24)", { y: -60 }, { y: 820, duration: 4.4, ease: "none" }, 11.0);
+      tl.fromTo("#snow i:nth-child(25)", { y: -60 }, { y: 820, duration: 4.800000000000001, ease: "none" }, 11.2);
+      tl.fromTo("#snow i:nth-child(26)", { y: -60 }, { y: 820, duration: 3.2, ease: "none" }, 11.4);
+      tl.set("#cver", { textContent: "v4" }, 12.4); tl.to("#card .me", { scale: 1.25, duration: 0.4, ease: "back.out(2)" }, 12.4);
+      tl.set("#cver", { textContent: "v9" }, 13.6); tl.to("#card .me", { scale: 1.5, duration: 0.4, ease: "back.out(2)" }, 13.6);
+      tl.to("#send", { opacity: 1, duration: 0.2 }, 14.0);
+      tl.fromTo("#send", { scale: 1 }, { scale: 0.92, duration: 0.1, yoyo: true, repeat: 1 }, 14.6);
+      tl.to("#card", { y: -900, rotation: -8, duration: 0.5, ease: "power3.in" }, 15.0);
+      peek("#pk3", 15.8); typing("#t3", 16.0, 2.4);
+      tl.to("#left", { opacity: 1, duration: 0.3 }, 18.6);
+      /* the Christmas corner: Calì in the bow, a bauble on the floor */
+      tl.fromTo("#catBow", { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 20.4);
+      tl.to("#bow", { rotation: -10, duration: 0.15, yoyo: true, repeat: 5, ease: "sine.inOut" }, 20.9);
+      tl.to("#ball", { y: 560, x: -300, rotation: 220, duration: 0.55, ease: "power2.in" }, 21.4);
+      tl.to("#ball", { y: 520, duration: 0.15, yoyo: true, repeat: 1, ease: "power1.out" }, 21.95);
+      tl.fromTo("#okX", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.22, ease: "power4.in" }, 22.85);
+      tl.to("#sXmas", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 23.07);
+      tl.to("#note", { opacity: 1, duration: 0.3 }, 23.8);
+      blurIn("#endH", 26.05); tl.fromTo("#endMel", { y: 700 }, { y: 0, duration: 0.6, ease: "back.out(1.5)" }, 26.2); tl.fromTo("#endEp", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 26.6);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
