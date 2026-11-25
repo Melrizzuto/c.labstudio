@@ -37,18 +37,18 @@ css = '''
       #what { position: absolute; left: 130px; top: 1240px; font: 700 30px/1 "Space Mono", monospace; color: var(--ink); opacity: 0; z-index: 4; }
 '''
 body = '\n'.join([
-  chat('sChat1', 0, 3.4, bub('b1', 600, 'Mi serve il packaging delle crocchette. <em>Per ieri.</em> 🐟', 'bub big', hidden=False), status='la capa · online', tease='guarda fino alla fine 👀', peek_id='pk1', **CALI),
-  react('sR1', 3.4, 2.4, 'Sì,<br /><em>capa.</em>'),
+  chat('sChat1', 0, 3.4, bub('b1', 600, 'Mi serve il packaging delle crocchette. <em>Per ieri.</em> 🐟', 'bub big', hidden=False), status='Boss · online', tease='guarda fino alla fine 👀', peek_id='pk1', **CALI),
+  react('sR1', 3.4, 2.4, 'Sì,<br /><em>Boss.</em>'),
   f'''      <div id="sPack" class="clip" data-start="5.8" data-duration="19.8" data-layout-allow-overlap style="z-index: 1">
         <p id="ver" class="stamp">v1</p><p id="clock">03:12</p>
         <div id="pack" class="box"><div id="packTint"></div><div id="band"></div><span id="brand">CROCC</span>
-          <p id="tagline">crocchette gourmet<br />per capi esigenti</p><div id="kib"></div><span id="fish">🐟</span></div>
+          <p id="tagline">crocchette gourmet<br />per Boss esigenti</p><div id="kib"></div><span id="fish">🐟</span></div>
         <div id="sw" class="sws"><div><i></i>trota</div><div><i></i>trota chiaro</div><div id="sw3"><i></i>trota, ma<br />più chiaro</div></div>
-        <div id="sendBtn">Invia alla capa ✉️</div>
+        <div id="sendBtn">Invia alla Boss ✉️</div>
         <svg id="cur5" viewBox="0 0 24 24"><path d="M3 2l17 9-7.5 1.6L9 20z" fill="#16130f" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" /></svg>
       </div>''',
-  chat('sChat2', 9.4, 3, bub('b2', 600, 'Puoi fare la crocchetta <em>un po\' più grande?</em>'), status='la capa · online', peek_id='pk2', **CALI),
-  chat('sChat3', 14.6, 3, bub('b3', 560, 'La voglio <em>color trota.</em>') + bub('b4', 780, 'Ma più chiaro.'), status='la capa · online', peek_id='pk3', **CALI),
+  chat('sChat2', 9.4, 3, bub('b2', 600, 'Puoi fare la crocchetta <em>un po\' più grande?</em>'), status='Boss · online', peek_id='pk2', **CALI),
+  chat('sChat3', 14.6, 3, bub('b3', 560, 'La voglio <em>color trota.</em>') + bub('b4', 780, 'Ma più chiaro.'), status='Boss · online', peek_id='pk3', **CALI),
   chat('sChat4', 19.8, 3.6, typing_dots('t4', 600) + bub('b5', 600, 'Ultima cosa veloce. <em>Ci vuole un minuto.</em> ⏱️'), status='sta scrivendo…', peek_id='pk4', **CALI),
   f'''      <div id="sBox" class="clip" data-start="25.6" data-duration="4">
         <div id="flapL"></div><div id="flapR"></div>

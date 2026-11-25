@@ -77,7 +77,7 @@ Se una puntata va molto bene, se ne fa il seguito entro una settimana.
 
 ## Il cuore della serie (dall'ep. 8)
 
-**Calì è la capa, Mel la sua assistente.** Calì vuole sempre qualcosa (crocchette, la scatola, il posto caldo sul portatile), dà ordini con le frasi dei clienti e approva solo le cose da gatto. Mel esegue, impassibile. È un rapporto tra personaggi, non una battuta sui clienti: funziona anche con chi ha un gatto e non fa il designer. Sullo schermo: «la capa», mai parolacce (così va bene anche su LinkedIn). Il metodo per scrivere le battute è in `COMICITA.md`.
+**Calì è la Boss, Mel la sua assistente.** Calì vuole sempre qualcosa (crocchette, la scatola, il posto caldo sul portatile), dà ordini con le frasi dei clienti e approva solo le cose da gatto. Mel esegue, impassibile. È un rapporto tra personaggi, non una battuta sui clienti: funziona anche con chi ha un gatto e non fa il designer. Sullo schermo il nome resta Calì e il suo ruolo è «Boss» (nella chat: «Calì · Boss»), mai parolacce (così va bene anche su LinkedIn). Il metodo per scrivere le battute è in `COMICITA.md`.
 
 ## Formati nuovi, perché la serie non stanchi
 

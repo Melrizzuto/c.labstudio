@@ -201,7 +201,7 @@ Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 8 — La capa
+## Ep. 8 — La Boss
 
 **YouTube, titolo:** La cliente più difficile? La mia gatta 🐟 | Calì & Mel ep. 8
 
