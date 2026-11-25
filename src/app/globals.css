@@ -524,6 +524,25 @@ main.cvr h1{font-size:clamp(34px,6vw,52px);overflow-wrap:anywhere}
 .after p{margin:4px 0 0;font-size:16px}
 .covers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
 .covers img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.tvremote{margin-top:18px;display:grid;gap:10px}
+.tv-ch{display:flex;gap:8px}
+.tv-ch button{flex:1;padding:9px 10px;border:2px solid var(--ink);border-radius:12px;background:var(--paper);color:var(--ink);font:700 14px/1.1 var(--body);cursor:pointer;text-align:left}
+.tv-ch button b{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:4px;border-radius:6px;background:var(--ink);color:var(--sun);font:700 12px/1 var(--mono)}
+.tv-ch button.on{background:var(--ink);color:var(--paper)}
+.tv-ch button.on b{background:var(--sun);color:var(--ink)}
+.tv-now{display:flex;align-items:center;gap:8px}
+.tv-now p{flex:1;margin:0;font:700 16px/1.25 var(--body);min-height:2.5em}
+.tv-now p small{display:block;font:700 11px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#C81D74}
+.tv-step{flex:none;width:40px;height:40px;border:2px solid var(--ink);border-radius:50%;background:var(--paper);color:var(--ink);font-size:14px;cursor:pointer}
+.tv-step:disabled{opacity:.35;cursor:default}
+.tv-actions{display:flex;flex-wrap:wrap;gap:8px}
+.tv-actions .chip{cursor:pointer;border:2px solid var(--ink)}
+.tv-note{margin:0;font:500 13px/1.3 var(--body);opacity:.75}
+.tvbig{padding:0;border:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+.tvbig::backdrop{background:rgba(10,8,6,.86)}
+.tvbig video{display:block;width:min(92vw,1100px);max-height:88dvh;border-radius:14px;background:#000}
+.tvbig.vertical video{width:auto;height:min(88dvh,960px);max-width:92vw}
+.tvbig .gb-close{position:absolute;top:-14px;right:-14px}
 /* contact card: book a call or copy the address; the address is not printed, it only appears if copying fails */
 .contact-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:24px}
 .btn.small.ghost{background:transparent;color:var(--text);box-shadow:inset 0 0 0 2px currentColor}

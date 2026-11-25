@@ -139,12 +139,14 @@ export const en: Dictionary = {
         ' is my YouTube series: I take a famous product and redesign it in one evening, together with Claude. Only rule: you have to get the improvement in five seconds.',
       ],
       "First episode: TikTok's AI assistant, which answered with a 162-word wall of text. After, you get the gist at a glance.",
+      [{ b: 'Calì & Mel' }, ' is the studio sitcom: I play the designer, Calì plays the Boss. The wildest client requests, one episode at a time. Switch channels with the remote.'],
     ],
     covers: [
       { src: '/assets/tv/rifatto-cover-a.jpg', alt: "Cover: I redid TikTok's AI" },
       { src: '/assets/tv/rifatto-cover-b.jpg', alt: 'Before, 162 words; after, 5 seconds to get the gist' },
     ],
     channel: 'Watch the channel on YouTube',
+    remote: { label: 'TV remote', channels: 'Channels', prev: 'Previous episode', next: 'Next episode', soundOff: '🔇 Sound', soundOn: '🔊 Sound', big: '⤢ Watch it big', close: 'Close', note: 'The episodes are in Italian.' },
   },
   contact: {
     title: 'Fancy a chat?',
