@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Dictionary, Locale } from '@/i18n/types';
-import { TV_CHANNELS } from '@/content/tv';
+import { TV_CHANNELS as ALL_CHANNELS, released } from '@/content/tv';
 
 /*
  * The remote under the TV card: pick a channel and an episode, turn the sound on, or watch it big.
@@ -13,6 +13,10 @@ export function TvRemote({ t, locale }: { t: Dictionary['weekend']['remote']; lo
   const [ch, setCh] = useState(0);
   const [ep, setEp] = useState(0);
   const [sound, setSound] = useState(false);
+  /* the time is read in the browser, after the first render, so the server and the browser render the same list */
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => setNow(Date.now()), []);
+  const TV_CHANNELS = ALL_CHANNELS.map((c) => released(c, now));
   const big = useRef<HTMLDialogElement>(null);
   const bigVideo = useRef<HTMLVideoElement>(null);
   const first = useRef(true);
@@ -21,7 +25,8 @@ export function TvRemote({ t, locale }: { t: Dictionary['weekend']['remote']; lo
   const epLabel = (x: (typeof channel.episodes)[number]) => x.label?.[locale] ?? `ep. ${x.n}`;
   const label = (c: number, e: number) => `${TV_CHANNELS[c].name} · ${epLabel(TV_CHANNELS[c].episodes[e])}: ${TV_CHANNELS[c].episodes[e].title[locale]}`;
 
-  const next = useCallback(() => setEp((e) => (e + 1) % TV_CHANNELS[ch].episodes.length), [ch]);
+  const count = TV_CHANNELS[ch].episodes.length;
+  const next = useCallback(() => setEp((e) => (e + 1) % count), [count]);
   const prev = () => setEp((e) => (e - 1 + channel.episodes.length) % channel.episodes.length);
 
   /* tune the TV in the room to the chosen episode (not on first render: the page ships with Rifatto already on) */

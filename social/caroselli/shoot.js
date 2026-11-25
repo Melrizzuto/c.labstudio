@@ -5,7 +5,7 @@ const fs = require('fs');
 (async () => {
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 1080, height: 1350 }, deviceScaleFactor: 1 });
-  for (const name of ['dizionario', 'flusso']) {
+  for (const name of (process.argv[2] ? process.argv.slice(2) : ['dizionario', 'flusso'])) {
     const out = path.join(__dirname, 'out', name);
     fs.mkdirSync(out, { recursive: true });
     await p.goto('file://' + path.join(__dirname, name + '.html'));

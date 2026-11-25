@@ -414,3 +414,81 @@ Musica: "The Builder" Kevin MacLeod (incompetech.com), CC BY 4.0
 **Ep. 5** — "Ci vuole un minuto" ⏱️ Spoiler: no. Quanto dura il tuo minuto? 👇
 Musica: "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
 #designer #designhumor #freelance #deadline #calìemel
+
+
+---
+
+# Caroselli di dicembre e gennaio
+
+## Una dashboard, 5 lettori (giovedì 17 dicembre)
+**Instagram:**
+```
+Una dashboard. 5 lettori. 👀
+
+Il designer controlla l'allineamento.
+Il CEO controlla che il numero sia verde.
+La Boss controlla che lo schermo sia caldo. 🐾
+
+Tu che lettore sei? Commenta con il numero 👇
+🔖 Salvalo per la prossima review.
+
+#dashboard #dataviz #uxdesign #productdesign #designhumor #vitadadesigner #calìemel
+```
+**TikTok:** `Una dashboard, 5 lettori 👀 Tu chi sei? Commenta col numero 👇 #dashboard #designhumor #uxdesign #calìemel`
+
+## Il primo giorno dopo le feste (giovedì 7 gennaio)
+**Instagram:**
+```
+Il primo giorno dopo le feste. 📬
+
+312 email. 48 menzioni su Slack. Una dice solo «?».
+E la Boss ha passato dieci giorni sulla tastiera.
+
+Quante email non lette avevi al rientro? Scrivi il numero 👇
+
+#rientro #lunedì #designer #freelance #designhumor #vitadadesigner #gatti #calìemel
+```
+**TikTok:** `Il rientro dopo le feste 📬 Quante email non lette avevi? 👇 #rientro #designhumor #freelance #calìemel`
+
+## Il bingo della riunione di design (giovedì 14 gennaio)
+**Instagram:**
+```
+Il bingo della riunione di design. 🎯
+
+Salvalo, aprilo alla prossima call e segna le caselle.
+Riga = BINGO (con il microfono spento).
+
+Quante caselle fai di solito? Tagga il collega che le fa tutte 👇
+
+#riunioni #smartworking #designer #uxdesign #designhumor #vitadadesigner #calìemel
+```
+**TikTok:** `Il bingo della riunione 🎯 Salvalo per la prossima call. Quante caselle fai? 👇 #riunioni #smartworking #designhumor #calìemel`
+
+## I livelli di «finale» (giovedì 21 gennaio)
+**Instagram:**
+```
+I livelli di «finale». 📁
+
+finale.pdf → ingenuità.
+finale_finale (1).pdf → il vuoto.
+
+A che livello sei adesso? Commenta con il numero 👇
+
+#graphicdesign #designer #freelance #revisioni #designhumor #vitadadesigner #calìemel
+```
+**TikTok:** `I livelli di «finale» 📁 A che livello sei? 👇 #designer #revisioni #designhumor #calìemel`
+
+## Il dizionario della Boss (giovedì 28 gennaio)
+**Instagram:**
+```
+Il dizionario della Boss. 🐾
+Cosa fa il gatto. E cosa intende davvero.
+
+Si siede sulla tastiera → revisione in corso.
+Entra nella scatola → il packaging è perfetto.
+
+Cosa fa il tuo gatto quando non approva? 👇
+
+#gatti #catsofinstagram #gattiitaliani #designer #designhumor #vitacongatto #calìemel
+```
+**TikTok:** `Il dizionario della Boss 🐾 Cosa fa il tuo gatto quando non approva? 👇 #gatti #catsoftiktok #designhumor #calìemel`
