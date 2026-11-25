@@ -102,10 +102,10 @@ Rotazione consigliata su 2 settimane: 1 puntata classica, 1 «Trova l'errore», 
 | --- | --- | --- |
 | 1 dic | ep. 2 Il nero più chiaro | carosello: Il dizionario del cliente |
 | 8 dic | ep. 3 Il bianco più bianco | carosello: Il flusso utente |
-| 15 dic | ep. 4 Minimal, ma con più cose | carosello da fare |
+| 15 dic | ep. 4 Minimal, ma con più cose | carosello: Una dashboard, 5 lettori (17 dic) |
 | 22 dic | 🎄 Speciale Natale: il biglietto | pausa |
 | 29 dic | 🥂 Speciale Capodanno: i buoni propositi | pausa |
-| 5 gen | ep. 5 Ci vuole un minuto | carosello da fare |
-| 12 gen | ep. 6 Hai perfettamente ragione | carosello da fare |
-| 19 gen | ep. 7 La linea deve salire | carosello da fare |
-| 26 gen | ep. 8 La Boss | carosello da fare |
+| 5 gen | ep. 5 Ci vuole un minuto | carosello: Il primo giorno dopo le feste (7 gen) |
+| 12 gen | ep. 6 Hai perfettamente ragione | carosello: Il bingo della riunione (14 gen) |
+| 19 gen | ep. 7 La linea deve salire | carosello: I livelli di «finale» (21 gen) |
+| 26 gen | ep. 8 La Boss | carosello: Il dizionario della Boss (28 gen) |

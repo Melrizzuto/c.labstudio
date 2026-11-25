@@ -1,0 +1,107 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><style>
+@font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+@font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+@font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+:root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; --leaf: #2e9e3e; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #555; font-family: "Figtree", sans-serif; color: var(--ink); }
+section { position: relative; width: 1080px; height: 1350px; overflow: hidden; margin: 0 0 20px;
+  background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+section.ink { background: var(--ink); color: #fff8ea; }
+section.pink { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; }
+/* print treatment, as on the site */
+section::before { content: ""; position: absolute; inset: 0; z-index: 50; pointer-events: none; mix-blend-mode: multiply; opacity: .2; background: url("assets/paper.webp") 0 0 / 512px 512px; }
+section::after { content: ""; position: absolute; inset: 0; z-index: 51; pointer-events: none; mix-blend-mode: multiply; opacity: .13; background: url("assets/grain-day.webp") 0 0 / 256px 256px; }
+section.ink::after { mix-blend-mode: screen; opacity: .08; }
+.riso { filter: url(#riso); }
+.box { position: relative; border: 7px solid transparent; border-radius: 40px; }
+.box::before { content: ""; position: absolute; inset: -7px; border: 7px solid var(--ink); border-radius: inherit; pointer-events: none;
+  -webkit-mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; }
+.kick { position: absolute; left: 80px; top: 70px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--note); }
+.num { position: absolute; right: 80px; top: 70px; font: 700 30px/1 "Space Mono", monospace; color: #8a8178; }
+.ink .num { color: var(--sun); }
+.swipe { position: absolute; right: 80px; bottom: 70px; padding: 16px 26px; border-radius: 999px; background: var(--ink); color: var(--sun); font: 700 30px/1 "Space Mono", monospace; }
+.handle { position: absolute; left: 80px; bottom: 76px; font: 700 28px/1 "Space Mono", monospace; color: #8a8178; }
+.ink .handle { color: var(--sun); }
+.title { position: absolute; left: 80px; right: 80px; top: 170px; font: 900 132px/0.92 "Outfit", sans-serif; letter-spacing: -0.05em; }
+.title em { font-style: normal; color: var(--note); }
+.ink .title em { color: var(--pink); }
+.sub { position: absolute; left: 84px; right: 80px; font: 600 44px/1.2 "Figtree", sans-serif; color: #4a4238; }
+.sticker { position: absolute; padding: 16px 26px; border-radius: 999px; background: #3be36b; border: 6px solid var(--ink); outline: 6px solid #fff; font: 900 38px/1 "Outfit", sans-serif; text-transform: uppercase; }
+img.mel { position: absolute; }
+.label { font: 700 30px/1 "Space Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+/* dictionary */
+.says { position: absolute; left: 80px; right: 80px; top: 230px; }
+.says .label { color: var(--note); margin-bottom: 22px; }
+.says .bubble { background: #fff; padding: 40px 46px 46px; border-radius: 46px 46px 46px 10px; box-shadow: 12px 12px 0 var(--ink); font: 800 74px/1.06 "Figtree", sans-serif; letter-spacing: -0.02em; }
+.means { position: absolute; left: 80px; right: 80px; top: 720px; }
+.means .label { color: var(--ink); margin-bottom: 22px; }
+.means .band { background: var(--ink); color: #fff8ea; padding: 38px 44px 44px; border-radius: 30px; font: 900 76px/1.02 "Outfit", sans-serif; letter-spacing: -0.035em; }
+.means .band em { font-style: normal; color: var(--sun); }
+/* flow diagrams */
+.node { position: absolute; padding: 22px 30px; background: #fff; border-radius: 26px; font: 800 40px/1 "Figtree", sans-serif; box-shadow: 8px 8px 0 var(--ink); }
+.node.ok { background: #c2f296; }
+.cap { position: absolute; left: 80px; right: 80px; bottom: 150px; font: 900 64px/1.02 "Outfit", sans-serif; letter-spacing: -0.03em; }
+.cap em { font-style: normal; color: var(--note); }
+
+.dash { position: absolute; left: 120px; right: 120px; top: 330px; height: 620px; background: #fff; border-radius: 30px; padding: 34px; }
+.dash .row { display: flex; gap: 18px; }
+.kp { flex: 1; height: 150px; border: 5px solid var(--ink); border-radius: 18px; padding: 16px; background: var(--paper); }
+.kp b { display: block; font: 900 54px/1 "Outfit", sans-serif; } .kp span { font: 700 24px/1 "Space Mono", monospace; color: #6f675e; }
+.kp.up b { color: #1f7a2c; } .kp.dn b { color: #c0211a; }
+.bars { position: absolute; left: 34px; right: 34px; bottom: 34px; height: 330px; display: flex; align-items: flex-end; gap: 22px; border-bottom: 5px solid var(--ink); }
+.bars i { flex: 1; background: var(--cobalt); border-radius: 10px 10px 0 0; }
+.dim .kp, .dim .bars { opacity: .25; } .dim .kp.hot { opacity: 1; outline: 8px solid #3be36b; outline-offset: 6px; }
+.grid8 { position: absolute; inset: 0; border-radius: 30px; background-image: linear-gradient(rgba(242,90,166,.35) 2px, transparent 2px), linear-gradient(90deg, rgba(242,90,166,.35) 2px, transparent 2px); background-size: 40px 40px; }
+.filters { position: absolute; left: 34px; right: 34px; top: 34px; display: flex; flex-wrap: wrap; gap: 10px; }
+.filters span { padding: 10px 16px; border: 4px solid var(--ink); border-radius: 12px; background: #fff; font: 700 24px/1 "Space Mono", monospace; }
+.spin { position: absolute; left: 50%; top: 50%; width: 140px; height: 140px; margin: -70px; border-radius: 50%; border: 16px solid #e9e4da; border-top-color: var(--cobalt); }
+.lines { position: absolute; left: 80px; right: 80px; top: 1010px; font: 900 66px/1.04 "Outfit", sans-serif; letter-spacing: -0.03em; }
+.lines em { font-style: normal; color: var(--note); }
+.who2 { position: absolute; left: 80px; top: 200px; display: flex; align-items: center; gap: 18px; font: 900 64px/1 "Outfit", sans-serif; }
+.who2 span { font-size: 70px; }
+.notif { position: absolute; left: 120px; right: 120px; padding: 26px 30px; background: #fff; border-radius: 26px; font: 700 40px/1.2 "Figtree", sans-serif; display: flex; gap: 18px; align-items: center; }
+.notif b { flex: none; min-width: 90px; height: 90px; padding: 0 18px; border-radius: 45px; display: grid; place-items: center; background: #d6281c; color: #fff; font: 900 44px/1 "Outfit", sans-serif; }
+.bingo { position: absolute; left: 130px; right: 130px; top: 230px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.bingo div { aspect-ratio: 1; background: #fff; border: 5px solid var(--ink); border-radius: 18px; display: grid; place-items: center; text-align: center; padding: 8px; font: 800 24px/1.1 "Figtree", sans-serif; }
+.bingo div.free { background: var(--sun); font-family: "Outfit"; font-weight: 900; font-size: 34px; }
+.bingo div.x { position: relative; } .bingo div.x::after { content: "✕"; position: absolute; font: 900 120px/1 "Outfit"; color: rgba(214, 40, 28, .75); }
+.file { position: absolute; left: 50%; top: 380px; width: 860px; margin-left: -430px; text-align: center; }
+.file .pg { width: 300px; height: 380px; margin: 0 auto; background: #fff; border-radius: 16px 80px 16px 16px; box-shadow: 14px 14px 0 var(--ink); position: relative; }
+.file .pg::after { content: "PDF"; position: absolute; left: 40px; bottom: 40px; padding: 10px 18px; background: #d6281c; color: #fff; border-radius: 10px; font: 900 40px/1 "Outfit"; }
+.file p { margin-top: 40px; font: 700 36px/1.2 "Space Mono", monospace; }
+.lvl { position: absolute; left: 80px; top: 200px; font: 700 34px/1 "Space Mono", monospace; color: var(--note); letter-spacing: .06em; text-transform: uppercase; }
+.verdict { position: absolute; left: 80px; right: 80px; bottom: 150px; text-align: center; font: 900 96px/1 "Outfit", sans-serif; letter-spacing: -0.04em; }
+.verdict em { font-style: normal; color: var(--note); }
+</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="riso" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="w0" />
+    <feColorMatrix in="w0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="warp" />
+    <feDisplacementMap in="SourceGraphic" in2="warp" scale="0.8" xChannelSelector="R" yChannelSelector="G" result="rough" />
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="8" result="g0" />
+    <feColorMatrix in="g0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="grain" />
+    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5" result="b0" />
+    <feColorMatrix in="b0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="blotch" />
+    <feComposite in="grain" in2="blotch" operator="arithmetic" k1="0" k2="1" k3="0.15" k4="-0.075" result="mix" />
+    <feColorMatrix in="mix" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.4 0 0 0 -0.12" result="mask" />
+    <feComposite in="rough" in2="mask" operator="in" />
+  </filter></defs></svg>
+<section><p class="kick">Calì &amp; Mel · dati</p><p class="num">01/07</p><h1 class="title">Una dashboard.<br /><em>5 lettori.</em></h1><p class="sub" style="top: 640px">Chi la guarda davvero? 👀</p>
+  <img class="mel" src="assets/mel-felt.png" style="left: 640px; top: 700px; width: 380px" alt="" /><p class="handle">@c.labstudio.milano</p><span class="swipe">scorri →</span></section>
+<section><p class="kick">una dashboard, 5 lettori</p><p class="num">02/07</p><p class="who2"><span>🎨</span>Il designer</p><div class="dash box ">
+    <div class="row"><div class="kp up hot"><b>+12%</b><span>vendite</span></div><div class="kp dn"><b>−3%</b><span>resi</span></div><div class="kp up"><b>4,8★</b><span>recensioni</span></div></div>
+    <div class="bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:66%"></i><i style="height:92%"></i></div><div class="grid8"></div></div><p class="lines">Allineamento a 8 px ✓<br />Contrasto ✓<br /><em>Quel grafico va rifatto.</em></p></section>
+<section><p class="kick">una dashboard, 5 lettori</p><p class="num">03/07</p><p class="who2"><span>💼</span>Il CEO</p><div class="dash box dim">
+    <div class="row"><div class="kp up hot"><b>+12%</b><span>vendite</span></div><div class="kp dn"><b>−3%</b><span>resi</span></div><div class="kp up"><b>4,8★</b><span>recensioni</span></div></div>
+    <div class="bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:66%"></i><i style="height:92%"></i></div></div><p class="lines">Il numero in alto è verde?<br /><em>Ok. Riunione finita.</em></p></section>
+<section><p class="kick">una dashboard, 5 lettori</p><p class="num">04/07</p><p class="who2"><span>📋</span>Il PM</p><div class="dash box ">
+    <div class="row"><div class="kp up hot"><b>+12%</b><span>vendite</span></div><div class="kp dn"><b>−3%</b><span>resi</span></div><div class="kp up"><b>4,8★</b><span>recensioni</span></div></div>
+    <div class="bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:66%"></i><i style="height:92%"></i></div><div class="filters" style="top: 200px"><span>filtro ▾</span><span>periodo ▾</span><span>regione ▾</span><span>canale ▾</span><span>filtro dei filtri ▾</span><span>altro ▾</span></div></div><p class="lines">Possiamo aggiungere un filtro?<br /><em>E un filtro per i filtri.</em></p></section>
+<section><p class="kick">una dashboard, 5 lettori</p><p class="num">05/07</p><p class="who2"><span>💻</span>Lo sviluppatore</p><div class="dash box"><div class="spin riso"></div></div><p class="lines">Chi ha messo<br /><em>47 query</em> in una pagina?</p></section>
+<section><p class="kick">una dashboard, 5 lettori</p><p class="num">06/07</p><p class="who2"><span>🐾</span>La Boss</p><div class="dash box ">
+    <div class="row"><div class="kp up hot"><b>+12%</b><span>vendite</span></div><div class="kp dn"><b>−3%</b><span>resi</span></div><div class="kp up"><b>4,8★</b><span>recensioni</span></div></div>
+    <div class="bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:66%"></i><i style="height:92%"></i></div><img src="assets/cali-peek.png" style="position:absolute;left:220px;top:-20px;width:440px" alt="" /></div><p class="lines">Lo schermo è caldo.<br /><em>Ci si dorme sopra.</em></p></section>
+<section class="ink"><p class="kick" style="color: var(--sun)">Calì &amp; Mel</p><p class="num">07/07</p><h1 class="title" style="font-size: 104px">Tu che lettore sei? <em>1, 2, 3, 4 o 5?</em></h1>
+  <p class="sub" style="top: 700px; color: #fff8ea">Commenta con il numero 👇<br /><br />🔖 Salva · ➕ Segui per la serie</p><img class="mel" src="assets/mel-felt.png" style="left: 660px; top: 820px; width: 360px" alt="" /><p class="handle">@c.labstudio.milano</p></section>
+</body></html>
