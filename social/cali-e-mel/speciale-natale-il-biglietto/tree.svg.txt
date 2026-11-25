@@ -1,0 +1,53 @@
+<svg id="tree" viewBox="0 0 560 940" data-layout-ignore>
+  <defs>
+    <!-- felt: fuzzy edges and fibres, the same craft look as Mel and Calì -->
+    <filter id="felt" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="4" result="fib" />
+      <feDisplacementMap in="SourceGraphic" in2="fib" scale="5" xChannelSelector="R" yChannelSelector="G" result="fuzzy" />
+      <feColorMatrix in="fib" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.55 0.42" result="speck" />
+      <feComposite in="speck" in2="fuzzy" operator="in" result="speckIn" />
+      <feMerge><feMergeNode in="fuzzy" /><feMergeNode in="speckIn" /></feMerge>
+    </filter>
+    <radialGradient id="g1" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#5fc46a" /><stop offset=".55" stop-color="#2f9a48" /><stop offset="1" stop-color="#1c6b33" /></radialGradient>
+    <radialGradient id="ballR" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ff8a7a" /><stop offset=".5" stop-color="#e0352a" /><stop offset="1" stop-color="#8f1712" /></radialGradient>
+    <radialGradient id="ballY" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff1a8" /><stop offset=".5" stop-color="#ffc21a" /><stop offset="1" stop-color="#b37a00" /></radialGradient>
+    <radialGradient id="ballP" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffc6e2" /><stop offset=".5" stop-color="#f25aa6" /><stop offset="1" stop-color="#a32a68" /></radialGradient>
+    <radialGradient id="ballB" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#b9c6ff" /><stop offset=".5" stop-color="#3d5ce6" /><stop offset="1" stop-color="#1a2d8c" /></radialGradient>
+    <radialGradient id="glow" r="50%"><stop offset="0" stop-color="#fff3b0" stop-opacity="1" /><stop offset=".35" stop-color="#ffd25a" stop-opacity=".8" /><stop offset="1" stop-color="#ffb020" stop-opacity="0" /></radialGradient>
+    <linearGradient id="trunk" x1="0" x2="1"><stop offset="0" stop-color="#6b3f1c" /><stop offset=".5" stop-color="#9a6131" /><stop offset="1" stop-color="#5a3315" /></linearGradient>
+    <radialGradient id="star" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#fff7c2" /><stop offset=".6" stop-color="#ffc21a" /><stop offset="1" stop-color="#d18f00" /></radialGradient>
+  </defs>
+  <!-- soft floor shadow -->
+  <ellipse cx="280" cy="905" rx="230" ry="26" fill="#000" opacity=".28" />
+  <!-- trunk -->
+  <rect x="245" y="790" width="70" height="115" rx="14" fill="url(#trunk)" filter="url(#felt)" />
+  <!-- three felt tiers with scalloped hems, bottom first -->
+  <g filter="url(#felt)">
+    <path d="M280 360 C 360 470, 450 600, 520 760 Q 500 800 470 780 Q 440 815 405 790 Q 375 825 340 795 Q 310 830 280 800 Q 250 830 220 795 Q 185 825 155 790 Q 120 815 90 780 Q 60 800 40 760 C 110 600, 200 470, 280 360 Z" fill="url(#g1)" />
+    <path d="M280 190 C 345 290, 410 400, 465 520 Q 448 556 420 540 Q 395 572 365 548 Q 335 580 305 552 Q 280 584 255 552 Q 225 580 195 548 Q 165 572 140 540 Q 112 556 95 520 C 150 400, 215 290, 280 190 Z" fill="url(#g1)" />
+    <path d="M280 40 C 325 110, 370 190, 410 285 Q 395 315 372 302 Q 350 330 325 308 Q 302 336 280 312 Q 258 336 235 308 Q 210 330 188 302 Q 165 315 150 285 C 190 190, 235 110, 280 40 Z" fill="url(#g1)" />
+  </g>
+  <!-- stitches along the hems, like sewn felt -->
+  <g fill="none" stroke="#bff0c4" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 14" opacity=".8">
+    <path d="M58 752 Q 90 770 120 760 Q 150 778 185 765 Q 220 782 250 770 Q 280 784 310 770 Q 340 782 375 765 Q 410 778 440 760 Q 470 770 502 752" />
+    <path d="M112 512 Q 140 528 165 518 Q 195 534 225 522 Q 255 538 280 526 Q 305 538 335 522 Q 365 534 395 518 Q 420 528 448 512" />
+    <path d="M165 280 Q 188 292 210 284 Q 235 298 258 288 Q 280 300 302 288 Q 325 298 350 284 Q 372 292 395 280" />
+  </g>
+  <!-- the garland of warm lights -->
+  <path d="M170 240 Q 280 300 390 230 M120 470 Q 280 560 445 460 M75 700 Q 280 820 490 690" fill="none" stroke="#3a2a10" stroke-width="3" opacity=".55" />
+  <g id="lights">
+    <circle cx="200" cy="258" r="30" fill="url(#glow)" /><circle cx="280" cy="275" r="30" fill="url(#glow)" /><circle cx="360" cy="250" r="30" fill="url(#glow)" />
+    <circle cx="160" cy="500" r="32" fill="url(#glow)" /><circle cx="240" cy="525" r="32" fill="url(#glow)" /><circle cx="320" cy="525" r="32" fill="url(#glow)" /><circle cx="400" cy="495" r="32" fill="url(#glow)" />
+    <circle cx="120" cy="728" r="34" fill="url(#glow)" /><circle cx="210" cy="765" r="34" fill="url(#glow)" /><circle cx="300" cy="772" r="34" fill="url(#glow)" /><circle cx="390" cy="752" r="34" fill="url(#glow)" /><circle cx="460" cy="715" r="34" fill="url(#glow)" />
+  </g>
+  <!-- glossy baubles on little strings -->
+  <g>
+    <line x1="215" y1="330" x2="215" y2="352" stroke="#3a2a10" stroke-width="3" /><circle cx="215" cy="372" r="22" fill="url(#ballR)" /><circle cx="207" cy="364" r="6" fill="#fff" opacity=".85" />
+    <line x1="345" y1="400" x2="345" y2="420" stroke="#3a2a10" stroke-width="3" /><circle cx="345" cy="442" r="24" fill="url(#ballP)" /><circle cx="336" cy="433" r="6" fill="#fff" opacity=".85" />
+    <line x1="175" y1="600" x2="175" y2="620" stroke="#3a2a10" stroke-width="3" /><circle cx="175" cy="644" r="26" fill="url(#ballB)" /><circle cx="165" cy="634" r="7" fill="#fff" opacity=".85" />
+    <line x1="395" y1="620" x2="395" y2="640" stroke="#3a2a10" stroke-width="3" /><circle cx="395" cy="664" r="26" fill="url(#ballR)" /><circle cx="385" cy="654" r="7" fill="#fff" opacity=".85" />
+    <line x1="280" y1="640" x2="280" y2="660" stroke="#3a2a10" stroke-width="3" /><circle cx="280" cy="684" r="24" fill="url(#ballP)" /><circle cx="271" cy="675" r="6" fill="#fff" opacity=".85" />
+  </g>
+  <!-- the felt star -->
+  <g filter="url(#felt)"><path d="M280 0 L 297 34 L 335 39 L 307 64 L 314 102 L 280 84 L 246 102 L 253 64 L 225 39 L 263 34 Z" fill="url(#star)" /></g>
+</svg>

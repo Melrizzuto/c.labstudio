@@ -18,11 +18,13 @@ css = '''
       #cver { position: absolute; left: 130px; top: 300px; padding: 10px 18px; border-radius: 12px; background: var(--ink); color: var(--sun); font: 700 30px/1 "Space Mono", monospace; }
       #send { position: absolute; left: 330px; top: 1195px; padding: 22px 40px; border-radius: 999px; background: var(--ink); color: #fff8ea; font: 800 40px/1 "Outfit", sans-serif; opacity: 0; }
       /* the Christmas corner */
-      #sXmas { background: #1f3b2c radial-gradient(rgba(255,255,255,.1) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
-      #tree { position: absolute; left: 90px; top: 330px; width: 520px; height: 900px; }
-      #ball { position: absolute; left: 380px; top: 640px; z-index: 5; width: 70px; height: 70px; border-radius: 50%; background: #ffc21a; border: 6px solid var(--ink); }
-      #gift { position: absolute; left: 470px; top: 930px; width: 470px; height: 300px; background: #d6281c; border: 8px solid var(--ink); border-radius: 12px; }
-      #gift::before { content: ""; position: absolute; left: 50%; top: -8px; bottom: -8px; width: 60px; margin-left: -30px; background: #ffc21a; border-left: 6px solid var(--ink); border-right: 6px solid var(--ink); }
+      #sXmas { background: radial-gradient(ellipse 70% 55% at 40% 55%, #2f5a40 0%, #1b3526 60%, #12241a 100%); }
+      #sXmas::after { content: ""; position: absolute; left: 0; right: 0; top: 1180px; bottom: 0; background: linear-gradient(#5a3a22, #2a1a0e); opacity: .6; }
+      #tree { position: absolute; left: 60px; top: 300px; width: 560px; height: 940px; }
+      #ball { position: absolute; left: 390px; top: 650px; z-index: 5; width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff1a8, #ffc21a 50%, #b37a00); box-shadow: 0 6px 10px rgba(0,0,0,.35); }
+      #gift { position: absolute; left: 470px; top: 930px; width: 470px; height: 300px; border-radius: 18px; background: linear-gradient(160deg, #ff6a5a 0%, #e0352a 40%, #a51f17 100%); box-shadow: inset -24px -20px 40px rgba(0,0,0,.28), inset 18px 16px 30px rgba(255,255,255,.18), 0 26px 30px -14px rgba(0,0,0,.55); z-index: 1; }
+      #gift::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 64px; margin-left: -32px; z-index: 1; background: linear-gradient(90deg, #c98d00, #ffd75a 45%, #ffc21a 60%, #b07a00); }
+      #gift::after { content: ""; position: absolute; left: -10px; right: -10px; top: -6px; height: 74px; border-radius: 16px; background: linear-gradient(#ff7b6c, #e0352a); box-shadow: 0 10px 14px rgba(0,0,0,.28); }
       #bow { position: absolute; left: 640px; top: 700px; width: 220px; height: 147px; z-index: 5; transform-origin: 50% 80%; }
       #catBow { position: absolute; left: 520px; top: 800px; width: 400px; height: 163px; z-index: 4; }
       #catBow img { width: 100%; height: 100%; }
@@ -31,13 +33,8 @@ css = '''
       #okX small { display: block; font: 700 40px/1 "Caveat", cursive; text-transform: none; color: #fff3df; margin-top: 6px; }
       #note { position: absolute; left: 130px; top: 1215px; font: 700 28px/1 "Space Mono", monospace; color: #fff3df; opacity: 0; z-index: 6; }
 '''
-tree = '''<svg id="tree" viewBox="0 0 520 900" data-layout-ignore><g stroke="#16130f" stroke-width="8" stroke-linejoin="round">
-  <polygon points="260,40 400,300 120,300" fill="#2e9e3e"/><polygon points="260,200 450,520 70,520" fill="#2e9e3e"/><polygon points="260,400 500,780 20,780" fill="#2e9e3e"/>
-  <rect x="220" y="780" width="80" height="100" fill="#8a5a2b"/></g>
-  <text x="260" y="60" text-anchor="middle" font-size="90">⭐</text>
-  <circle cx="200" cy="270" r="22" fill="#d6281c" stroke="#16130f" stroke-width="6"/><circle cx="330" cy="460" r="22" fill="#f25aa6" stroke="#16130f" stroke-width="6"/>
-  <circle cx="160" cy="700" r="24" fill="#1d3fd1" stroke="#16130f" stroke-width="6"/><circle cx="380" cy="720" r="24" fill="#d6281c" stroke="#16130f" stroke-width="6"/></svg>'''
-bow = '''<svg id="bow" viewBox="0 0 300 200" data-layout-ignore><g stroke="#16130f" stroke-width="8" stroke-linejoin="round" fill="#ffc21a">
+tree = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tree.svg.txt')).read()
+bow = '''<svg id="bow" viewBox="0 0 300 200" data-layout-ignore><defs><radialGradient id="bowG" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#fff1a8"/><stop offset=".55" stop-color="#ffc21a"/><stop offset="1" stop-color="#b37a00"/></radialGradient></defs><g filter="url(#felt)" fill="url(#bowG)" stroke="#9a6a00" stroke-width="3">
   <path d="M150 120 C 60 20, 0 60, 30 130 C 60 180, 120 150, 150 120 Z"/><path d="M150 120 C 240 20, 300 60, 270 130 C 240 180, 180 150, 150 120 Z"/>
   <path d="M140 120 L 100 200 L 130 190 Z"/><path d="M160 120 L 200 200 L 170 190 Z"/><circle cx="150" cy="120" r="26"/></g></svg>'''
 body = '\n'.join([
