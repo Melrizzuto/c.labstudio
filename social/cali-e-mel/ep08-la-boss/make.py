@@ -40,7 +40,7 @@ css = '''
 '''
 body = '\n'.join([
   chat('sChat1', 0, 3.4, bub('b1', 600, 'Mi serve il packaging delle crocchette. <em>Per ieri.</em> 🐟', 'bub big', hidden=False), status='Boss · online', tease='guarda fino alla fine 👀', peek_id='pk1', **CALI),
-  react('sR1', 3.4, 2.4, 'Sì,<br /><em>Boss.</em>'),
+  react('sR1', 3.4, 2.4, 'Sì,<br /><em>Boss.</em>', sweat=True),
   f'''      <div id="sPack" class="clip" data-start="5.8" data-duration="19.8" data-layout-allow-overlap style="z-index: 1">
         <p id="ver" class="stamp">v1</p><p id="clock">03:12</p>
         <div id="pack" class="box"><div id="packTint"></div><div id="band"></div><span id="brand">CROCC</span>
@@ -72,7 +72,7 @@ timeline = '''
       /* 1 · the boss's brief, frame 0 */
       peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.0);
       /* 2 · "yes, boss" */
-      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.12, duration: 2.4, ease: "power1.inOut" }, 3.4); blurIn("#sR1B", 3.8);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.12, duration: 2.4, ease: "power1.inOut" }, 3.4); blurIn("#sR1B", 3.8); sweat("sR1", 4.1);
       /* 3 · v1, made fast and well */
       tl.fromTo("#pack", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 5.8);
       tl.fromTo("#brand", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.25 }, 6.55);

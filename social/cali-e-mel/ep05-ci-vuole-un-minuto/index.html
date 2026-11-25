@@ -88,6 +88,14 @@
       .win .bar i { width: 22px; height: 22px; border-radius: 50%; border: 4px solid var(--ink); display: block; }
       .win .bar b { margin-left: 12px; font: 700 28px/1 "Space Mono", monospace; }
 
+      /* Mel's own messages: on the right, pink */
+      .bub.me { left: auto; right: 192px; max-width: 640px; background: #ffd3e8; border-radius: 46px 46px 10px 46px; transform-origin: 100% 100%; }
+      .bub.me.old { opacity: 0.38; }
+      /* the AI's avatar: a plain ink badge with a star, no brand logo */
+      .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
+
+      .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+
 
       #sDay { background: #f7efe1; }
       #sky { position: absolute; inset: 0; background: #f7efe1; }
@@ -134,12 +142,13 @@
             <feComposite in="rough" in2="mask" operator="in" />
           </filter></defs></svg>
         <div id="sChat1" class="clip dots" data-start="0" data-duration="3.6">
-        <p id="sChat1T" class="tease">guarda fino alla fine 👀</p><div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
+        <p id="sChat1T" class="tease">guarda fino alla fine 👀</p><div class="who"><div class="av ">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
         <div id="b1" class="bub big" style="top: 600px">Una modifica veloce veloce. <em>Ci vuole un minuto</em> ⏱️</div>
         <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
       </div>
       <div id="sR1" class="clip react" data-start="3.6" data-duration="2.8">
-        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /></div>
+        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /><svg id="sR1S" class="sweat" viewBox="0 0 60 84" data-layout-ignore><defs><radialGradient id="sR1Sg" cx="38%" cy="62%" r="70%"><stop offset="0" stop-color="#e6f6ff"/><stop offset=".55" stop-color="#8fd3f5"/><stop offset="1" stop-color="#3f9bd1"/></radialGradient></defs>
+  <path d="M30 2 C 22 22, 4 40, 4 56 A 26 26 0 0 0 56 56 C 56 40, 38 22, 30 2 Z" fill="url(#sR1Sg)" stroke="#2c7fb3" stroke-width="2.5"/><ellipse cx="20" cy="54" rx="6" ry="10" fill="#fff" opacity=".85"/></svg></div>
         <div id="sR1B" class="band2" style="opacity: 0">Un.<br /><em>Minuto.</em></div>
       </div>
       <div id="sDay" class="clip" data-start="6.4" data-duration="15.6" data-layout-allow-overlap>
@@ -178,7 +187,7 @@
         <div id="sR2B" class="band2" style="opacity: 0">23:58.<br /><em>Il minuto più lungo.</em></div>
       </div>
       <div id="sChat2" class="clip dots" data-start="25.6" data-duration="7.8">
-        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>sta scrivendo…</small></div></div>
+        <div class="who"><div class="av ">👔</div><div><b>Il Cliente</b><small>sta scrivendo…</small></div></div>
         <div id="t5" class="typing" style="top: 560px; opacity: 0"><i></i><i></i><i></i></div><div id="b2" class="bub" style="top: 560px; opacity: 0">Grazie mille!! ❤️</div><div id="b3" class="bub" style="top: 760px; opacity: 0">Domattina un'altra cosina veloce? <em>Ci vuole un minuto</em> 🙏</div>
         <div id="pk2" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
       </div>
@@ -188,7 +197,7 @@
         <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
       </div>
       <!-- music: "Hidden Agenda", Kevin MacLeod (incompetech.com), CC BY 4.0 -->
-      <audio id="aMusic" class="clip" data-start="0" data-duration="37.4" src="assets/music.mp3" data-volume="0.38" data-fade-out="2"></audio>
+      <audio id="aMusic" class="clip" data-start="0" data-duration="37.4" src="assets/music.mp3" data-volume="0.38" data-fade-in="0.6" data-fade-out="2"></audio>
       <audio id="a1" class="clip" data-start="0.06" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
       <audio id="a2" class="clip" data-start="3.5" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.55"></audio>
       <audio id="a3" class="clip" data-start="6.3" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.55"></audio>
@@ -234,6 +243,11 @@
         [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
         tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
       };
+      /* Mel's sweat drop: it appears on her temple and slides down a little */
+      const sweat = (scene, at) => {
+        tl.fromTo(`#${scene}S`, { opacity: 0, scale: 0.4, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.5)" }, at);
+        tl.to(`#${scene}S`, { y: 70, duration: 1.6, ease: "power1.in" }, at + 0.4);
+      };
       const yawn = (scene, from, to) => {
         tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);
         tl.set(`#${scene}Y`, { opacity: 0 }, to); tl.set(`#${scene}A`, { opacity: 1 }, to);
@@ -243,7 +257,7 @@
       peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.2);
       tl.fromTo("#sChat1T", { opacity: 1 }, { opacity: 0.35, duration: 0.25, yoyo: true, repeat: 1 }, 2.2);
       /* 2 · "one. minute." */
-      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.14, duration: 2.8, ease: "power1.inOut" }, 3.6); blurIn("#sR1B", 4.2);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.14, duration: 2.8, ease: "power1.inOut" }, 3.6); blurIn("#sR1B", 4.2); sweat("sR1", 4.6);
       /* 3 · the day goes by: the sky turns from morning to sunset to night, the sun goes down */
       tl.fromTo("#files", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 6.4);
       tl.to("#sky", { backgroundColor: "#ffc08a", duration: 7, ease: "none" }, 8.0);

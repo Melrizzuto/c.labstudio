@@ -16,7 +16,7 @@ body = '\n'.join([
   react('sR1', 5, 2.6, 'Ok.<br /><em>Proviamo.</em>'),
   chat('sChat2', 7.6, 5.4, bub('m2', 560, 'Aspetta… in realtà è <em>troppo grande.</em>', 'bub me') + typing_dots('t2', 900) + bub('a2', 900, '<em>Hai perfettamente ragione!</em> 🙌 È decisamente troppo grande.'), status='sta pensando…', **AI),
   chat('sChat3', 13, 6.4, bub('m3', 560, 'E se ti dicessi che <em>è giusto così?</em> 🤨', 'bub me') + typing_dots('t3', 900) + bub('a3', 900, '<em>Hai perfettamente ragione!</em> ✨ È perfetto così.'), status='sta pensando…', **AI),
-  react('sR2', 19.4, 3.2, 'Ha ragione. Sempre.<br /><em>Su tutto.</em>'),
+  react('sR2', 19.4, 3.2, 'Ha ragione. Sempre.<br /><em>Su tutto.</em>', sweat=True),
   f'''      <div id="sChat4" class="clip" data-start="22.6" data-duration="4.8">
         <div id="lid" class="dots">
           {who('online', **AI)}
@@ -50,7 +50,7 @@ timeline = '''
       pop("#m3", 13.1); typing("#t3", 14.2, 2.2); pop("#a3", 16.4);
       tl.to("#a3", { x: 8, duration: 0.05, yoyo: true, repeat: 3 }, 16.75);
       /* 5 · slow push-in, the realisation */
-      tl.fromTo("#sR2F", { scale: 1 }, { scale: 1.14, duration: 3.2, ease: "power1.inOut" }, 19.4); blurIn("#sR2B", 19.9);
+      tl.fromTo("#sR2F", { scale: 1 }, { scale: 1.14, duration: 3.2, ease: "power1.inOut" }, 19.4); blurIn("#sR2B", 19.9); sweat("sR2", 20.3);
       /* 6 · ask the real boss: the paw shuts the laptop */
       pop("#m5", 22.7);
       tl.fromTo("#pawX", { x: 560, y: 260, rotation: 0 }, { x: 0, y: 0, duration: 0.4, ease: "power2.out" }, 23.95);

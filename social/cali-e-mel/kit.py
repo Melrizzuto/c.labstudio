@@ -35,6 +35,11 @@ def _page(duration, body, timeline, extra_css=''):
         [0, 1, 2].forEach((i) => tl.fromTo(`${{sel}} i:nth-child(${{i + 1}})`, {{ y: 0 }}, {{ y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }}, at + 0.2 + i * 0.14));
         tl.to(sel, {{ opacity: 0, duration: 0.1 }}, at + len - 0.05);
       }};
+      /* Mel's sweat drop: it appears on her temple and slides down a little */
+      const sweat = (scene, at) => {{
+        tl.fromTo(`#${{scene}}S`, {{ opacity: 0, scale: 0.4, y: -10 }}, {{ opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.5)" }}, at);
+        tl.to(`#${{scene}}S`, {{ y: 70, duration: 1.6, ease: "power1.in" }}, at + 0.4);
+      }};
       const yawn = (scene, from, to) => {{
         tl.set(`#${{scene}}Y`, {{ opacity: 1 }}, from); tl.set(`#${{scene}}A`, {{ opacity: 0 }}, from);
         tl.set(`#${{scene}}Y`, {{ opacity: 0 }}, to); tl.set(`#${{scene}}A`, {{ opacity: 1 }}, to);
@@ -69,11 +74,14 @@ def old(top, html):
 def typing_dots(id, top):
     return f'<div id="{id}" class="typing" style="top: {top}px; opacity: 0"><i></i><i></i><i></i></div>'
 
-def react(id, start, dur, band_html, night=False, yawn=False, band_cls='band2'):
+SWEAT = '''<svg id="{id}S" class="sweat" viewBox="0 0 60 84" data-layout-ignore><defs><radialGradient id="{id}Sg" cx="38%" cy="62%" r="70%"><stop offset="0" stop-color="#e6f6ff"/><stop offset=".55" stop-color="#8fd3f5"/><stop offset="1" stop-color="#3f9bd1"/></radialGradient></defs>
+  <path d="M30 2 C 22 22, 4 40, 4 56 A 26 26 0 0 0 56 56 C 56 40, 38 22, 30 2 Z" fill="url(#{id}Sg)" stroke="#2c7fb3" stroke-width="2.5"/><ellipse cx="20" cy="54" rx="6" ry="10" fill="#fff" opacity=".85"/></svg>'''
+
+def react(id, start, dur, band_html, night=False, yawn=False, band_cls='band2', sweat=False):
     bg = 'night' if night else 'react'
     imgs = f'<img id="{id}A" src="assets/mel-felt.png" alt="" />' + (f'<img id="{id}Y" src="assets/mel-felt-yawn.png" alt="" style="opacity: 0" />' if yawn else '')
     return f'''      <div id="{id}" class="clip {bg}" data-start="{start}" data-duration="{dur}">
-        <div id="{id}F" class="face">{imgs}</div>
+        <div id="{id}F" class="face">{imgs}{SWEAT.format(id=id) if sweat else ''}</div>
         <div id="{id}B" class="{band_cls}" style="opacity: 0">{band_html}</div>
       </div>'''
 

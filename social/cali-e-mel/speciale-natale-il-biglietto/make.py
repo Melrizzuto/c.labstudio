@@ -43,7 +43,7 @@ bow = '''<svg id="bow" viewBox="0 0 300 200" data-layout-ignore><defs><radialGra
   <path d="M140 120 L 100 200 L 130 190 Z"/><path d="M160 120 L 200 200 L 170 190 Z"/><circle cx="150" cy="120" r="26"/></g></svg>'''
 body = '\n'.join([
   chat('sChat1', 0, 3.4, bub('b1', 600, 'Mi serve il <em>biglietto di Natale</em> dello studio. 🎄', 'bub big', hidden=False), status='Boss · online', tease='guarda fino alla fine 👀', peek_id='pk1', **CALI),
-  react('sR1', 3.4, 2.4, 'Tre giorni.<br /><em>E una Boss.</em>'),
+  react('sR1', 3.4, 2.4, 'Tre giorni.<br /><em>E una Boss.</em>', sweat=True),
   chat('sChat2', 5.8, 4.8, bub('b2', 480, 'Natalizio, <em>ma non troppo.</em>') + bub('b3', 720, 'Con la neve, <em>ma che non sembri freddo.</em> ❄️') + bub('b4', 990, 'E mettici me. <em>Più grande.</em>'), status='Boss · online', **CALI),
   f'''      <div id="sCard" class="clip" data-start="10.6" data-duration="5" data-layout-allow-overlap>
         <p id="cver" class="stamp">v1</p>
@@ -54,8 +54,7 @@ body = '\n'.join([
   f'''      <div id="sXmas" class="clip" data-start="20" data-duration="6">
         <img id="scene" src="assets/scena-natale.jpg" alt="" data-layout-ignore />
         <div id="glows" data-layout-ignore>{''.join(f'<i style="left:{x}px;top:{y}px"></i>' for x, y in GLOWS)}</div>
-        <div id="ball"></div>
-        <div id="catBow" data-layout-ignore><img src="assets/cali-fusa.png" alt="" />{bow}</div>
+        <div id="catBow" data-layout-ignore><img src="assets/cali-fusa.png" alt="" /></div>
         <p id="okX">Approvato<small>il fiocco.</small></p>
         <p id="note">(il biglietto non l'ha aperto)</p>
       </div>''',
@@ -71,7 +70,7 @@ body = '\n'.join([
 snow_tl = '\n'.join(f'      tl.fromTo("#snow i:nth-child({i + 1})", {{ y: -60 }}, {{ y: 820, duration: {3.2 + (i % 5) * 0.4}, ease: "none" }}, {round(10.6 + (i % 7) * 0.2, 2)});' for i in range(26))
 timeline = '''
       peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.0);
-      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.12, duration: 2.4, ease: "power1.inOut" }, 3.4); blurIn("#sR1B", 3.8);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.12, duration: 2.4, ease: "power1.inOut" }, 3.4); blurIn("#sR1B", 3.8); sweat("sR1", 4.1);
       pop("#b2", 6.0); pop("#b3", 7.3); pop("#b4", 8.8);
       tl.fromTo("#card", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 10.6);
 ''' + snow_tl + '''
@@ -91,9 +90,6 @@ timeline = '''
       tl.fromTo("#scene", { scale: 1.06 }, { scale: 1, duration: 6, ease: "power1.out" }, 20);
       /* the Christmas corner: Calì in the bow, a bauble on the floor */
       tl.fromTo("#catBow", { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 20.4);
-      tl.to("#bow", { rotation: -10, duration: 0.15, yoyo: true, repeat: 5, ease: "sine.inOut" }, 20.9);
-      tl.to("#ball", { y: 420, x: -60, rotation: 220, duration: 0.55, ease: "power2.in" }, 21.4);
-      tl.to("#ball", { y: 380, duration: 0.15, yoyo: true, repeat: 1, ease: "power1.out" }, 21.95);
       tl.fromTo("#okX", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.22, ease: "power4.in" }, 22.85);
       tl.to("#sXmas", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 23.07);
       tl.to("#note", { opacity: 1, duration: 0.3 }, 23.8);

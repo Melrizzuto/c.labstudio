@@ -94,6 +94,8 @@
       /* the AI's avatar: a plain ink badge with a star, no brand logo */
       .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
 
+      .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+
 
       #sChat2, #sChat3, #sChat4, #sBox, #sEnd { z-index: 2; }
       .av.cat { padding: 0; overflow: hidden; background: #fff8ea; }
@@ -164,7 +166,8 @@
         <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
       </div>
       <div id="sR1" class="clip react" data-start="3.4" data-duration="2.4">
-        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /></div>
+        <div id="sR1F" class="face"><img id="sR1A" src="assets/mel-felt.png" alt="" /><svg id="sR1S" class="sweat" viewBox="0 0 60 84" data-layout-ignore><defs><radialGradient id="sR1Sg" cx="38%" cy="62%" r="70%"><stop offset="0" stop-color="#e6f6ff"/><stop offset=".55" stop-color="#8fd3f5"/><stop offset="1" stop-color="#3f9bd1"/></radialGradient></defs>
+  <path d="M30 2 C 22 22, 4 40, 4 56 A 26 26 0 0 0 56 56 C 56 40, 38 22, 30 2 Z" fill="url(#sR1Sg)" stroke="#2c7fb3" stroke-width="2.5"/><ellipse cx="20" cy="54" rx="6" ry="10" fill="#fff" opacity=".85"/></svg></div>
         <div id="sR1B" class="band2" style="opacity: 0">Sì,<br /><em>Boss.</em></div>
       </div>
       <div id="sPack" class="clip" data-start="5.8" data-duration="19.8" data-layout-allow-overlap style="z-index: 1">
@@ -245,6 +248,11 @@
         [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
         tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
       };
+      /* Mel's sweat drop: it appears on her temple and slides down a little */
+      const sweat = (scene, at) => {
+        tl.fromTo(`#${scene}S`, { opacity: 0, scale: 0.4, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.5)" }, at);
+        tl.to(`#${scene}S`, { y: 70, duration: 1.6, ease: "power1.in" }, at + 0.4);
+      };
       const yawn = (scene, from, to) => {
         tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);
         tl.set(`#${scene}Y`, { opacity: 0 }, to); tl.set(`#${scene}A`, { opacity: 1 }, to);
@@ -253,7 +261,7 @@
       /* 1 · the boss's brief, frame 0 */
       peek("#pk1", 0.3); tl.fromTo("#b1 em", { color: "#16130f" }, { color: "#c81d74", duration: 0.3 }, 1.0);
       /* 2 · "yes, boss" */
-      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.12, duration: 2.4, ease: "power1.inOut" }, 3.4); blurIn("#sR1B", 3.8);
+      tl.fromTo("#sR1F", { scale: 1 }, { scale: 1.12, duration: 2.4, ease: "power1.inOut" }, 3.4); blurIn("#sR1B", 3.8); sweat("sR1", 4.1);
       /* 3 · v1, made fast and well */
       tl.fromTo("#pack", { scale: 1.06, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }, 5.8);
       tl.fromTo("#brand", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.25 }, 6.55);

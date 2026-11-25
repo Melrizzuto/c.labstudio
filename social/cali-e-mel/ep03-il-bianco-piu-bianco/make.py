@@ -1,5 +1,5 @@
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))  # kit.py
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from kit import *
 
 NAME = "sfondo_PIU_BIANCO.png"
@@ -26,7 +26,7 @@ css = '''
 '''
 body = '\n'.join([
   chat('sChat1', 0, 3.6, bub('b1', 600, 'Lo sfondo bianco… <em>lo fai più bianco?</em> 🤍', 'bub big', hidden=False), tease='guarda fino alla fine 👀', peek_id='pk1'),
-  react('sR1', 3.6, 2.8, 'Più bianco.<br /><em>Del bianco.</em>'),
+  react('sR1', 3.6, 2.8, 'Più bianco.<br /><em>Del bianco.</em>', sweat=True),
   f'''      <div id="sHex" class="clip" data-start="6.4" data-duration="5.8" style="background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px">
         <div id="hexWin" class="win"><div class="bar"><i></i><i></i><i></i><b>colore sfondo</b></div>
           <div class="body"><div class="white"></div>
@@ -63,7 +63,7 @@ timeline = f'''
       peek("#pk1", 0.3); tl.fromTo("#b1 em", {{ color: "#16130f" }}, {{ color: "#c81d74", duration: 0.3 }}, 1.2);
       tl.fromTo("#sChat1T", {{ opacity: 1 }}, {{ opacity: 0.35, duration: 0.25, yoyo: true, repeat: 1 }}, 2.2);
       /* 2 · slow push-in */
-      tl.fromTo("#sR1F", {{ scale: 1 }}, {{ scale: 1.14, duration: 2.8, ease: "power1.inOut" }}, 3.6); blurIn("#sR1B", 4.2);
+      tl.fromTo("#sR1F", {{ scale: 1 }}, {{ scale: 1.14, duration: 2.8, ease: "power1.inOut" }}, 3.6); blurIn("#sR1B", 4.2); sweat("sR1", 4.6);
       /* 3 · one more F: not a colour */
       tl.fromTo("#hexWin", {{ scale: 1.08, opacity: 0 }}, {{ scale: 1, opacity: 1, duration: 0.5, ease: "expo.out" }}, 6.4);
       tl.set("#h1", {{ opacity: 0 }}, 7.9); tl.set("#h2", {{ opacity: 1 }}, 7.9);
