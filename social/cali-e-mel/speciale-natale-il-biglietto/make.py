@@ -6,7 +6,13 @@ CALI = dict(name='Calì', avatar='<img src="assets/cali-av.png" alt="" />', av_c
 snow = ''.join(f'<i style="left:{(i * 137) % 520 + 10}px; top:{(i * 89) % 700}px; animation-delay:0s"></i>' for i in range(26))
 GLOWS = [(778, 819), (860, 832), (734, 999), (932, 1030), (572, 972), (526, 1179), (634, 1210), (832, 1269), (986, 1179), (454, 1386), (648, 1454), (871, 1462), (1040, 1422)]
 css = '''
-      #sChat2, #sChat3, #sXmas, #sEnd { z-index: 2; }
+      #sChat2, #sChat3, #sRoom, #sXmas, #sEnd { z-index: 2; }
+      #room { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #walker { position: absolute; left: 0; top: 1240px; width: 560px; transform-origin: 50% 100%; }
+      #swat { position: absolute; left: 90px; top: 960px; width: 470px; z-index: 4; }
+      #swat img { width: 100%; transform-origin: 50% 100%; }
+      .bub.cat { left: 110px; z-index: 5; }
+      .bub.cat.big { font-size: 74px; }
       #endMel { top: 1100px; }
       .av.cat { padding: 0; overflow: hidden; background: #fff8ea; } .av.cat img { width: 100%; height: 100%; display: block; }
       #sCard { background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
@@ -32,10 +38,10 @@ css = '''
       #catBow img { position: absolute; inset: 0; width: 100%; height: 100%; }
 
       #lights .bulb { mix-blend-mode: screen; transform-box: fill-box; transform-origin: center; }
-      #okX { position: absolute; left: 110px; top: 360px; padding: 16px 30px 20px; border: 10px solid #3be36b; border-radius: 22px; color: #3be36b; background: rgba(15,30,20,.88);
+      #okX { position: absolute; left: 300px; top: 860px; padding: 16px 30px 20px; border: 10px solid #3be36b; border-radius: 22px; color: #3be36b; background: rgba(15,30,20,.88);
         font: 900 76px/1 "Outfit", sans-serif; text-transform: uppercase; z-index: 6; opacity: 0; }
       #okX small { display: block; font: 700 40px/1 "Caveat", cursive; text-transform: none; color: #fff3df; margin-top: 6px; }
-      #note { position: absolute; left: 120px; top: 600px; font: 700 28px/1 "Space Mono", monospace; color: #fff3df; opacity: 0; z-index: 6; }
+      #note { position: absolute; left: 330px; top: 1095px; padding: 10px 16px; border-radius: 12px; background: rgba(15,30,20,.88); font: 700 28px/1 "Space Mono", monospace; color: #fff3df; opacity: 0; z-index: 6; }
 '''
 tree = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tree.svg.txt')).read()
 bow = '''<svg id="bow" viewBox="0 0 300 200" data-layout-ignore><defs><radialGradient id="bowG" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#fff1a8"/><stop offset=".55" stop-color="#ffc21a"/><stop offset="1" stop-color="#b37a00"/></radialGradient></defs><g filter="url(#felt)" fill="url(#bowG)" stroke="#9a6a00" stroke-width="3">
@@ -51,21 +57,29 @@ body = '\n'.join([
         <div id="send">Invia alla Boss ✉️</div>
       </div>''',
   chat('sChat3', 15.6, 4.4, typing_dots('t3', 560) + '<p id="left" style="position:absolute;left:130px;top:560px;font:700 34px/1.3 \'Space Mono\',monospace;color:#8a8178;opacity:0">🐾 la Boss ha lasciato la chat</p>', status='sta scrivendo…', peek_id='pk3', **CALI),
-  f'''      <div id="sXmas" class="clip" data-start="20" data-duration="6">
+  f'''      <div id="sRoom" class="clip" data-start="20" data-duration="4">
+        <img id="room" src="assets/stanza-natale.jpg" alt="" data-layout-ignore />
+        <img id="walker" src="assets/cali-cammina.png" alt="" data-layout-ignore />
+      </div>''',
+  f'''      <div id="sXmas" class="clip" data-start="24" data-duration="7" data-layout-allow-overlap>
         <img id="scene" src="assets/scena-natale.jpg" alt="" data-layout-ignore />
         <div id="glows" data-layout-ignore>{''.join(f'<i style="left:{x}px;top:{y}px"></i>' for x, y in GLOWS)}</div>
-        <div id="catBow" data-layout-ignore><img src="assets/cali-fusa.png" alt="" /></div>
-        <p id="okX">Approvato<small>il fiocco.</small></p>
+        <div id="swat" data-layout-ignore><img src="assets/cali-zampata.png" alt="" /></div>
+        {bub('cb1', 300, 'Il biglietto? <em>Chi se ne frega…</em>', 'bub cat')}
+        {bub('cb2', 580, 'qui ci sono le <em>PALLINE!</em> 🎄', 'bub cat big')}
+        <p id="okX">Approvato<small>le palline.</small></p>
         <p id="note">(il biglietto non l'ha aperto)</p>
       </div>''',
-  end(26, 4, 'Buon Natale da c.lab studio 🎄<br />e dalla <em>Boss.</em>', 'speciale', 'anche il tuo gatto preferisce il fiocco? 👇'),
-  music(30, '"Deck the Halls B"', 0.36),
+  end(31, 4, 'Buon Natale da c.lab studio 🎄<br />e dalla <em>Boss.</em>', 'speciale', 'anche il tuo gatto gioca con le palline? 👇'),
+  music(35, '"Deck the Halls B"', 0.36),
   sfx('pop.wav', 0.06), sfx('whoosh1.wav', 3.3, 0.55), sfx('whoosh2.wav', 5.7, 0.55),
   sfx('pop.wav', 6.05, 0.85), sfx('pop.wav', 7.35, 0.9), sfx('pop.wav', 8.85, 0.95),
   sfx('whoosh1.wav', 10.5, 0.5), sfx('pop.wav', 11.3, 0.8), sfx('tick.wav', 12.4, 0.5), sfx('tick.wav', 13.6, 0.5), sfx('tick.wav', 14.6, 0.6), sfx('whoosh2.wav', 15.0, 0.55),
   sfx('tick.wav', 16.3, 0.45), sfx('tick.wav', 17.1, 0.5), sfx('tick.wav', 17.9, 0.45),
-  sfx('whoosh1.wav', 19.9, 0.5), sfx('cat-trill.mp3', 20.6, 0.85), sfx('knock1.wav', 21.95, 0.9), sfx('knock2.wav', 22.25, 0.7),
-  sfx('pop.wav', 23.05, 1), sfx('cat-purr.mp3', 23.3, 0.9), sfx('cat-meow.mp3', 26.4, 0.85),
+  sfx('whoosh1.wav', 19.9, 0.5), sfx('cat-trill.mp3', 20.5, 0.8),
+  sfx('whoosh2.wav', 23.9, 0.5), sfx('pop.wav', 24.75, 0.95), sfx('pop.wav', 26.05, 1),
+  sfx('knock1.wav', 26.9, 0.6), sfx('knock2.wav', 27.4, 0.6), sfx('knock1.wav', 27.9, 0.6), sfx('cat-purr.mp3', 27.0, 0.8),
+  sfx('pop.wav', 28.65, 1), sfx('cat-meow.mp3', 31.4, 0.85),
 ])
 snow_tl = '\n'.join(f'      tl.fromTo("#snow i:nth-child({i + 1})", {{ y: -60 }}, {{ y: 820, duration: {3.2 + (i % 5) * 0.4}, ease: "none" }}, {round(10.6 + (i % 7) * 0.2, 2)});' for i in range(26))
 timeline = '''
@@ -81,17 +95,18 @@ timeline = '''
       tl.to("#card", { y: -900, rotation: -8, duration: 0.5, ease: "power3.in" }, 15.0);
       peek("#pk3", 15.8); typing("#t3", 16.0, 2.4);
       tl.to("#left", { opacity: 1, duration: 0.3 }, 18.6);
-      /* the lights twinkle, each at its own pace */
-      document.querySelectorAll("#lights .bulb").forEach((b, i) => {
-        const d = 0.35 + (i % 4) * 0.12;
-        tl.fromTo(b, { opacity: 0.35, scale: 0.85 }, { opacity: 1, scale: 1.15, duration: d, yoyo: true, repeat: Math.floor(6 / d) - 1, ease: "sine.inOut" }, 20 + (i % 5) * 0.11);
-      });
-      document.querySelectorAll("#glows i").forEach((g, i) => { const d = 0.4 + (i % 4) * 0.13; tl.fromTo(g, { opacity: 0.25 }, { opacity: 1, duration: d, yoyo: true, repeat: Math.floor(6 / d) - 1, ease: "sine.inOut" }, 20 + (i % 5) * 0.1); });
-      tl.fromTo("#scene", { scale: 1.06 }, { scale: 1, duration: 6, ease: "power1.out" }, 20);
-      /* the Christmas corner: Calì in the bow, a bauble on the floor */
-      tl.fromTo("#catBow", { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 20.4);
-      tl.fromTo("#okX", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.22, ease: "power4.in" }, 22.85);
-      tl.to("#sXmas", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 23.07);
-      tl.to("#note", { opacity: 1, duration: 0.3 }, 23.8);
-''' + end_tl(26)
-open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'index.html'), 'w').write(page(30, body, timeline, css))
+      /* the Boss leaves: she walks across Mel's room toward the tree */
+      tl.fromTo("#room", { scale: 1.04 }, { scale: 1, duration: 4, ease: "power1.out" }, 20);
+      tl.fromTo("#walker", { x: -560, y: 0, scale: 1 }, { x: 520, y: -260, scale: 0.62, duration: 3.6, ease: "none" }, 20.2);
+      tl.fromTo("#walker", { rotation: -3 }, { rotation: 3, duration: 0.22, yoyo: true, repeat: 15, ease: "sine.inOut" }, 20.2);
+      /* the tree: who cares about the card */
+      document.querySelectorAll("#glows i").forEach((g, i) => { const d = 0.4 + (i % 4) * 0.13; tl.fromTo(g, { opacity: 0.25 }, { opacity: 1, duration: d, yoyo: true, repeat: Math.floor(7 / d) - 1, ease: "sine.inOut" }, 24 + (i % 5) * 0.1); });
+      tl.fromTo("#scene", { scale: 1.06 }, { scale: 1, duration: 7, ease: "power1.out" }, 24);
+      tl.fromTo("#swat", { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.6)" }, 24.1);
+      pop("#cb1", 24.7); pop("#cb2", 26.0);
+      [26.85, 27.35, 27.85].forEach((t) => tl.to("#swat img", { rotation: -7, duration: 0.12, yoyo: true, repeat: 1, ease: "power2.out" }, t));
+      tl.fromTo("#okX", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.22, ease: "power4.in" }, 28.6);
+      tl.to("#sXmas", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 28.82);
+      tl.to("#note", { opacity: 1, duration: 0.3 }, 29.4);
+''' + end_tl(31)
+open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'index.html'), 'w').write(page(35, body, timeline, css))

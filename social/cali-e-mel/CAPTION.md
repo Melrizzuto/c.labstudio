@@ -259,10 +259,11 @@ La Boss voleva il biglietto di Natale dello studio. 🎄
 «Con la neve, ma che non sembri freddo.»
 «E mettici me. Più grande.»
 
-Nove versioni dopo… ha approvato il fiocco. 🎀
+Nove versioni dopo… ha lasciato la chat.
+L'abbiamo trovata sotto l'albero. 🎄
 
 Buon Natale da c.lab studio (e dalla Boss).
-Anche il tuo gatto preferisce il fiocco al regalo? 👇
+Anche il tuo gatto gioca con le palline dell'albero? 👇
 
 Calì & Mel · speciale Natale
 Musica: "Deck the Halls B" Kevin MacLeod (incompetech.com), CC BY 4.0
@@ -272,7 +273,7 @@ Musica: "Deck the Halls B" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 **TikTok:**
 ```
-Il biglietto di Natale per la Boss 🎄 9 versioni… e ha approvato il fiocco 🎀 Il tuo gatto è così? 👇
+Il biglietto di Natale per la Boss 🎄 9 versioni… «chi se ne frega, qui ci sono le palline!» Il tuo gatto è così? 👇
 Musica: "Deck the Halls B" Kevin MacLeod (incompetech.com), CC BY 4.0
 #natale #gatti #designhumor #catsoftiktok #calìemel
 ```
@@ -280,7 +281,7 @@ Musica: "Deck the Halls B" Kevin MacLeod (incompetech.com), CC BY 4.0
 **LinkedIn:**
 ```
 Il nostro biglietto di Natale ha avuto nove revisioni. 🎄
-La cliente: la mia gatta. Il verdetto: ha approvato il fiocco.
+La cliente: la mia gatta. Il verdetto: «il biglietto? Chi se ne frega, qui ci sono le palline.»
 
 Grazie a chi quest'anno ci ha affidato un progetto, una revisione o anche solo un «ci vuole un minuto».
 Buone feste da c.lab studio (e dalla Boss). 🐾

@@ -97,7 +97,13 @@
       .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
 
 
-      #sChat2, #sChat3, #sXmas, #sEnd { z-index: 2; }
+      #sChat2, #sChat3, #sRoom, #sXmas, #sEnd { z-index: 2; }
+      #room { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #walker { position: absolute; left: 0; top: 1240px; width: 560px; transform-origin: 50% 100%; }
+      #swat { position: absolute; left: 90px; top: 960px; width: 470px; z-index: 4; }
+      #swat img { width: 100%; transform-origin: 50% 100%; }
+      .bub.cat { left: 110px; z-index: 5; }
+      .bub.cat.big { font-size: 74px; }
       #endMel { top: 1100px; }
       .av.cat { padding: 0; overflow: hidden; background: #fff8ea; } .av.cat img { width: 100%; height: 100%; display: block; }
       #sCard { background: #e9e4da radial-gradient(rgba(22,19,15,.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
@@ -123,10 +129,10 @@
       #catBow img { position: absolute; inset: 0; width: 100%; height: 100%; }
 
       #lights .bulb { mix-blend-mode: screen; transform-box: fill-box; transform-origin: center; }
-      #okX { position: absolute; left: 110px; top: 360px; padding: 16px 30px 20px; border: 10px solid #3be36b; border-radius: 22px; color: #3be36b; background: rgba(15,30,20,.88);
+      #okX { position: absolute; left: 300px; top: 860px; padding: 16px 30px 20px; border: 10px solid #3be36b; border-radius: 22px; color: #3be36b; background: rgba(15,30,20,.88);
         font: 900 76px/1 "Outfit", sans-serif; text-transform: uppercase; z-index: 6; opacity: 0; }
       #okX small { display: block; font: 700 40px/1 "Caveat", cursive; text-transform: none; color: #fff3df; margin-top: 6px; }
-      #note { position: absolute; left: 120px; top: 600px; font: 700 28px/1 "Space Mono", monospace; color: #fff3df; opacity: 0; z-index: 6; }
+      #note { position: absolute; left: 330px; top: 1095px; padding: 10px 16px; border-radius: 12px; background: rgba(15,30,20,.88); font: 700 28px/1 "Space Mono", monospace; color: #fff3df; opacity: 0; z-index: 6; }
 
     
         /* ===== print treatment, as on the site: paper fibres, grain, risograph ink on the decorative pieces ===== */
@@ -143,7 +149,7 @@
       </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="35" data-width="1080" data-height="1920">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
           <filter id="riso" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
             <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="w0" />
@@ -182,20 +188,26 @@
         <div id="t3" class="typing" style="top: 560px; opacity: 0"><i></i><i></i><i></i></div><p id="left" style="position:absolute;left:130px;top:560px;font:700 34px/1.3 'Space Mono',monospace;color:#8a8178;opacity:0">🐾 la Boss ha lasciato la chat</p>
         <div id="pk3" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
       </div>
-      <div id="sXmas" class="clip" data-start="20" data-duration="6">
+      <div id="sRoom" class="clip" data-start="20" data-duration="4">
+        <img id="room" src="assets/stanza-natale.jpg" alt="" data-layout-ignore />
+        <img id="walker" src="assets/cali-cammina.png" alt="" data-layout-ignore />
+      </div>
+      <div id="sXmas" class="clip" data-start="24" data-duration="7" data-layout-allow-overlap>
         <img id="scene" src="assets/scena-natale.jpg" alt="" data-layout-ignore />
         <div id="glows" data-layout-ignore><i style="left:778px;top:819px"></i><i style="left:860px;top:832px"></i><i style="left:734px;top:999px"></i><i style="left:932px;top:1030px"></i><i style="left:572px;top:972px"></i><i style="left:526px;top:1179px"></i><i style="left:634px;top:1210px"></i><i style="left:832px;top:1269px"></i><i style="left:986px;top:1179px"></i><i style="left:454px;top:1386px"></i><i style="left:648px;top:1454px"></i><i style="left:871px;top:1462px"></i><i style="left:1040px;top:1422px"></i></div>
-        <div id="catBow" data-layout-ignore><img src="assets/cali-fusa.png" alt="" /></div>
-        <p id="okX">Approvato<small>il fiocco.</small></p>
+        <div id="swat" data-layout-ignore><img src="assets/cali-zampata.png" alt="" /></div>
+        <div id="cb1" class="bub cat" style="top: 300px; opacity: 0">Il biglietto? <em>Chi se ne frega…</em></div>
+        <div id="cb2" class="bub cat big" style="top: 580px; opacity: 0">qui ci sono le <em>PALLINE!</em> 🎄</div>
+        <p id="okX">Approvato<small>le palline.</small></p>
         <p id="note">(il biglietto non l'ha aperto)</p>
       </div>
-      <div id="sEnd" class="clip" data-start="26" data-duration="4">
+      <div id="sEnd" class="clip" data-start="31" data-duration="4">
         <h2 id="endH">Buon Natale da c.lab studio 🎄<br />e dalla <em>Boss.</em></h2>
-        <p id="endEp" class="ep">Calì &amp; Mel · ep. speciale<br />@c.labstudio.milano<br /><span style="color:#fff8ea">anche il tuo gatto preferisce il fiocco? 👇</span></p>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. speciale<br />@c.labstudio.milano<br /><span style="color:#fff8ea">anche il tuo gatto gioca con le palline? 👇</span></p>
         <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
       </div>
       <!-- music: "Deck the Halls B", Kevin MacLeod (incompetech.com), CC BY 4.0 -->
-      <audio id="aMusic" class="clip" data-start="0" data-duration="30" src="assets/music.mp3" data-volume="0.36" data-fade-in="0.6" data-fade-out="2"></audio>
+      <audio id="aMusic" class="clip" data-start="0" data-duration="35" src="assets/music.mp3" data-volume="0.36" data-fade-in="0.6" data-fade-out="2"></audio>
       <audio id="a1" class="clip" data-start="0.06" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
       <audio id="a2" class="clip" data-start="3.3" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.55"></audio>
       <audio id="a3" class="clip" data-start="5.7" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.55"></audio>
@@ -212,15 +224,19 @@
       <audio id="a14" class="clip" data-start="17.1" data-duration="0.03" src="assets/tick.wav" data-volume="0.5"></audio>
       <audio id="a15" class="clip" data-start="17.9" data-duration="0.03" src="assets/tick.wav" data-volume="0.45"></audio>
       <audio id="a16" class="clip" data-start="19.9" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
-      <audio id="a17" class="clip" data-start="20.6" data-duration="1.25" src="assets/cat-trill.mp3" data-volume="0.85"></audio>
-      <audio id="a18" class="clip" data-start="21.95" data-duration="0.11" src="assets/knock1.wav" data-volume="0.9"></audio>
-      <audio id="a19" class="clip" data-start="22.25" data-duration="0.11" src="assets/knock2.wav" data-volume="0.7"></audio>
-      <audio id="a20" class="clip" data-start="23.05" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
-      <audio id="a21" class="clip" data-start="23.3" data-duration="2.54" src="assets/cat-purr.mp3" data-volume="0.9"></audio>
-      <audio id="a22" class="clip" data-start="26.4" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="0.85"></audio>
-    <div id="printPaper" class="clip" data-start="0" data-duration="30" data-layout-ignore></div>
-        <div id="printGrain" class="clip" data-start="0" data-duration="30" data-layout-ignore></div>
-        <div id="printGrainN" class="clip" data-start="0" data-duration="30" data-layout-ignore></div>
+      <audio id="a17" class="clip" data-start="20.5" data-duration="1.25" src="assets/cat-trill.mp3" data-volume="0.8"></audio>
+      <audio id="a18" class="clip" data-start="23.9" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.5"></audio>
+      <audio id="a19" class="clip" data-start="24.75" data-duration="0.06" src="assets/pop.wav" data-volume="0.95"></audio>
+      <audio id="a20" class="clip" data-start="26.05" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
+      <audio id="a21" class="clip" data-start="26.9" data-duration="0.11" src="assets/knock1.wav" data-volume="0.6"></audio>
+      <audio id="a22" class="clip" data-start="27.4" data-duration="0.11" src="assets/knock2.wav" data-volume="0.6"></audio>
+      <audio id="a23" class="clip" data-start="27.9" data-duration="0.11" src="assets/knock1.wav" data-volume="0.6"></audio>
+      <audio id="a24" class="clip" data-start="27.0" data-duration="2.54" src="assets/cat-purr.mp3" data-volume="0.8"></audio>
+      <audio id="a25" class="clip" data-start="28.65" data-duration="0.06" src="assets/pop.wav" data-volume="1"></audio>
+      <audio id="a26" class="clip" data-start="31.4" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="0.85"></audio>
+    <div id="printPaper" class="clip" data-start="0" data-duration="35" data-layout-ignore></div>
+        <div id="printGrain" class="clip" data-start="0" data-duration="35" data-layout-ignore></div>
+        <div id="printGrainN" class="clip" data-start="0" data-duration="35" data-layout-ignore></div>
       </div>
     <script>
       window.__timelines = window.__timelines || {};
@@ -281,19 +297,20 @@
       tl.to("#card", { y: -900, rotation: -8, duration: 0.5, ease: "power3.in" }, 15.0);
       peek("#pk3", 15.8); typing("#t3", 16.0, 2.4);
       tl.to("#left", { opacity: 1, duration: 0.3 }, 18.6);
-      /* the lights twinkle, each at its own pace */
-      document.querySelectorAll("#lights .bulb").forEach((b, i) => {
-        const d = 0.35 + (i % 4) * 0.12;
-        tl.fromTo(b, { opacity: 0.35, scale: 0.85 }, { opacity: 1, scale: 1.15, duration: d, yoyo: true, repeat: Math.floor(6 / d) - 1, ease: "sine.inOut" }, 20 + (i % 5) * 0.11);
-      });
-      document.querySelectorAll("#glows i").forEach((g, i) => { const d = 0.4 + (i % 4) * 0.13; tl.fromTo(g, { opacity: 0.25 }, { opacity: 1, duration: d, yoyo: true, repeat: Math.floor(6 / d) - 1, ease: "sine.inOut" }, 20 + (i % 5) * 0.1); });
-      tl.fromTo("#scene", { scale: 1.06 }, { scale: 1, duration: 6, ease: "power1.out" }, 20);
-      /* the Christmas corner: Calì in the bow, a bauble on the floor */
-      tl.fromTo("#catBow", { y: 160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 20.4);
-      tl.fromTo("#okX", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.22, ease: "power4.in" }, 22.85);
-      tl.to("#sXmas", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 23.07);
-      tl.to("#note", { opacity: 1, duration: 0.3 }, 23.8);
-      blurIn("#endH", 26.05); tl.fromTo("#endMel", { y: 700 }, { y: 0, duration: 0.6, ease: "back.out(1.5)" }, 26.2); tl.fromTo("#endEp", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 26.6);
+      /* the Boss leaves: she walks across Mel's room toward the tree */
+      tl.fromTo("#room", { scale: 1.04 }, { scale: 1, duration: 4, ease: "power1.out" }, 20);
+      tl.fromTo("#walker", { x: -560, y: 0, scale: 1 }, { x: 520, y: -260, scale: 0.62, duration: 3.6, ease: "none" }, 20.2);
+      tl.fromTo("#walker", { rotation: -3 }, { rotation: 3, duration: 0.22, yoyo: true, repeat: 15, ease: "sine.inOut" }, 20.2);
+      /* the tree: who cares about the card */
+      document.querySelectorAll("#glows i").forEach((g, i) => { const d = 0.4 + (i % 4) * 0.13; tl.fromTo(g, { opacity: 0.25 }, { opacity: 1, duration: d, yoyo: true, repeat: Math.floor(7 / d) - 1, ease: "sine.inOut" }, 24 + (i % 5) * 0.1); });
+      tl.fromTo("#scene", { scale: 1.06 }, { scale: 1, duration: 7, ease: "power1.out" }, 24);
+      tl.fromTo("#swat", { y: 200, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "back.out(1.6)" }, 24.1);
+      pop("#cb1", 24.7); pop("#cb2", 26.0);
+      [26.85, 27.35, 27.85].forEach((t) => tl.to("#swat img", { rotation: -7, duration: 0.12, yoyo: true, repeat: 1, ease: "power2.out" }, t));
+      tl.fromTo("#okX", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.22, ease: "power4.in" }, 28.6);
+      tl.to("#sXmas", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 28.82);
+      tl.to("#note", { opacity: 1, duration: 0.3 }, 29.4);
+      blurIn("#endH", 31.05); tl.fromTo("#endMel", { y: 700 }, { y: 0, duration: 0.6, ease: "back.out(1.5)" }, 31.2); tl.fromTo("#endEp", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 31.6);
       window.__timelines["main"] = tl;
       tl.seek(0);
     </script>
