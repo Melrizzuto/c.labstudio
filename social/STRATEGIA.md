@@ -96,16 +96,18 @@ Lo stesso schema (chat → schermo → Calì) dopo 6–8 puntate diventa prevedi
 Rotazione consigliata su 2 settimane: 1 puntata classica, 1 «Trova l'errore», 1 «Scegli il finale» o «Calì recensisce», 2 caroselli.
 
 
-## Calendario dicembre – gennaio (una puntata a settimana, il martedì alle 18:30)
+## Calendario dicembre – febbraio (una puntata a settimana, il martedì alle 18:30)
 
-| Martedì | Puntata | Giovedì 13:00 |
+| Martedì | Puntata | Giovedì 13:00 (carosello) |
 | --- | --- | --- |
-| 1 dic | ep. 2 Il nero più chiaro | carosello: Il dizionario del cliente |
-| 8 dic | ep. 3 Il bianco più bianco | carosello: Il flusso utente |
-| 15 dic | ep. 4 Minimal, ma con più cose | carosello: Una dashboard, 5 lettori (17 dic) |
-| 22 dic | 🎄 Speciale Natale: il biglietto | pausa |
-| 29 dic | 🥂 Speciale Capodanno: i buoni propositi | pausa |
-| 5 gen | ep. 5 Ci vuole un minuto | carosello: Il primo giorno dopo le feste (7 gen) |
-| 12 gen | ep. 6 Hai perfettamente ragione | carosello: Il bingo della riunione (14 gen) |
-| 19 gen | ep. 7 La linea deve salire | carosello: I livelli di «finale» (21 gen) |
-| 26 gen | ep. 8 La Boss | carosello: Il dizionario della Boss (28 gen) |
+| — | — | 26 nov: Il dizionario del cliente ✅ |
+| 1 dic | ep. 2 La priorità | 3 dic: Il flusso utente |
+| 8 dic | ep. 3 Il nero più chiaro | 10 dic: Una dashboard, 5 lettori |
+| 15 dic | ep. 4 Il bianco più bianco | 17 dic: Il bingo della riunione |
+| 22 dic | 🎄 Speciale Natale | pausa |
+| 29 dic | 🥂 Speciale Capodanno | pausa |
+| 5 gen | ep. 5 Minimal, ma con più cose | 7 gen: Il primo giorno dopo le feste |
+| 12 gen | ep. 6 Ci vuole un minuto | 14 gen: I livelli di «finale» |
+| 19 gen | ep. 7 Hai perfettamente ragione | 21 gen: Il dizionario della Boss |
+| 26 gen | ep. 8 La linea deve salire | 28 gen: da fare |
+| 2 feb | ep. 9 La Boss | 4 feb: da fare |

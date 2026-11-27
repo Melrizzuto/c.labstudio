@@ -50,7 +50,7 @@ Vi è mai successo? 👇
 #design #branding #logodesign #clienti
 ```
 
-### Ep. 2 — Il nero più chiaro
+### Ep. 3 — Il nero più chiaro
 ```
 «Mi serve un nero… ma più chiaro.» 🖤
 
@@ -59,13 +59,13 @@ Vi è mai successo? 👇
 Quando un feedback è impossibile (un nero più chiaro, un bianco più bianco), non riguarda il colore: riguarda una sensazione che il cliente non sa nominare.
 La domanda che sblocca quasi sempre: «che cosa ti piacerebbe che provasse chi guarda?»
 
-Calì & Mel · ep. 2 🐾
+Calì & Mel · ep. 3 🐾
 La richiesta più strana che avete ricevuto? 👇
 
 #design #uidesign #feedback #clienti
 ```
 
-### Ep. 3 — Il bianco più bianco
+### Ep. 4 — Il bianco più bianco
 ```
 #FFFFFF è il bianco più bianco che esiste.
 #FFFFFFF non è nemmeno un colore.
@@ -74,12 +74,12 @@ Così Mel ha rinominato il file: «sfondo_PIU_BIANCO.png». Approvato al primo i
 
 Fa ridere, ma dice una cosa seria: a volte il cliente non ha bisogno di una modifica, ha bisogno di sentirsi ascoltato. Un buon processo di revisione lo fa sentire ascoltato senza bisogno di trucchi.
 
-Calì & Mel · ep. 3 🐾
+Calì & Mel · ep. 4 🐾
 
 #design #ux #feedback #processodidesign
 ```
 
-### Ep. 4 — Minimal, ma con più cose
+### Ep. 5 — Minimal, ma con più cose
 ```
 «Voglio un sito minimal. Pulito. Essenziale.» ✨
 Poi: il meteo. L'oroscopo. Un carosello. Due popup.
@@ -87,13 +87,13 @@ Poi: il meteo. L'oroscopo. Un carosello. Due popup.
 Ogni elemento aggiunto, da solo, ha senso. Tutti insieme cancellano il messaggio.
 Il «minimal» non è uno stile: è una scelta di priorità. E le priorità vanno decise prima di disegnare, non dopo.
 
-Calì & Mel · ep. 4 🐾
+Calì & Mel · ep. 5 🐾
 La richiesta più contraddittoria che avete ricevuto? 👇
 
 #webdesign #uxdesign #productdesign #priorità
 ```
 
-### Ep. 5 — Ci vuole un minuto
+### Ep. 6 — Ci vuole un minuto
 ```
 «Una modifica veloce veloce. Ci vuole un minuto.» ⏱️
 10:02 → brochure_v1.pdf
@@ -102,13 +102,13 @@ La richiesta più contraddittoria che avete ricevuto? 👇
 Le revisioni infinite non nascono da clienti cattivi: nascono da un perimetro non concordato.
 Due giri di revisione inclusi, scritti nel preventivo, salvano progetti (e serate).
 
-Calì & Mel · ep. 5 🐾
+Calì & Mel · ep. 6 🐾
 Quanto dura il vostro «minuto»? 👇
 
 #freelance #design #projectmanagement #clienti
 ```
 
-### Ep. 6 — Hai perfettamente ragione
+### Ep. 7 — Hai perfettamente ragione
 ```
 Ho chiesto un parere sincero alla mia AI. 🤖
 «Il bottone è troppo piccolo?» → «Hai perfettamente ragione!»
@@ -117,13 +117,13 @@ Ho chiesto un parere sincero alla mia AI. 🤖
 Uso l'AI ogni giorno e mi fa risparmiare ore. Ma un parere che dice sempre sì non è un parere.
 Le decisioni di design hanno bisogno di qualcuno che dica «no, e ti spiego perché»: un collega, un test con gli utenti… o una gatta. 🐾
 
-Calì & Mel · ep. 6
+Calì & Mel · ep. 7
 Come usate l'AI nel vostro lavoro di design? 👇
 
 #ai #design #uxdesign #intelligenzaartificiale
 ```
 
-### Ep. 7 — La linea deve salire
+### Ep. 8 — La linea deve salire
 ```
 «Il grafico delle vendite… lo fai andare in su?» 📈
 
@@ -131,7 +131,7 @@ Il grafico. Non le vendite.
 
 Chi disegna dashboard lo sa: ci chiedono spesso di far dire ai dati quello che vorremmo sentire. Invertire un asse o zoomare sui cinque minuti buoni è facile. Il lavoro vero è aiutare a leggere i dati brutti in tempo per cambiarli.
 
-Calì & Mel · ep. 7 🐾
+Calì & Mel · ep. 8 🐾
 Il grafico più «creativo» che vi hanno chiesto? 👇
 
 #dataviz #dashboard #uxdesign #kpi

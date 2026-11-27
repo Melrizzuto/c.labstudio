@@ -1,0 +1,9 @@
+Le cartelle mantengono il numero vecchio; questa è la nuova numerazione (da novembre 2026, dopo l'ep. 2 "La priorità"):
+
+ep02-il-nero-piu-chiaro -> ep03-il-nero-piu-chiaro
+ep03-il-bianco-piu-bianco -> ep04-il-bianco-piu-bianco
+ep04-minimal-ma-con-piu-cose -> ep05-minimal-ma-con-piu-cose
+ep05-ci-vuole-un-minuto -> ep06-ci-vuole-un-minuto
+ep06-hai-perfettamente-ragione -> ep07-hai-perfettamente-ragione
+ep07-la-linea-deve-salire -> ep08-la-linea-deve-salire
+ep08-la-boss -> ep09-la-boss

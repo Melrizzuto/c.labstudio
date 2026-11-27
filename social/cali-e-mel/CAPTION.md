@@ -48,9 +48,51 @@ Musica: "Fluffing a Duck" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 2 — Il nero più chiaro
+## Ep. 2 — La priorità (martedì 1° dicembre)
 
-**YouTube, titolo:** "Mi serve un nero… ma più chiaro" 🖤 | Calì & Mel ep. 2
+**YouTube, titolo:** Giorno 3 di consegna. Poi bussa la Boss 🐾 | Calì & Mel ep. 2
+
+**Instagram:**
+```
+Giorno 3 di consegna. 47 schermate. 7 caffè. ☕
+
+Poi qualcuno ha bussato. 🐾
+
+La Boss ha parlato: le priorità sono altre.
+E come si fa a dire di no alla Boss?
+
+Anche il tuo capo ti obbliga alle pause? 👇
+
+Calì & Mel · ep. 2
+Musica: "Monkeys Spinning Monkeys" Kevin MacLeod (incompetech.com), CC BY 4.0
+
+#smartworking #gatti #catsofinstagram #designer #lavorodacasa #designhumor #vitadadesigner #calìemel
+```
+
+**TikTok:**
+```
+Giorno 3 di consegna… poi bussa la Boss 🐾 Il tuo capo ti obbliga alle pause? 👇
+Musica: "Monkeys Spinning Monkeys" Kevin MacLeod (incompetech.com), CC BY 4.0
+#smartworking #gatti #designhumor #catsoftiktok #calìemel
+```
+
+**LinkedIn:**
+```
+Giorno 3 di una consegna: 47 schermate, 7 caffè, la lingua di fuori per la concentrazione.
+Poi qualcuno bussa. È la mia gatta, e ha deciso che basta così. 🐾
+
+Lo diciamo spesso ai clienti e quasi mai a noi stessi: la qualità del lavoro dipende anche dalle pause. A volte serve qualcuno che ti chiuda il portatile (o che ci si sdrai sopra).
+
+Calì & Mel · ep. 2
+
+#smartworking #design #benessere #freelance
+```
+
+---
+
+## Ep. 3 — Il nero più chiaro
+
+**YouTube, titolo:** "Mi serve un nero… ma più chiaro" 🖤 | Calì & Mel ep. 3
 
 ```
 "Mi serve un nero… ma più chiaro." 🖤
@@ -63,7 +105,7 @@ Guarda fino alla fine 👀
 
 Qual è la richiesta più strana che hai ricevuto da un cliente? Scrivila qui sotto 👇
 
-Calì & Mel · ep. 2
+Calì & Mel · ep. 3
 Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 #designer #uxdesign #uidesign #colori #richiesteassurde #clienti #freelance #vitadadesigner #designhumor #calìemel
@@ -71,9 +113,9 @@ Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 3 — Il bianco più bianco
+## Ep. 4 — Il bianco più bianco
 
-**YouTube, titolo:** "Lo puoi fare più bianco?" 🤍 | Calì & Mel ep. 3
+**YouTube, titolo:** "Lo puoi fare più bianco?" 🤍 | Calì & Mel ep. 4
 
 ```
 "Lo sfondo bianco… lo fai più bianco?" 🤍
@@ -86,7 +128,7 @@ Guarda fino alla fine 👀
 
 Confessa: hai mai mandato lo stesso file rinominato? 👇
 
-Calì & Mel · ep. 3
+Calì & Mel · ep. 4
 Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 #designer #uidesign #graphicdesign #richiesteassurde #clienti #freelance #vitadadesigner #designhumor #gatti #calìemel
@@ -94,9 +136,9 @@ Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 4 — Minimal, ma con più cose
+## Ep. 5 — Minimal, ma con più cose
 
-**YouTube, titolo:** "Lo voglio minimal… ma con più cose" ✨ | Calì & Mel ep. 4
+**YouTube, titolo:** "Lo voglio minimal… ma con più cose" ✨ | Calì & Mel ep. 5
 
 ```
 "Voglio un sito minimal. Pulito. Essenziale." ✨
@@ -109,7 +151,7 @@ Indovina com'è finita. 😐
 
 La richiesta più contraddittoria che hai ricevuto? 👇
 
-Calì & Mel · ep. 4
+Calì & Mel · ep. 5
 Musica: "The Builder" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 #webdesign #uxdesign #uidesign #minimal #clienti #freelance #vitadadesigner #designhumor #gatti #calìemel
@@ -117,9 +159,9 @@ Musica: "The Builder" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 5 — Ci vuole un minuto
+## Ep. 6 — Ci vuole un minuto
 
-**YouTube, titolo:** "Ci vuole un minuto" ⏱️ (spoiler: no) | Calì & Mel ep. 5
+**YouTube, titolo:** "Ci vuole un minuto" ⏱️ (spoiler: no) | Calì & Mel ep. 6
 
 ```
 "Una modifica veloce veloce. Ci vuole un minuto." ⏱️
@@ -131,7 +173,7 @@ E domattina? 👀
 
 Quanto dura il TUO "minuto"? 👇
 
-Calì & Mel · ep. 5
+Calì & Mel · ep. 6
 Musica: "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 #designer #graphicdesign #freelance #clienti #deadline #vitadadesigner #designhumor #revisioni #gatti #calìemel
@@ -139,9 +181,9 @@ Musica: "Hidden Agenda" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 6 — Hai perfettamente ragione
+## Ep. 7 — Hai perfettamente ragione
 
-**YouTube, titolo:** «Hai perfettamente ragione!» 🤖 | Calì & Mel ep. 6
+**YouTube, titolo:** «Hai perfettamente ragione!» 🤖 | Calì & Mel ep. 7
 
 **Instagram:**
 ```
@@ -155,7 +197,7 @@ Per fortuna c'è ancora qualcuno che mi dice di no. 🐾
 
 Anche la tua AI ti dà sempre ragione? 👇
 
-Calì & Mel · ep. 6
+Calì & Mel · ep. 7
 Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 #designer #uxdesign #ai #claude #intelligenzaartificiale #designhumor #vitadadesigner #productdesign #gatti #calìemel
@@ -170,9 +212,9 @@ Musica: "Sneaky Snitch" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 7 — La linea deve salire
+## Ep. 8 — La linea deve salire
 
-**YouTube, titolo:** «Lo fai andare in su?» 📈 | Calì & Mel ep. 7
+**YouTube, titolo:** «Lo fai andare in su?» 📈 | Calì & Mel ep. 8
 
 **Instagram:**
 ```
@@ -186,7 +228,7 @@ Indovina quale è finita nella slide del board. 😐
 
 Il grafico più «creativo» che ti hanno chiesto? 👇
 
-Calì & Mel · ep. 7
+Calì & Mel · ep. 8
 Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 #dashboard #dataviz #uxdesign #uidesign #kpi #productdesign #designhumor #vitadadesigner #gatti #calìemel
@@ -201,9 +243,9 @@ Musica: "Investigations" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 ---
 
-## Ep. 8 — La Boss
+## Ep. 9 — La Boss
 
-**YouTube, titolo:** La cliente più difficile? La mia gatta 🐟 | Calì & Mel ep. 8
+**YouTube, titolo:** La cliente più difficile? La mia gatta 🐟 | Calì & Mel ep. 9
 
 **Instagram:**
 ```
@@ -218,7 +260,7 @@ Non il mio progetto. 📦
 
 Anche il tuo capo è così? Taggalo 👇
 
-Calì & Mel · ep. 8
+Calì & Mel · ep. 9
 Musica: "Pixel Peeker Polka - faster" Kevin MacLeod (incompetech.com), CC BY 4.0
 
 #gatti #catsofinstagram #designer #designhumor #packagingdesign #vitadadesigner #capo #calìemel
@@ -240,7 +282,7 @@ Mi ha chiesto il packaging delle sue crocchette «per ieri», poi «un po' più 
 
 Da designer rido, ma è una cosa vera: a volte il cliente non sta valutando quello che gli hai mandato, ma qualcos'altro che per lui conta di più (la comodità, la sicurezza, il «sentirsi a casa»). Capire cosa, prima di disegnare, fa risparmiare 46 versioni.
 
-Calì & Mel · ep. 8 🐾
+Calì & Mel · ep. 9 🐾
 
 #design #packaging #clienti #ux
 ```

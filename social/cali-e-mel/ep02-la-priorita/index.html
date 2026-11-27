@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="it" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Outfit"; src: url("assets/outfit-latin.woff2") format("woff2"); font-weight: 100 900; }
+      @font-face { font-family: "Figtree"; src: url("assets/figtree-latin.woff2") format("woff2"); font-weight: 300 900; }
+      @font-face { font-family: "Caveat"; src: url("assets/caveat-latin.woff2") format("woff2"); font-weight: 400 700; }
+      @font-face { font-family: "Space Mono"; src: url("assets/spacemono-700.woff2") format("woff2"); font-weight: 700; }
+      :root { --paper: #f7efe1; --ink: #16130f; --pink: #f25aa6; --note: #c81d74; --sun: #ffc21a; --cobalt: #1d3fd1; --red: #d6281c; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--paper); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Figtree", sans-serif; color: var(--ink); }
+      .clip { position: absolute; inset: 0; }
+      .dots { background: var(--paper) radial-gradient(rgba(22, 19, 15, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+
+      /* ---------- chat world ---------- */
+      .kick { position: absolute; left: 130px; top: 300px; font: 700 30px/1 "Space Mono", monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--note); }
+      .who { position: absolute; left: 130px; top: 360px; display: flex; align-items: center; gap: 22px; }
+      .who .av { width: 104px; height: 104px; border-radius: 50%; border: 6px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 56px; }
+      .who b { display: block; font: 900 50px/1 "Outfit", sans-serif; letter-spacing: -0.02em; }
+      .who small { display: block; margin-top: 8px; font: 600 30px/1 "Figtree", sans-serif; color: #2e9e3e; }
+      .bub { position: absolute; left: 130px; max-width: 760px; padding: 30px 40px 34px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px;
+        box-shadow: 10px 10px 0 var(--ink); font: 700 66px/1.1 "Figtree", sans-serif; letter-spacing: -0.01em; transform-origin: 0% 100%; }
+      .bub.big { font: 900 96px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .bub em { font-style: normal; color: var(--note); }
+      .bub.old { opacity: 0.38; box-shadow: none; }
+      .typing { position: absolute; left: 130px; padding: 30px 38px; background: #fff; border: 7px solid var(--ink); border-radius: 46px 46px 46px 10px; display: flex; gap: 14px; transform-origin: 0% 100%; }
+      .peek { position: absolute; left: 330px; top: 1330px; width: 420px; height: 1095px; }
+      .peek img { width: 100%; height: 100%; }
+      .typing i { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); display: block; }
+
+      /* ---------- screen world: the poster on the design canvas ---------- */
+      #sScr { background: #e9e4da radial-gradient(rgba(22, 19, 15, 0.1) 1.6px, transparent 2px) 0 0 / 32px 32px; }
+      .tool { position: absolute; left: 130px; top: 300px; display: flex; gap: 14px; font: 700 28px/1 "Space Mono", monospace; text-transform: uppercase; }
+      .tool span { padding: 12px 18px; border: 4px solid var(--ink); border-radius: 14px; background: #fff; }
+      .tool span.on { background: var(--ink); color: #fff; }
+      #cam { position: absolute; left: 220px; top: 380px; width: 640px; height: 860px; transform-origin: 50% 19%; }
+      #poster { position: absolute; inset: 0; background: #fff3df; border: 6px solid var(--ink); border-radius: 10px; overflow: hidden; box-shadow: 16px 16px 0 rgba(22, 19, 15, 0.85); }
+      #logo { position: absolute; left: 245px; top: 60px; width: 150px; height: 150px; border-radius: 50%; background: var(--red); border: 6px solid var(--ink);
+        display: grid; place-items: center; color: #fff3df; font: 900 92px/1 "Outfit", sans-serif; transform-origin: 50% 0%; z-index: 2; }
+      #rest { position: absolute; left: 0; top: 240px; width: 100%; text-align: center; }
+      #rest h2 { font: 700 130px/0.9 "Caveat", cursive; color: var(--red); }
+      #rest p { margin-top: 14px; font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+      #rest .awn { margin: 40px auto 0; width: 520px; height: 250px; border: 6px solid var(--ink); border-radius: 16px; background: repeating-linear-gradient(90deg, var(--red) 0 52px, #fff3df 52px 104px); }
+      #rest .addr { margin-top: 34px; font: 700 30px/1 "Figtree", sans-serif; }
+      #sel { position: absolute; left: 239px; top: 54px; width: 162px; height: 162px; border: 4px solid var(--cobalt); transform-origin: 50% 0%; z-index: 3; }
+      #sel i { position: absolute; width: 22px; height: 22px; background: #fff; border: 4px solid var(--cobalt); }
+      #sel i:nth-child(1) { left: -13px; top: -13px; } #sel i:nth-child(2) { right: -13px; top: -13px; }
+      #sel i:nth-child(3) { left: -13px; bottom: -13px; } #sel i:nth-child(4) { right: -13px; bottom: -13px; }
+      #cursor { position: absolute; left: 0; top: 0; width: 70px; height: 70px; z-index: 5; }
+      .size { position: absolute; left: 130px; top: 1262px; padding: 12px 20px; border-radius: 12px; background: var(--cobalt); color: #fff; font: 700 32px/1 "Space Mono", monospace; }
+
+      /* ---------- reaction world: Mel and Calì, close up ---------- */
+      .react { background: var(--pink) radial-gradient(rgba(255, 255, 255, 0.28) 2.6px, transparent 3px) 0 0 / 44px 44px; overflow: hidden; }
+      .face { position: absolute; left: 40px; top: 150px; width: 1001px; height: 2610px; transform-origin: 50% 24%; }
+      .face img { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .drop { position: absolute; left: 700px; top: 520px; font-size: 110px; line-height: 1; }
+      .band { position: absolute; left: 110px; right: 190px; top: 1060px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px;
+        font: 900 78px/1 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band em { font-style: normal; color: var(--sun); }
+
+      /* ---------- end card ---------- */
+      #sEnd { background: var(--ink); color: #fff8ea; }
+      #sEnd h2 { position: absolute; left: 120px; right: 190px; top: 330px; font: 900 112px/0.96 "Outfit", sans-serif; letter-spacing: -0.045em; }
+      #sEnd h2 em { font-style: normal; color: var(--pink); }
+      #sEnd .ep { position: absolute; left: 124px; top: 860px; font: 700 34px/1.4 "Space Mono", monospace; color: var(--sun); }
+      #endMel { position: absolute; left: 600px; top: 1010px; width: 380px; height: 991px; }
+      #endMel img { width: 100%; height: 100%; }
+    
+
+      .tease { position: absolute; left: 130px; top: 300px; padding: 10px 18px; border-radius: 999px; background: var(--ink); color: var(--sun); font: 700 28px/1 "Space Mono", monospace; letter-spacing: 0.04em; }
+      .who { top: 370px; }
+      .toast { position: absolute; left: 130px; top: 300px; max-width: 800px; padding: 22px 30px 26px; background: #fff; border: 6px solid var(--ink); border-radius: 36px 36px 36px 8px; box-shadow: 8px 8px 0 var(--ink);
+        font: 700 52px/1.1 "Figtree", sans-serif; transform-origin: 0% 100%; z-index: 4; display: flex; align-items: center; gap: 18px; }
+      .toast .av { width: 70px; height: 70px; flex: none; border-radius: 50%; border: 5px solid var(--ink); background: var(--sun); display: grid; place-items: center; font-size: 38px; }
+      .band2 { position: absolute; left: 110px; right: 190px; top: 1020px; padding: 26px 34px 30px; background: var(--ink); color: #fff8ea; border-radius: 26px; font: 900 72px/1.02 "Outfit", sans-serif; letter-spacing: -0.03em; }
+      .band2 em { font-style: normal; color: var(--sun); }
+      #sEnd h2 { top: 320px; font-size: 100px; }
+      #sEnd .ep { top: 900px; }
+    
+      .night { background: #1b2140 radial-gradient(rgba(255, 255, 255, 0.12) 2.4px, transparent 2.8px) 0 0 / 44px 44px; }
+      .night .face { filter: brightness(0.82) saturate(0.9); }
+      .win { position: absolute; left: 130px; top: 380px; width: 820px; background: #fff; border: 7px solid var(--ink); border-radius: 30px; box-shadow: 14px 14px 0 var(--ink); overflow: hidden; }
+      .win .bar { height: 70px; border-bottom: 6px solid var(--ink); background: var(--paper); display: flex; align-items: center; gap: 14px; padding: 0 24px; }
+      .win .bar i { width: 22px; height: 22px; border-radius: 50%; border: 4px solid var(--ink); display: block; }
+      .win .bar b { margin-left: 12px; font: 700 28px/1 "Space Mono", monospace; }
+
+      /* Mel's own messages: on the right, pink */
+      .bub.me { left: auto; right: 192px; max-width: 640px; background: #ffd3e8; border-radius: 46px 46px 10px 46px; transform-origin: 100% 100%; }
+      .bub.me.old { opacity: 0.38; }
+      /* the AI's avatar: a plain ink badge with a star, no brand logo */
+      .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
+
+      .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+
+
+      .pink { background: var(--pink) radial-gradient(rgba(255,255,255,.28) 2.6px, transparent 3px) 0 0 / 44px 44px; }
+      .blurdesk { background: url("assets/scrivania.jpg") center / cover; }
+      .blurdesk::before { content: ""; position: absolute; inset: 0; backdrop-filter: blur(14px); background: rgba(247,239,225,.35); }
+      #desk { position: absolute; inset: 0; width: 1080px; height: 1920px; transform-origin: 30% 45%; }
+      .label { position: absolute; left: 130px; top: 300px; padding: 12px 20px; border-radius: 14px; background: var(--ink); color: var(--sun); font: 700 34px/1 "Space Mono", monospace; z-index: 3; }
+      /* the screen */
+      #sScreen { background: #2a2420; }
+      #monitor { position: absolute; left: 60px; top: 300px; width: 960px; height: 1060px; border-radius: 40px; background: #3a332d; padding: 34px; box-shadow: inset 0 0 0 10px #4a423b, 0 40px 60px rgba(0,0,0,.45); }
+      #app { position: relative; width: 100%; height: 100%; border-radius: 18px; background: #f5f0e8; overflow: hidden; }
+      #app .top { display: flex; align-items: center; gap: 16px; padding: 24px 30px; border-bottom: 3px solid #e6ddd0; font: 700 40px/1 "Figtree", sans-serif; color: #3d3929; }
+      .spark { width: 52px; height: 52px; }
+      .msg { position: absolute; max-width: 700px; padding: 22px 28px; border-radius: 26px; font: 600 40px/1.25 "Figtree", sans-serif; opacity: 0; }
+      .msg.me { right: 30px; background: #e8dfd2; color: #3d3929; }
+      .msg.ai { left: 30px; background: transparent; color: #3d3929; display: flex; gap: 16px; align-items: flex-start; padding-left: 0; }
+      .msg.ai .spark { flex: none; width: 46px; height: 46px; margin-top: 2px; }
+      #bar { position: absolute; left: 30px; right: 30px; top: 560px; height: 26px; border-radius: 13px; background: #e6ddd0; overflow: hidden; opacity: 0; }
+      #bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 2%; background: #d97757; }
+      #barLbl { position: absolute; left: 30px; top: 600px; font: 700 30px/1 "Space Mono", monospace; color: #8a8178; opacity: 0; }
+      #input { position: absolute; left: 30px; right: 30px; bottom: 30px; min-height: 110px; padding: 24px 28px; border-radius: 26px; background: #fff; box-shadow: 0 0 0 3px #e6ddd0; font: 600 36px/1.2 "Space Mono", monospace; color: #3d3929; overflow: hidden; word-break: break-all; }
+      #spam { opacity: 0; }
+      #onKeys { position: absolute; left: 160px; top: 1180px; width: 760px; z-index: 4; }
+      .toc { position: absolute; font: 700 150px/1 "Caveat", cursive; color: var(--sun); opacity: 0; z-index: 6; }
+      /* characters */
+      .char { position: absolute; transform-origin: 50% 100%; }
+      #melJump { left: 90px; top: 520px; width: 900px; }
+      #caliMeow { left: 140px; top: 760px; width: 800px; }
+      #melNo { left: 90px; top: 700px; width: 900px; }
+      #caliSus { left: 300px; top: 820px; width: 560px; }
+      #melMelt { left: 90px; top: 700px; width: 900px; transform-origin: 50% 100%; }
+      #hug { left: 110px; top: 440px; width: 860px; }
+      .heart { position: absolute; font-size: 110px; opacity: 0; z-index: 5; }
+      .bub.cat { left: 110px; z-index: 5; }
+      .bub.me2 { left: auto; right: 150px; z-index: 5; background: #ffd3e8; border-radius: 46px 46px 10px 46px; }
+      .toastC { position: absolute; left: 110px; right: 160px; top: 300px; display: flex; gap: 18px; align-items: center; padding: 24px 28px; background: #f5f0e8; border-radius: 26px; box-shadow: 10px 10px 0 var(--ink); font: 700 44px/1.2 "Figtree", sans-serif; color: #3d3929; opacity: 0; z-index: 6; }
+      #okC { position: absolute; left: 250px; top: 1300px; padding: 16px 30px 20px; border: 10px solid #2e9e3e; border-radius: 22px; color: #2e9e3e; background: rgba(255,248,234,.94);
+        font: 900 92px/1 "Outfit", sans-serif; text-transform: uppercase; z-index: 6; opacity: 0; }
+      #okC small { display: block; font: 700 44px/1 "Caveat", cursive; text-transform: none; color: var(--ink); margin-top: 6px; }
+      #sJump, #sMeow, #sNo, #sSus, #sMelt, #sHug, #sEnd { z-index: 2; }
+      #sScreen { z-index: 1; }
+
+    
+        /* ===== print treatment, as on the site: paper fibres, grain, risograph ink on the decorative pieces ===== */
+        #printPaper { z-index: 88; pointer-events: none; mix-blend-mode: multiply; opacity: .2; background: url("assets/paper.webp") 0 0 / 512px 512px; }
+        #printGrain { z-index: 89; pointer-events: none; mix-blend-mode: multiply; opacity: .13; background: url("assets/grain-day.webp") 0 0 / 256px 256px; }
+        #printGrainN { z-index: 90; pointer-events: none; mix-blend-mode: screen; opacity: .07; background: url("assets/grain-night.webp") 0 0 / 256px 256px; }
+        .stamp, .tag, .tease, .who .av, .toast .av, #sun, .awn, .heart, .chk, #sent, .size, .sticker-ink, #wSaldi, #wNew, #wMarq, #clkLbl, .typing i, #series { filter: url(#riso); }
+        /* the printed borders: as on the site's cards, the outline is a second plate of ink with the risograph mask */
+        .bub, .typing, .toast, .win, #picker, #poster, .card { --bw: 7px; border-color: transparent !important; }
+        .toast, #poster { --bw: 6px; }
+        .bub::before, .typing::before, .toast::before, .win::before, #picker::before, #poster::before, .card::before {
+          content: ""; position: absolute; inset: calc(-1 * var(--bw)); border: var(--bw) solid var(--ink); border-radius: inherit; pointer-events: none; z-index: 5;
+          -webkit-mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; mask: url("assets/riso-mask.webp") 0 0 / 512px 512px; }
+      </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34" data-width="1080" data-height="1920">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+          <filter id="riso" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="3" result="w0" />
+            <feColorMatrix in="w0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="warp" />
+            <feDisplacementMap in="SourceGraphic" in2="warp" scale="0.8" xChannelSelector="R" yChannelSelector="G" result="rough" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="8" result="g0" />
+            <feColorMatrix in="g0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="grain" />
+            <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5" result="b0" />
+            <feColorMatrix in="b0" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0 1" result="blotch" />
+            <feComposite in="grain" in2="blotch" operator="arithmetic" k1="0" k2="1" k3="0.15" k4="-0.075" result="mix" />
+            <feColorMatrix in="mix" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3.4 0 0 0 -0.12" result="mask" />
+            <feComposite in="rough" in2="mask" operator="in" />
+          </filter></defs></svg>
+        <div id="sDesk" class="clip" data-start="0" data-duration="3.6" data-layout-allow-overlap>
+        <img id="desk" src="assets/scrivania.jpg" alt="" data-layout-ignore />
+        <p id="tease" class="tease" style="top: 240px">guarda fino alla fine 👀</p>
+        <p id="lbl1" class="label">Giorno 3 di consegna · ☕ × 7</p>
+      </div>
+      <div id="sScreen" class="clip" data-start="3.6" data-duration="19.4" data-layout-allow-overlap>
+        <div id="monitor"><div id="app">
+          <div class="top"><svg viewBox="0 0 40 40" class="spark"><g fill="#d97757"><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(0 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(36 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(72 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(108 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(144 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(180 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(216 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(252 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(288 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(324 20 20)"/></g></svg>Claude</div>
+          <div id="m1" class="msg me" style="top: 140px">Sistemami queste <b>47 schermate</b> entro stasera 🙏</div>
+          <div id="m2" class="msg ai" style="top: 360px"><svg viewBox="0 0 40 40" class="spark"><g fill="#d97757"><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(0 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(36 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(72 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(108 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(144 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(180 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(216 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(252 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(288 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(324 20 20)"/></g></svg><span>Certo! Partiamo dalla prima.</span></div>
+          <div id="bar"><i></i></div><p id="barLbl">schermata 1 di 47</p>
+          <div id="input"><span id="typed"></span><span id="spam">jjjjjjjjjjjjjjjjjjkkkkkkkkkkkkk;;;;;;;;;;;;;;;;;;;;</span></div>
+        </div></div>
+        <img id="onKeys" src="assets/cali-tastiera.png" alt="" data-layout-ignore style="opacity: 0" />
+        <span id="toc1" class="toc" style="left: 170px; top: 1400px">toc</span>
+        <span id="toc2" class="toc" style="left: 470px; top: 1510px">toc!</span>
+      </div>
+      <div id="sJump" class="clip pink" data-start="11" data-duration="1.6"><img id="melJump" class="char" src="assets/mel-sobbalza.png" alt="" data-layout-ignore /></div>
+      <div id="sMeow" class="clip blurdesk" data-start="12.6" data-duration="3.4" data-layout-allow-overlap>
+        <img id="caliMeow" class="char" src="assets/cali-miagola.png" alt="" data-layout-ignore />
+        <div id="cb1" class="bub cat big" style="top: 330px; opacity: 0">MIAAAO. 🐾</div>
+        <div id="cb2" class="bub cat" style="top: 540px; opacity: 0">Basta lavorare. <em>Ho bisogno di coccole.</em></div>
+      </div>
+      <div id="sNo" class="clip pink" data-start="16" data-duration="2.6" data-layout-allow-overlap>
+        <img id="melNo" class="char" src="assets/mel-no.png" alt="" data-layout-ignore />
+        <div id="mb1" class="bub me2" style="top: 330px; opacity: 0">No Boss, non posso. <em>Devo finire.</em></div>
+      </div>
+      <div id="sSus" class="clip blurdesk" data-start="18.6" data-duration="1.6"><img id="caliSus" class="char" src="assets/cali-sospettosa.png" alt="" data-layout-ignore /></div>
+      <div id="sMelt" class="clip pink" data-start="23" data-duration="2.6" data-layout-allow-overlap>
+        <img id="melMelt" class="char" src="assets/mel-sconfitta.png" alt="" data-layout-ignore />
+        <div id="mb2" class="bub me2" style="top: 330px; opacity: 0">…ok. <em>La priorità sono le coccole.</em></div>
+      </div>
+      <div id="sHug" class="clip pink" data-start="25.6" data-duration="4.4" data-layout-allow-overlap>
+        <img id="hug" class="char" src="assets/abbraccio.png" alt="" data-layout-ignore />
+        <span id="h1" class="heart" style="left: 120px; top: 700px">💗</span><span id="h2" class="heart" style="left: 820px; top: 640px">💖</span><span id="h3" class="heart" style="left: 700px; top: 460px">💕</span>
+        <div id="toastC" class="toastC"><svg viewBox="0 0 40 40" class="spark"><g fill="#d97757"><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(0 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(36 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(72 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(108 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(144 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(180 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(216 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(252 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(288 20 20)"/><rect x="18" y="3" width="4" height="15" rx="2" transform="rotate(324 20 20)"/></g></svg><span>Ottima scelta. Le schermate possono aspettare 🐾</span></div>
+        <p id="okC">Approvato<small>le coccole.</small></p>
+      </div>
+      <div id="sEnd" class="clip" data-start="30" data-duration="4">
+        <h2 id="endH">Anche il tuo capo ti obbliga alle <em>pause?</em> 🐾👇</h2>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. 2<br />@c.labstudio.milano<br /><span style="color:#fff8ea">segui per la prossima puntata</span></p>
+        <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
+      </div>
+      <!-- music: "Monkeys Spinning Monkeys", Kevin MacLeod (incompetech.com), CC BY 4.0 -->
+      <audio id="aMusic" class="clip" data-start="0" data-duration="34" src="assets/music.mp3" data-media-start="30" data-volume="0.36" data-fade-in="0.6" data-fade-out="2"></audio>
+      <audio id="a1" class="clip" data-start="0.2" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a2" class="clip" data-start="0.36" data-duration="0.03" src="assets/tick.wav" data-volume="0.44999999999999996"></audio>
+      <audio id="a3" class="clip" data-start="0.52" data-duration="0.03" src="assets/tick.wav" data-volume="0.55"></audio>
+      <audio id="a4" class="clip" data-start="0.68" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a5" class="clip" data-start="0.84" data-duration="0.03" src="assets/tick.wav" data-volume="0.44999999999999996"></audio>
+      <audio id="a6" class="clip" data-start="1.0" data-duration="0.03" src="assets/tick.wav" data-volume="0.55"></audio>
+      <audio id="a7" class="clip" data-start="1.16" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a8" class="clip" data-start="1.32" data-duration="0.03" src="assets/tick.wav" data-volume="0.44999999999999996"></audio>
+      <audio id="a9" class="clip" data-start="1.48" data-duration="0.03" src="assets/tick.wav" data-volume="0.55"></audio>
+      <audio id="a10" class="clip" data-start="1.64" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a11" class="clip" data-start="1.8" data-duration="0.03" src="assets/tick.wav" data-volume="0.44999999999999996"></audio>
+      <audio id="a12" class="clip" data-start="1.96" data-duration="0.03" src="assets/tick.wav" data-volume="0.55"></audio>
+      <audio id="a13" class="clip" data-start="2.12" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a14" class="clip" data-start="2.28" data-duration="0.03" src="assets/tick.wav" data-volume="0.44999999999999996"></audio>
+      <audio id="a15" class="clip" data-start="3.5" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="a16" class="clip" data-start="4.05" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
+      <audio id="a17" class="clip" data-start="4.6" data-duration="0.03" src="assets/tick.wav" data-volume="0.3"></audio>
+      <audio id="a18" class="clip" data-start="4.74" data-duration="0.03" src="assets/tick.wav" data-volume="0.4"></audio>
+      <audio id="a19" class="clip" data-start="4.88" data-duration="0.03" src="assets/tick.wav" data-volume="0.3"></audio>
+      <audio id="a20" class="clip" data-start="5.02" data-duration="0.03" src="assets/tick.wav" data-volume="0.4"></audio>
+      <audio id="a21" class="clip" data-start="5.16" data-duration="0.03" src="assets/tick.wav" data-volume="0.3"></audio>
+      <audio id="a22" class="clip" data-start="5.3" data-duration="0.03" src="assets/tick.wav" data-volume="0.4"></audio>
+      <audio id="a23" class="clip" data-start="5.44" data-duration="0.03" src="assets/tick.wav" data-volume="0.3"></audio>
+      <audio id="a24" class="clip" data-start="5.58" data-duration="0.03" src="assets/tick.wav" data-volume="0.4"></audio>
+      <audio id="a25" class="clip" data-start="6.05" data-duration="0.06" src="assets/pop.wav" data-volume="0.85"></audio>
+      <audio id="a26" class="clip" data-start="7.0" data-duration="0.03" src="assets/tick.wav" data-volume="0.4"></audio>
+      <audio id="a27" class="clip" data-start="7.6" data-duration="0.03" src="assets/tick.wav" data-volume="0.4"></audio>
+      <audio id="a28" class="clip" data-start="9.1" data-duration="0.11" src="assets/knock1.wav" data-volume="0.95"></audio>
+      <audio id="a29" class="clip" data-start="9.75" data-duration="0.11" src="assets/knock2.wav" data-volume="1"></audio>
+      <audio id="a30" class="clip" data-start="10.95" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.6"></audio>
+      <audio id="a31" class="clip" data-start="12.7" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="1"></audio>
+      <audio id="a32" class="clip" data-start="13.75" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="a33" class="clip" data-start="15.95" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="a34" class="clip" data-start="16.35" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="a35" class="clip" data-start="18.55" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.5"></audio>
+      <audio id="a36" class="clip" data-start="18.9" data-duration="1.25" src="assets/cat-trill.mp3" data-volume="0.7"></audio>
+      <audio id="a37" class="clip" data-start="20.15" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.5"></audio>
+      <audio id="a38" class="clip" data-start="20.9" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a39" class="clip" data-start="20.99" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a40" class="clip" data-start="21.08" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a41" class="clip" data-start="21.17" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a42" class="clip" data-start="21.26" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a43" class="clip" data-start="21.35" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a44" class="clip" data-start="21.44" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a45" class="clip" data-start="21.53" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a46" class="clip" data-start="21.62" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a47" class="clip" data-start="21.71" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a48" class="clip" data-start="21.8" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a49" class="clip" data-start="21.89" data-duration="0.03" src="assets/tick.wav" data-volume="0.35"></audio>
+      <audio id="a50" class="clip" data-start="22.95" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.5"></audio>
+      <audio id="a51" class="clip" data-start="23.6" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="a52" class="clip" data-start="25.55" data-duration="0.45" src="assets/whoosh1.wav" data-volume="0.55"></audio>
+      <audio id="a53" class="clip" data-start="25.8" data-duration="2.54" src="assets/cat-purr.mp3" data-volume="1"></audio>
+      <audio id="a54" class="clip" data-start="27.0" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
+      <audio id="a55" class="clip" data-start="28.05" data-duration="0.11" src="assets/knock1.wav" data-volume="0.8"></audio>
+      <audio id="a56" class="clip" data-start="30.4" data-duration="1.59" src="assets/cat-meow.mp3" data-volume="0.8"></audio>
+    <div id="printPaper" class="clip" data-start="0" data-duration="34" data-layout-ignore></div>
+        <div id="printGrain" class="clip" data-start="0" data-duration="34" data-layout-ignore></div>
+        <div id="printGrainN" class="clip" data-start="0" data-duration="34" data-layout-ignore></div>
+      </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const pop = (sel, at) => tl.fromTo(sel, { scale: 0.75, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "back.out(2.4)" }, at);
+      const peek = (sel, at) => tl.fromTo(sel, { y: 160 }, { y: 0, duration: 0.6, ease: "back.out(1.6)" }, at);
+      const blurIn = (sel, at) => tl.fromTo(sel, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2 }, at);
+      const typing = (sel, at, len) => {
+        tl.fromTo(sel, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2)" }, at);
+        const n = Math.max(1, Math.round((len - 0.5) / 0.44));
+        [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
+        tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
+      };
+      /* Mel's sweat drop: it appears on her temple and slides down a little */
+      const sweat = (scene, at) => {
+        tl.fromTo(`#${scene}S`, { opacity: 0, scale: 0.4, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.5)" }, at);
+        tl.to(`#${scene}S`, { y: 70, duration: 1.6, ease: "power1.in" }, at + 0.4);
+      };
+      const yawn = (scene, from, to) => {
+        tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);
+        tl.set(`#${scene}Y`, { opacity: 0 }, to); tl.set(`#${scene}A`, { opacity: 1 }, to);
+      };
+
+      /* 1 · overworked: slow push-in, typing jitter */
+      tl.fromTo("#desk", { scale: 1 }, { scale: 1.12, duration: 3.6, ease: "power1.inOut" }, 0);
+      tl.fromTo("#lbl1", { scale: 0.6, opacity: 0, rotation: -6 }, { scale: 1, opacity: 1, rotation: -2, duration: 0.4, ease: "back.out(3)" }, 0.4);
+      tl.to("#desk", { x: 4, duration: 0.06, yoyo: true, repeat: 25, ease: "none" }, 0.2);
+      /* 2 · the screen */
+      tl.fromTo("#monitor", { scale: 1.08, y: 40 }, { scale: 1, y: 0, duration: 0.6, ease: "expo.out" }, 3.6);
+      tl.fromTo("#m1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 4.0);
+      tl.set("#typed", { textContent: 's' }, 4.6);
+      tl.set("#typed", { textContent: 'si' }, 4.65);
+      tl.set("#typed", { textContent: 'sis' }, 4.7);
+      tl.set("#typed", { textContent: 'sist' }, 4.75);
+      tl.set("#typed", { textContent: 'siste' }, 4.8);
+      tl.set("#typed", { textContent: 'sistem' }, 4.85);
+      tl.set("#typed", { textContent: 'sistema' }, 4.9);
+      tl.set("#typed", { textContent: 'sistemar' }, 4.95);
+      tl.set("#typed", { textContent: 'sistemare' }, 5.0);
+      tl.set("#typed", { textContent: 'sistemare ' }, 5.05);
+      tl.set("#typed", { textContent: 'sistemare 4' }, 5.1);
+      tl.set("#typed", { textContent: 'sistemare 47' }, 5.15);
+      tl.set("#typed", { textContent: 'sistemare 47 ' }, 5.2);
+      tl.set("#typed", { textContent: 'sistemare 47 s' }, 5.25);
+      tl.set("#typed", { textContent: 'sistemare 47 sc' }, 5.3);
+      tl.set("#typed", { textContent: 'sistemare 47 sch' }, 5.35);
+      tl.set("#typed", { textContent: 'sistemare 47 sche' }, 5.4);
+      tl.set("#typed", { textContent: 'sistemare 47 scher' }, 5.45);
+      tl.set("#typed", { textContent: 'sistemare 47 scherm' }, 5.5);
+      tl.set("#typed", { textContent: 'sistemare 47 scherma' }, 5.55);
+      tl.set("#typed", { textContent: 'sistemare 47 schermat' }, 5.6);
+      tl.set("#typed", { textContent: 'sistemare 47 schermate' }, 5.65);
+      tl.set("#typed", { textContent: 'sistemare 47 schermate…' }, 5.7);
+      tl.set("#typed", { textContent: "" }, 5.9);
+      tl.fromTo("#m2", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 6.0);
+      tl.to("#bar, #barLbl", { opacity: 1, duration: 0.2 }, 6.5);
+      tl.to("#bar i", { width: "4%", duration: 2.4, ease: "none" }, 6.6);
+      /* knock knock, the series' own knock */
+      tl.to("#monitor", { x: 18, duration: 0.05, yoyo: true, repeat: 3 }, 9.1);
+      tl.set("#toc1", { opacity: 1 }, 9.1); tl.fromTo("#toc1", { scale: 0.4 }, { scale: 1, duration: 0.25, ease: "back.out(3)", immediateRender: false }, 9.1);
+      tl.to("#monitor", { x: -18, duration: 0.05, yoyo: true, repeat: 3 }, 9.75);
+      tl.set("#toc2", { opacity: 1 }, 9.75); tl.fromTo("#toc2", { scale: 0.4 }, { scale: 1, duration: 0.25, ease: "back.out(3)", immediateRender: false }, 9.75); tl.set("#toc1, #toc2", { opacity: 0 }, 10.9);
+      /* 3 · startled: jump, squash, shake */
+      tl.fromTo("#melJump", { y: 120, scaleY: 0.8, scaleX: 1.1 }, { y: -90, scaleY: 1.12, scaleX: 0.94, duration: 0.22, ease: "power3.out" }, 11);
+      tl.to("#melJump", { y: 0, scaleY: 1, scaleX: 1, duration: 0.5, ease: "bounce.out" }, 11.22);
+      tl.to("#melJump", { rotation: 3, duration: 0.05, yoyo: true, repeat: 7 }, 11.7);
+      /* 4 · the Boss */
+      tl.fromTo("#caliMeow", { y: 400, scale: 0.7 }, { y: 0, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 12.6);
+      tl.to("#caliMeow", { scaleY: 1.06, scaleX: 0.96, duration: 0.12, yoyo: true, repeat: 3, ease: "sine.inOut" }, 12.75);
+      pop("#cb1", 12.8); pop("#cb2", 13.7);
+      tl.to("#caliMeow", { rotation: -4, duration: 0.18, yoyo: true, repeat: 5, ease: "sine.inOut" }, 14.4);
+      /* 5 · no */
+      tl.fromTo("#melNo", { x: -200, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 16);
+      tl.to("#melNo", { rotation: 4, duration: 0.09, yoyo: true, repeat: 7, ease: "sine.inOut" }, 16.5);
+      pop("#mb1", 16.3);
+      /* 6 · the stare, then she lies on the keyboard */
+      tl.fromTo("#caliSus", { scale: 1.4 }, { scale: 1, duration: 1.4, ease: "power2.out" }, 18.6);
+      tl.set("#sScreen", { opacity: 1 }, 20.2);
+      tl.set("#m1, #m2, #bar, #barLbl", { opacity: 0 }, 20.2);
+      tl.set("#onKeys", { opacity: 1, y: 500 }, 20.3); tl.to("#onKeys", { y: 0, duration: 0.55, ease: "back.out(1.6)" }, 20.3);
+      tl.set("#spam", { opacity: 1 }, 20.9);
+      tl.fromTo("#spam", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 1.1, ease: "none" }, 20.9);
+      /* 7 · defeated: she melts */
+      tl.fromTo("#melMelt", { scaleY: 1, y: 0 }, { scaleY: 0.9, y: 40, duration: 1.2, ease: "power2.inOut" }, 23.1);
+      pop("#mb2", 23.5);
+      /* 8 · cuddles */
+      tl.fromTo("#hug", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "elastic.out(1, 0.6)" }, 25.6);
+      tl.to("#hug", { scale: 1.04, duration: 0.32, yoyo: true, repeat: 5, ease: "sine.inOut" }, 26.3);
+      [["#h1", 26.0], ["#h2", 26.3], ["#h3", 26.6]].forEach(([h, t]) => { tl.fromTo(h, { opacity: 1, scale: 0.3, y: 0 }, { scale: 1.1, y: -220, duration: 1.6, ease: "power1.out" }, t); tl.to(h, { opacity: 0, duration: 0.3 }, t + 1.3); });
+      tl.fromTo("#toastC", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)" }, 26.9);
+      tl.fromTo("#okC", { opacity: 0, scale: 3, rotation: -12 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.22, ease: "power4.in" }, 27.85);
+      tl.to("#sHug", { x: 12, duration: 0.05, yoyo: true, repeat: 3 }, 28.07);
+      blurIn("#endH", 30.05); tl.fromTo("#endMel", { y: 700 }, { y: 0, duration: 0.6, ease: "back.out(1.5)" }, 30.2); tl.fromTo("#endEp", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 30.6);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

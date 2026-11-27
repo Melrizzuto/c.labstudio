@@ -49,7 +49,7 @@ body = '\n'.join([
       </div>''',
   chat('sChat2', 19.6, 6.8, typing_dots('t2', 600) + bub('b2', 600, 'Ah, e mettiamo 12 KPI sopra la piega. <em>Ma pulito.</em> ✨'), status='sta scrivendo…', peek_id='pk2', **BOSS),
   react('sR2', 26.4, 3.6, 'I dati non mentono.<br /><em>Gli assi sì.</em>', yawn=True),
-  end(30, 4, 'Il grafico più <em>creativo</em> che ti hanno chiesto? 📈👇', 7, 'segui per l’ep. 8'),
+  end(30, 4, 'Il grafico più <em>creativo</em> che ti hanno chiesto? 📈👇', 8, 'segui per l’ep. 9'),
   music(34, '"Investigations"', 0.4, offset=30),
   sfx('pop.wav', 0.06), sfx('whoosh1.wav', 4.1, 0.55), sfx('whoosh2.wav', 6.7, 0.55),
   sfx('tick.wav', 8.95, 0.6), sfx('whoosh2.wav', 9.3, 0.45), sfx('pop.wav', 9.85, 0.9), sfx('pop.wav', 11.45, 0.9),
