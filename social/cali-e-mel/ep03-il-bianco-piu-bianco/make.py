@@ -46,7 +46,7 @@ body = '\n'.join([
       </div>''',
   chat('sChat3', 25.4, 4, bub('b3', 560, 'ORA SÌ!!! 😍', 'bub big') + bub('b4', 790, 'Si vede proprio <em>la differenza</em> ✨'), peek_id='pk3'),
   react('sR2', 29.4, 3.6, 'Stesso file.<br /><em>Nome diverso.</em>', yawn=True),
-  end(33, 4, 'Hai mai mandato lo stesso file <em>rinominato?</em> 🤫👇', 3),
+  end(33, 4, 'Hai mai mandato lo stesso file <em>rinominato?</em> 🤫👇', 4),
   music(37, '"Investigations"', 0.42),
   sfx('pop.wav', 0.06), sfx('whoosh1.wav', 3.5, 0.55), sfx('whoosh2.wav', 6.3, 0.55),
   sfx('tick.wav', 7.9, 0.6), sfx('knock1.wav', 8.6, 0.7), sfx('pop.wav', 10.05, 0.9),

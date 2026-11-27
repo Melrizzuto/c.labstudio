@@ -1,5 +1,5 @@
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))  # kit.py
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from kit import *
 
 css = '''
@@ -57,7 +57,7 @@ body = '\n'.join([
   chat('sChat2', 8, 5.8, bub('b2', 560, 'Il <em>meteo</em> ☀️') + bub('b3', 740, "l'<em>oroscopo</em> ♈") + bub('b4', 920, 'un <em>carosello</em> 🎠') + bub('b5', 1100, 'e un bel <em>popup!</em> 🎉'), peek_id=None),
   chat('sChat3', 22.6, 6.2, typing_dots('t3', 560) + bub('b6', 560, 'Mmm… sembra un po' + "'" + ' <em>pieno</em> 🤔') + bub('b7', 790, 'Lo fai più <em>minimal?</em> 🙏'), status='sta scrivendo…', peek_id='pk3'),
   react('sR2', 28.8, 3.6, 'Minimal.<br /><em>Ma con tutto.</em>', yawn=True),
-  end(32.4, 4, 'La richiesta più <em>contraddittoria</em> che hai ricevuto? 👇', 4),
+  end(32.4, 4, 'La richiesta più <em>contraddittoria</em> che hai ricevuto? 👇', 5),
   music(36.4, '"The Builder"', 0.4),
   sfx('pop.wav', 0.06), sfx('whoosh2.wav', 3.5, 0.55), sfx('pop.wav', 5.45, 0.9), sfx('whoosh1.wav', 7.9, 0.5),
   sfx('pop.wav', 8.35, 0.85), sfx('pop.wav', 9.65, 0.85), sfx('pop.wav', 10.95, 0.9), sfx('pop.wav', 12.25, 0.95),

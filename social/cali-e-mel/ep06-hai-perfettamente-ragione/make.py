@@ -27,7 +27,7 @@ body = '\n'.join([
         <p id="closed">Calì ha chiuso<br />il portatile. 🐾<small>conversazione terminata</small></p>
       </div>''',
   react('sR3', 27.4, 3.2, "L'unica che mi dice<br /><em>di no.</em>"),
-  end(30.6, 4, 'Anche la tua AI ti dà <em>sempre ragione?</em> 👇', 6, 'segui per l’ep. 7'),
+  end(30.6, 4, 'Anche la tua AI ti dà <em>sempre ragione?</em> 👇', 7, 'segui per l’ep. 8'),
   music(34.6, '"Sneaky Snitch"', 0.4, offset=38),
   sfx('pop.wav', 0.06), sfx('tick.wav', 1.3, 0.45), sfx('tick.wav', 1.9, 0.5), sfx('pop.wav', 2.45, 0.95),
   sfx('whoosh1.wav', 4.9, 0.55), sfx('whoosh2.wav', 7.5, 0.55),

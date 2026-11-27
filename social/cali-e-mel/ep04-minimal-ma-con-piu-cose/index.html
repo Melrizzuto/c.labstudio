@@ -88,6 +88,14 @@
       .win .bar i { width: 22px; height: 22px; border-radius: 50%; border: 4px solid var(--ink); display: block; }
       .win .bar b { margin-left: 12px; font: 700 28px/1 "Space Mono", monospace; }
 
+      /* Mel's own messages: on the right, pink */
+      .bub.me { left: auto; right: 192px; max-width: 640px; background: #ffd3e8; border-radius: 46px 46px 10px 46px; transform-origin: 100% 100%; }
+      .bub.me.old { opacity: 0.38; }
+      /* the AI's avatar: a plain ink badge with a star, no brand logo */
+      .av.ai { background: var(--ink); color: var(--sun); font: 900 50px/1 "Outfit", sans-serif; }
+
+      .sweat { position: absolute; left: 712px; top: 540px; width: 76px; height: 106px; opacity: 0; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+
 
       #sSite { z-index: 1; } #sChat2, #sChat3, #sR2, #sEnd { z-index: 2; }
       #site .body { position: relative; height: 780px; background: #fff; overflow: hidden; }
@@ -143,7 +151,7 @@
             <feComposite in="rough" in2="mask" operator="in" />
           </filter></defs></svg>
         <div id="sChat1" class="clip dots" data-start="0" data-duration="3.6">
-        <p id="sChat1T" class="tease">guarda fino alla fine 👀</p><div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
+        <p id="sChat1T" class="tease">guarda fino alla fine 👀</p><div class="who"><div class="av ">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
         <div id="b1" class="bub big" style="top: 600px">Voglio un sito <em>minimal.</em> Pulito. Essenziale. ✨</div>
         <div id="pk1" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
       </div>
@@ -169,12 +177,12 @@
         <p id="chk" class="chk">widget: 12</p>
       </div>
       <div id="sChat2" class="clip dots" data-start="8" data-duration="5.8">
-        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
+        <div class="who"><div class="av ">👔</div><div><b>Il Cliente</b><small>online</small></div></div>
         <div id="b2" class="bub" style="top: 560px; opacity: 0">Il <em>meteo</em> ☀️</div><div id="b3" class="bub" style="top: 740px; opacity: 0">l'<em>oroscopo</em> ♈</div><div id="b4" class="bub" style="top: 920px; opacity: 0">un <em>carosello</em> 🎠</div><div id="b5" class="bub" style="top: 1100px; opacity: 0">e un bel <em>popup!</em> 🎉</div>
         
       </div>
       <div id="sChat3" class="clip dots" data-start="22.6" data-duration="6.2">
-        <div class="who"><div class="av">👔</div><div><b>Il Cliente</b><small>sta scrivendo…</small></div></div>
+        <div class="who"><div class="av ">👔</div><div><b>Il Cliente</b><small>sta scrivendo…</small></div></div>
         <div id="t3" class="typing" style="top: 560px; opacity: 0"><i></i><i></i><i></i></div><div id="b6" class="bub" style="top: 560px; opacity: 0">Mmm… sembra un po' <em>pieno</em> 🤔</div><div id="b7" class="bub" style="top: 790px; opacity: 0">Lo fai più <em>minimal?</em> 🙏</div>
         <div id="pk3" class="peek" data-layout-ignore><img src="assets/mel-felt.png" alt="" /></div>
       </div>
@@ -184,11 +192,11 @@
       </div>
       <div id="sEnd" class="clip" data-start="32.4" data-duration="4">
         <h2 id="endH">La richiesta più <em>contraddittoria</em> che hai ricevuto? 👇</h2>
-        <p id="endEp" class="ep">Calì &amp; Mel · ep. 4<br />@c.labstudio.milano</p>
+        <p id="endEp" class="ep">Calì &amp; Mel · ep. 5<br />@c.labstudio.milano</p>
         <div id="endMel"><img src="assets/mel-felt.png" alt="" /></div>
       </div>
       <!-- music: "The Builder", Kevin MacLeod (incompetech.com), CC BY 4.0 -->
-      <audio id="aMusic" class="clip" data-start="0" data-duration="36.4" src="assets/music.mp3" data-volume="0.4" data-fade-out="2"></audio>
+      <audio id="aMusic" class="clip" data-start="0" data-duration="36.4" src="assets/music.mp3" data-volume="0.4" data-fade-in="0.6" data-fade-out="2"></audio>
       <audio id="a1" class="clip" data-start="0.06" data-duration="0.06" src="assets/pop.wav" data-volume="0.8"></audio>
       <audio id="a2" class="clip" data-start="3.5" data-duration="0.38" src="assets/whoosh2.wav" data-volume="0.55"></audio>
       <audio id="a3" class="clip" data-start="5.45" data-duration="0.06" src="assets/pop.wav" data-volume="0.9"></audio>
@@ -234,6 +242,11 @@
         const n = Math.max(1, Math.round((len - 0.5) / 0.44));
         [0, 1, 2].forEach((i) => tl.fromTo(`${sel} i:nth-child(${i + 1})`, { y: 0 }, { y: -14, duration: 0.22, yoyo: true, repeat: n * 2 - 1, ease: "sine.inOut" }, at + 0.2 + i * 0.14));
         tl.to(sel, { opacity: 0, duration: 0.1 }, at + len - 0.05);
+      };
+      /* Mel's sweat drop: it appears on her temple and slides down a little */
+      const sweat = (scene, at) => {
+        tl.fromTo(`#${scene}S`, { opacity: 0, scale: 0.4, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: 0.35, ease: "back.out(2.5)" }, at);
+        tl.to(`#${scene}S`, { y: 70, duration: 1.6, ease: "power1.in" }, at + 0.4);
       };
       const yawn = (scene, from, to) => {
         tl.set(`#${scene}Y`, { opacity: 1 }, from); tl.set(`#${scene}A`, { opacity: 0 }, from);

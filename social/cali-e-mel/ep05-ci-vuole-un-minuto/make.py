@@ -41,7 +41,7 @@ body = '\n'.join([
       </div>''',
   react('sR2', 22, 3.6, '23:58.<br /><em>Il minuto più lungo.</em>', night=True, yawn=True),
   chat('sChat2', 25.6, 7.8, typing_dots('t5', 560) + bub('b2', 560, 'Grazie mille!! ❤️') + bub('b3', 760, "Domattina un'altra cosina veloce? <em>Ci vuole un minuto</em> 🙏"), status='sta scrivendo…', peek_id='pk2'),
-  end(33.4, 4, "Quanto dura il <em>TUO</em> «minuto»? ⏱️👇", 5),
+  end(33.4, 4, "Quanto dura il <em>TUO</em> «minuto»? ⏱️👇", 6),
   music(37.4, '"Hidden Agenda"', 0.38),
   sfx('pop.wav', 0.06), sfx('whoosh1.wav', 3.5, 0.55), sfx('whoosh2.wav', 6.3, 0.55),
   *[sfx('tick.wav', round(at + 0.02, 2), 0.55) for _, at in FILES[:-1]],

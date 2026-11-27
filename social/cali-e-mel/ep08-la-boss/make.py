@@ -57,7 +57,7 @@ body = '\n'.join([
         <p id="ok">Approvato</p>
         <p id="what">(la scatola del portatile)</p>
       </div>''',
-  end(29.6, 4, 'Anche il tuo capo è <em>così?</em> Taggalo 👇', 8, 'segui per l’ep. 9'),
+  end(29.6, 4, 'Anche il tuo capo è <em>così?</em> Taggalo 👇', 9, 'segui per l’ep. 10'),
   music(33.6, '"Pixel Peeker Polka - faster"', 0.34),
   sfx('pop.wav', 0.06), sfx('whoosh1.wav', 3.3, 0.55), sfx('whoosh2.wav', 5.7, 0.55),
   sfx('pop.wav', 6.6, 0.8), sfx('pop.wav', 7.1, 0.8), sfx('pop.wav', 7.6, 0.8),
